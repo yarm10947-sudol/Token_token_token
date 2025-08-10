@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CADO Token — Roadmap и соцсети</title>
 
-<!-- Подключаем FontAwesome CSS для иконок соцсетей -->
+<!-- FontAwesome CSS для иконок соцсетей -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
@@ -15,7 +15,7 @@
     margin: 0;
     font-family: 'Roboto', sans-serif;
     background: radial-gradient(circle at center, #0a0a0a 40%, #1a1a1a 100%);
-    color: #ffd700; /* золотой */
+    color: #ffd700; /* базовый золотой */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -23,11 +23,40 @@
     padding: 30px 15px;
   }
 
+  /* Логотип сверху */
+  .logo-container {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #ff0000 40%, #b22222 90%);
+    box-shadow:
+      0 0 20px #ff0000aa,
+      inset 0 0 30px #ff6347;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    transition: box-shadow 0.6s ease-in-out;
+  }
+  .logo-container:hover {
+    box-shadow:
+      0 0 35px #ff4500ff,
+      inset 0 0 50px #ff7f50ff;
+  }
+  .logo-container img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 4px solid #ffd700;
+    box-shadow: 0 0 15px #ffd700;
+  }
+
   h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: 3.5rem;
     margin-bottom: 10px;
-    text-shadow: 0 0 10px #ffd700;
+    text-shadow: 0 0 12px #ff0000, 0 0 25px #ffd700;
+    color: #ff4500;
   }
 
   p.lead {
@@ -36,15 +65,15 @@
     line-height: 1.6;
     margin-bottom: 50px;
     text-align: center;
-    color: #fff7cc;
-    text-shadow: 0 0 6px #b8860b;
+    color: #ffb6b6;
+    text-shadow: 0 0 8px #ff4500cc;
   }
 
   /* Roadmap */
   .roadmap {
-    background: rgba(255, 215, 0, 0.1);
+    background: rgba(255, 69, 0, 0.15);
     border-radius: 15px;
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.7);
     max-width: 700px;
     width: 100%;
     padding: 30px 40px;
@@ -56,8 +85,8 @@
     font-size: 2.4rem;
     margin-bottom: 30px;
     text-align: center;
-    color: #ffd700;
-    text-shadow: 0 0 8px #ffd700;
+    color: #ff4500;
+    text-shadow: 0 0 10px #ff4500;
   }
 
   .roadmap ul {
@@ -67,24 +96,25 @@
   }
 
   .roadmap li {
-    background: linear-gradient(135deg, #ffd700aa, #b8860b88);
+    background: linear-gradient(135deg, #ff6347cc, #b2222244);
     padding: 15px 25px;
     margin-bottom: 20px;
     border-radius: 12px;
     font-size: 1.3rem;
     box-shadow:
-      0 0 8px #ffd700aa,
-      inset 0 0 6px #fff4b8aa;
+      0 0 10px #ff6347cc,
+      inset 0 0 8px #ff7f5088;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: default;
+    color: #ffe4e1;
   }
 
   .roadmap li:hover {
     transform: scale(1.05);
     box-shadow:
-      0 0 20px #ffec5c,
-      inset 0 0 15px #fff9aa;
+      0 0 30px #ff4500ee,
+      inset 0 0 18px #ff6347cc;
   }
 
   /* Нумерация с кружком слева */
@@ -95,16 +125,16 @@
     left: -45px;
     top: 50%;
     transform: translateY(-50%);
-    background: #ffd700;
-    color: #000;
+    background: #ff4500;
+    color: #fff;
     font-weight: 700;
     font-family: 'Orbitron', sans-serif;
-    width: 35px;
-    height: 35px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     text-align: center;
-    line-height: 35px;
-    box-shadow: 0 0 8px #ffd700;
+    line-height: 38px;
+    box-shadow: 0 0 15px #ff4500;
   }
 
   .roadmap ul {
@@ -127,16 +157,16 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #222;
-    color: #ffd700;
+    background: #330000;
+    color: #ff4500;
     font-size: 2.4rem;
-    box-shadow: 0 0 15px #ffd700;
+    box-shadow: 0 0 20px #ff4500;
     transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
     text-decoration: none;
   }
 
   .socials a:hover {
-    box-shadow: 0 0 25px currentColor;
+    box-shadow: 0 0 35px currentColor;
   }
 
   /* Цвета при наведении */
@@ -157,6 +187,15 @@
 
   /* Адаптив */
   @media(max-width: 480px) {
+    .logo-container {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 15px;
+    }
+    .logo-container img {
+      width: 85px;
+      height: 85px;
+    }
     h1 {
       font-size: 2.8rem;
     }
@@ -173,6 +212,11 @@
 </style>
 </head>
 <body>
+
+<!-- Логотип -->
+<div class="logo-container" title="CADO Token Logo">
+  <img src="https://cdn-icons-png.flaticon.com/512/5903/5903685.png" alt="CADO Logo" />
+</div>
 
 <h1>CADO Token</h1>
 <p class="lead">Никто не верил в мои силы и мечты, все считали, что я ничего не добьюсь. Но я не сдался. Я создал Cado, чтобы доказать — даже когда все против тебя, можно добиться великого. Этот токен — мой вызов миру и приглашение к победе для каждого.</p>
