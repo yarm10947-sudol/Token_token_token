@@ -1,29 +1,120 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CADO Token — Roadmap и соцсети</title>
+<title>CADO Token — Roadmap & Socials</title>
 
-<!-- FontAwesome CSS для иконок соцсетей -->
+<!-- FontAwesome for social icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto:wght@300;400;700&display=swap');
 
-  body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: radial-gradient(circle at center, #0a0a0a 40%, #1a1a1a 100%);
-    color: #ffd700; /* базовый золотой */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: center;
-    padding: 30px 15px;
+  /* Reset & body */
+  * {
+    box-sizing: border-box;
   }
 
-  /* Логотип сверху */
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    overflow-x: hidden;
+    background: #0a0a0a;
+    color: #ffd700;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Animated gradient background */
+  body::before {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, #ff4500, #ffd700, #8b0000, #ff6347, #b22222);
+    background-size: 600% 600%;
+    animation: gradientAnimation 20s ease infinite;
+    filter: blur(90px);
+    z-index: -2;
+  }
+
+  @keyframes gradientAnimation {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+  }
+
+  /* Floating crypto coins container */
+  #floating-coins {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: visible;
+    z-index: -1;
+  }
+
+  .coin {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    opacity: 0.15;
+    animation: floatUp linear infinite;
+    filter: drop-shadow(0 0 3px #ff6347);
+  }
+  /* Different durations and delays for natural effect */
+  .coin:nth-child(1) {
+    left: 10%;
+    animation-duration: 30s;
+    animation-delay: 0s;
+  }
+  .coin:nth-child(2) {
+    left: 30%;
+    animation-duration: 22s;
+    animation-delay: 5s;
+  }
+  .coin:nth-child(3) {
+    left: 50%;
+    animation-duration: 35s;
+    animation-delay: 3s;
+  }
+  .coin:nth-child(4) {
+    left: 70%;
+    animation-duration: 25s;
+    animation-delay: 1s;
+  }
+  .coin:nth-child(5) {
+    left: 85%;
+    animation-duration: 28s;
+    animation-delay: 4s;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(120vh) rotate(0deg);
+      opacity: 0.15;
+    }
+    50% {
+      opacity: 0.35;
+    }
+    100% {
+      transform: translateY(-20vh) rotate(360deg);
+      opacity: 0.15;
+    }
+  }
+
+  /* Logo container */
   .logo-container {
     width: 160px;
     height: 160px;
@@ -51,12 +142,14 @@
     box-shadow: 0 0 15px #ffd700;
   }
 
+  /* Heading */
   h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: 3.5rem;
     margin-bottom: 10px;
     text-shadow: 0 0 12px #ff0000, 0 0 25px #ffd700;
     color: #ff4500;
+    text-align: center;
   }
 
   p.lead {
@@ -117,7 +210,7 @@
       inset 0 0 18px #ff6347cc;
   }
 
-  /* Нумерация с кружком слева */
+  /* Number circles */
   .roadmap li::before {
     content: counter(item);
     counter-increment: item;
@@ -141,7 +234,7 @@
     counter-reset: item;
   }
 
-  /* Соцсети */
+  /* Social icons */
   .socials {
     display: flex;
     justify-content: center;
@@ -169,7 +262,7 @@
     box-shadow: 0 0 35px currentColor;
   }
 
-  /* Цвета при наведении */
+  /* Hover colors */
   .socials a.telegram:hover {
     color: #0088cc;
     background: #002f4b;
@@ -185,7 +278,7 @@
     background: #4d0000;
   }
 
-  /* Адаптив */
+  /* Responsive */
   @media(max-width: 480px) {
     .logo-container {
       width: 120px;
@@ -208,28 +301,40 @@
       height: 50px;
       font-size: 2rem;
     }
+    #floating-coins {
+      display: none; /* hide coins on small screens for performance */
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- Логотип -->
+<!-- Floating crypto coins -->
+<div id="floating-coins">
+  <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=025" alt="BTC" class="coin" style="width:48px; height:48px;">
+  <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025" alt="ETH" class="coin" style="width:48px; height:48px;">
+  <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png?v=025" alt="BNB" class="coin" style="width:48px; height:48px;">
+  <img src="https://cryptologos.cc/logos/polkadot-new-dot-logo.png?v=025" alt="DOT" class="coin" style="width:48px; height:48px;">
+  <img src="https://cryptologos.cc/logos/cardano-ada-logo.png?v=025" alt="ADA" class="coin" style="width:48px; height:48px;">
+</div>
+
+<!-- Logo -->
 <div class="logo-container" title="CADO Token Logo">
   <img src="https://cdn-icons-png.flaticon.com/512/5903/5903685.png" alt="CADO Logo" />
 </div>
 
 <h1>CADO Token</h1>
-<p class="lead">Никто не верил в мои силы и мечты, все считали, что я ничего не добьюсь. Но я не сдался. Я создал Cado, чтобы доказать — даже когда все против тебя, можно добиться великого. Этот токен — мой вызов миру и приглашение к победе для каждого.</p>
+<p class="lead">No one believed in my strength and dreams, everyone thought I would fail. But I didn’t give up. I created CADO to prove that even when everything is against you, greatness is possible. This token is my challenge to the world and an invitation to victory for everyone.</p>
 
 <section class="roadmap">
   <h2>Roadmap</h2>
   <ul>
-    <li>3 млн — Запуск NFT коллекции</li>
-    <li>10 млн — Майки, кепки, кружки</li>
-    <li>50 млн — Золотой знак</li>
-    <li>100 млн — Плюшевые игрушки</li>
-    <li>300 млн — Создание полноценного мультфильма</li>
-    <li>1 млрд — Фильм</li>
+    <li>3M — Launch NFT Collection</li>
+    <li>10M — T-shirts, caps, mugs</li>
+    <li>50M — Golden Badge</li>
+    <li>100M — Plush Toys</li>
+    <li>300M — Full Animated Series</li>
+    <li>1B — Feature Film</li>
   </ul>
 </section>
 
