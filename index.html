@@ -19,9 +19,10 @@
       margin: 0; padding: 0;
       font-family: 'Roboto', sans-serif;
       scroll-behavior: smooth;
-      background: linear-gradient(135deg, #0b0a0a, #300000);
+      background: linear-gradient(135deg, #3a0d0d, #7a1c1c);
       color: #fff;
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
     a {
@@ -38,17 +39,19 @@
 
     /* HEADER / HERO */
     header {
-      height: 100vh;
+      min-height: 100vh;
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: radial-gradient(circle at center, #300000, #0b0a0a);
+      background: radial-gradient(circle at center, #7a1c1c, #3a0d0d);
       color: #ffd700;
-      overflow: hidden;
-      padding: 0 20px;
+      overflow: visible;
+      padding: 40px 20px 80px; /* увеличен padding снизу */
+      box-sizing: border-box;
+      z-index: 10;
     }
     header::before {
       content: "";
@@ -62,6 +65,7 @@
       filter: drop-shadow(0 0 20px #ffcc00);
       z-index: 0;
       animation: slowSpin 60s linear infinite;
+      pointer-events: none;
     }
     @keyframes slowSpin {
       from { transform: rotate(0deg);}
@@ -69,13 +73,13 @@
     }
 
     .logo {
-      width: 160px;
-      height: 160px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       border: 6px solid #ffd700;
       box-shadow:
-        0 0 30px #ffd700cc,
-        inset 0 0 40px #ffcc0080;
+        0 0 40px #ffd700cc,
+        inset 0 0 50px #ffcc0080;
       margin-bottom: 30px;
       position: relative;
       z-index: 2;
@@ -84,19 +88,21 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: visible;
     }
     .logo img {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
       border: 4px solid #fff4b8;
-      box-shadow: 0 0 20px #fff4b8;
+      box-shadow: 0 0 25px #fff4b8;
+      object-fit: contain;
     }
     .logo:hover {
       transform: scale(1.15);
       box-shadow:
-        0 0 50px #ffd700ee,
-        inset 0 0 60px #ffcc00ff;
+        0 0 60px #ffd700ee,
+        inset 0 0 70px #ffcc00ff;
     }
 
     header h1 {
@@ -105,14 +111,14 @@
       font-size: 4.5rem;
       letter-spacing: 4px;
       text-shadow:
-        0 0 10px #ffcc00,
-        0 0 25px #ff9900;
+        0 0 12px #ffcc00,
+        0 0 28px #ff9900;
       margin-bottom: 15px;
       z-index: 2;
     }
 
     header p {
-      max-width: 600px;
+      max-width: 700px;
       font-size: 1.5rem;
       font-weight: 300;
       line-height: 1.6;
@@ -127,19 +133,20 @@
       gap: 40px;
       justify-content: center;
       z-index: 2;
+      margin-bottom: 20px;
     }
     .social-buttons a {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 65px;
-      height: 65px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       background: #ffd700;
       color: #4a2c00;
-      font-size: 32px;
+      font-size: 34px;
       box-shadow:
-        0 0 30px #ffcc00;
+        0 0 40px #ffcc00;
       transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
       border: 3px solid transparent;
       cursor: pointer;
@@ -149,8 +156,8 @@
       background-color: #ffb800;
       color: #3a2200;
       box-shadow:
-        0 0 45px #ffdd33;
-      transform: scale(1.2);
+        0 0 55px #ffdd33;
+      transform: scale(1.25);
       border-color: #fff;
     }
 
