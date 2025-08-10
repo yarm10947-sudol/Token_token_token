@@ -3,351 +3,234 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CADO Token — Roadmap & Socials</title>
+<title>CADO Token — The Legend</title>
 
 <!-- FontAwesome for social icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto:wght@300;400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Open+Sans:wght@300;600&display=swap');
 
-  /* Reset & body */
+  /* Reset */
   * {
     box-sizing: border-box;
   }
-
   body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
+    margin: 0; padding: 0;
     height: 100%;
-    overflow-x: hidden;
-    background: #0a0a0a;
-    color: #ffd700;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+    color: #1f2937;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px 80px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Animated gradient background */
-  body::before {
-    content: "";
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, #ff4500, #ffd700, #8b0000, #ff6347, #b22222);
-    background-size: 600% 600%;
-    animation: gradientAnimation 20s ease infinite;
-    filter: blur(90px);
-    z-index: -2;
-  }
-
-  @keyframes gradientAnimation {
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-  }
-
-  /* Floating crypto coins container */
-  #floating-coins {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    overflow: visible;
-    z-index: -1;
-  }
-
-  .coin {
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    opacity: 0.15;
-    animation: floatUp linear infinite;
-    filter: drop-shadow(0 0 3px #ff6347);
-  }
-  /* Different durations and delays for natural effect */
-  .coin:nth-child(1) {
-    left: 10%;
-    animation-duration: 30s;
-    animation-delay: 0s;
-  }
-  .coin:nth-child(2) {
-    left: 30%;
-    animation-duration: 22s;
-    animation-delay: 5s;
-  }
-  .coin:nth-child(3) {
-    left: 50%;
-    animation-duration: 35s;
-    animation-delay: 3s;
-  }
-  .coin:nth-child(4) {
-    left: 70%;
-    animation-duration: 25s;
-    animation-delay: 1s;
-  }
-  .coin:nth-child(5) {
-    left: 85%;
-    animation-duration: 28s;
-    animation-delay: 4s;
-  }
-
-  @keyframes floatUp {
-    0% {
-      transform: translateY(120vh) rotate(0deg);
-      opacity: 0.15;
-    }
-    50% {
-      opacity: 0.35;
-    }
-    100% {
-      transform: translateY(-20vh) rotate(360deg);
-      opacity: 0.15;
-    }
-  }
-
-  /* Logo container */
-  .logo-container {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, #ff0000 40%, #b22222 90%);
-    box-shadow:
-      0 0 20px #ff0000aa,
-      inset 0 0 30px #ff6347;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    margin-bottom: 25px;
-    transition: box-shadow 0.6s ease-in-out;
-  }
-  .logo-container:hover {
-    box-shadow:
-      0 0 35px #ff4500ff,
-      inset 0 0 50px #ff7f50ff;
-  }
-  .logo-container img {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    border: 4px solid #ffd700;
-    box-shadow: 0 0 15px #ffd700;
+    align-items: center;
+    padding: 40px 20px;
   }
 
-  /* Heading */
+  .container {
+    max-width: 900px;
+    background: white;
+    padding: 50px 60px;
+    border-radius: 20px;
+    box-shadow:
+      0 20px 30px rgba(0, 0, 0, 0.1),
+      0 8px 15px rgba(31, 41, 55, 0.1);
+    text-align: center;
+  }
+
+  .logo {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    box-shadow:
+      0 0 25px #667eea80,
+      inset 0 0 30px #764ba280;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.4s ease;
+  }
+  .logo:hover {
+    transform: scale(1.1);
+  }
+  .logo img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid #c3dafe;
+    box-shadow: 0 0 15px #c3dafe;
+  }
+
   h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 3.5rem;
-    margin-bottom: 10px;
-    text-shadow: 0 0 12px #ff0000, 0 0 25px #ffd700;
-    color: #ff4500;
-    text-align: center;
+    font-weight: 700;
+    font-size: 3.8rem;
+    margin-bottom: 25px;
+    color: #3b82f6;
+    text-shadow: 0 2px 8px rgba(59, 130, 246, 0.6);
   }
 
-  p.lead {
-    max-width: 700px;
-    font-size: 1.3rem;
-    line-height: 1.6;
-    margin-bottom: 50px;
-    text-align: center;
-    color: #ffb6b6;
-    text-shadow: 0 0 8px #ff4500cc;
+  .legend {
+    font-size: 1.35rem;
+    font-weight: 300;
+    color: #475569;
+    line-height: 1.8;
+    max-width: 720px;
+    margin: 0 auto 55px;
+    user-select: none;
   }
 
   /* Roadmap */
   .roadmap {
-    background: rgba(255, 69, 0, 0.15);
-    border-radius: 15px;
-    box-shadow: 0 0 30px rgba(255, 69, 0, 0.7);
-    max-width: 700px;
-    width: 100%;
-    padding: 30px 40px;
-    margin-bottom: 60px;
+    text-align: left;
+    margin: 0 auto 45px;
   }
 
   .roadmap h2 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 2.4rem;
-    margin-bottom: 30px;
-    text-align: center;
-    color: #ff4500;
-    text-shadow: 0 0 10px #ff4500;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    color: #4338ca;
+    text-shadow: 0 1px 4px rgba(67, 56, 202, 0.6);
   }
 
   .roadmap ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding-left: 0;
   }
 
   .roadmap li {
-    background: linear-gradient(135deg, #ff6347cc, #b2222244);
-    padding: 15px 25px;
-    margin-bottom: 20px;
+    background: #e0e7ff;
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 16px 22px;
     border-radius: 12px;
-    font-size: 1.3rem;
-    box-shadow:
-      0 0 10px #ff6347cc,
-      inset 0 0 8px #ff7f5088;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.15);
     position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease;
     cursor: default;
-    color: #ffe4e1;
   }
-
   .roadmap li:hover {
-    transform: scale(1.05);
-    box-shadow:
-      0 0 30px #ff4500ee,
-      inset 0 0 18px #ff6347cc;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
   }
 
-  /* Number circles */
   .roadmap li::before {
     content: counter(item);
     counter-increment: item;
     position: absolute;
-    left: -45px;
+    left: -40px;
     top: 50%;
     transform: translateY(-50%);
-    background: #ff4500;
-    color: #fff;
-    font-weight: 700;
+    background: #4338ca;
+    color: white;
     font-family: 'Orbitron', sans-serif;
-    width: 38px;
-    height: 38px;
+    font-weight: 700;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
+    line-height: 32px;
     text-align: center;
-    line-height: 38px;
-    box-shadow: 0 0 15px #ff4500;
+    box-shadow: 0 2px 8px rgba(67, 56, 202, 0.6);
   }
-
   .roadmap ul {
     counter-reset: item;
   }
 
-  /* Social icons */
+  /* Socials */
   .socials {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    max-width: 300px;
-    width: 100%;
+    gap: 28px;
+    margin-top: 10px;
   }
 
   .socials a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 60px;
     height: 60px;
+    background: #4338ca;
     border-radius: 50%;
-    background: #330000;
-    color: #ff4500;
-    font-size: 2.4rem;
-    box-shadow: 0 0 20px #ff4500;
-    transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 28px;
+    box-shadow: 0 8px 15px rgba(67, 56, 202, 0.4);
+    transition: background 0.3s ease, transform 0.3s ease;
     text-decoration: none;
   }
-
   .socials a:hover {
-    box-shadow: 0 0 35px currentColor;
-  }
-
-  /* Hover colors */
-  .socials a.telegram:hover {
-    color: #0088cc;
-    background: #002f4b;
-  }
-
-  .socials a.twitter:hover {
-    color: #1DA1F2;
-    background: #003c6e;
-  }
-
-  .socials a.youtube:hover {
-    color: #ff0000;
-    background: #4d0000;
+    background: #6366f1;
+    transform: scale(1.15);
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.7);
   }
 
   /* Responsive */
-  @media(max-width: 480px) {
-    .logo-container {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 15px;
-    }
-    .logo-container img {
-      width: 85px;
-      height: 85px;
+  @media (max-width: 640px) {
+    .container {
+      padding: 35px 25px;
     }
     h1 {
-      font-size: 2.8rem;
+      font-size: 3rem;
+    }
+    .legend {
+      font-size: 1.15rem;
     }
     .roadmap li {
-      font-size: 1.1rem;
-      padding: 12px 18px;
+      font-size: 1rem;
+      padding: 14px 18px;
     }
     .socials a {
       width: 50px;
       height: 50px;
-      font-size: 2rem;
-    }
-    #floating-coins {
-      display: none; /* hide coins on small screens for performance */
+      font-size: 24px;
     }
   }
 </style>
 </head>
 <body>
 
-<!-- Floating crypto coins -->
-<div id="floating-coins">
-  <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=025" alt="BTC" class="coin" style="width:48px; height:48px;">
-  <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025" alt="ETH" class="coin" style="width:48px; height:48px;">
-  <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png?v=025" alt="BNB" class="coin" style="width:48px; height:48px;">
-  <img src="https://cryptologos.cc/logos/polkadot-new-dot-logo.png?v=025" alt="DOT" class="coin" style="width:48px; height:48px;">
-  <img src="https://cryptologos.cc/logos/cardano-ada-logo.png?v=025" alt="ADA" class="coin" style="width:48px; height:48px;">
-</div>
+<div class="container" role="main" aria-label="CADO Token Legend and Roadmap">
 
-<!-- Logo -->
-<div class="logo-container" title="CADO Token Logo">
-  <img src="https://cdn-icons-png.flaticon.com/512/5903/5903685.png" alt="CADO Logo" />
-</div>
+  <div class="logo" aria-label="CADO Token Logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/5903/5903685.png" alt="CADO Token Logo" />
+  </div>
 
-<h1>CADO Token</h1>
-<p class="lead">No one believed in my strength and dreams, everyone thought I would fail. But I didn’t give up. I created CADO to prove that even when everything is against you, greatness is possible. This token is my challenge to the world and an invitation to victory for everyone.</p>
+  <h1>CADO Token</h1>
 
-<section class="roadmap">
-  <h2>Roadmap</h2>
-  <ul>
-    <li>3M — Launch NFT Collection</li>
-    <li>10M — T-shirts, caps, mugs</li>
-    <li>50M — Golden Badge</li>
-    <li>100M — Plush Toys</li>
-    <li>300M — Full Animated Series</li>
-    <li>1B — Feature Film</li>
-  </ul>
-</section>
+  <p class="legend">
+    Nobody believed in my strength and dreams — everyone thought I would fail. But I never gave up.  
+    I created CADO to prove that even when the world is against you, greatness is still possible.  
+    This token is my challenge to the world and an invitation to victory for everyone.
+  </p>
 
-<div class="socials">
-  <a href="#" class="telegram" title="Telegram" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-telegram-plane"></i>
-  </a>
-  <a href="#" class="twitter" title="Twitter" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-twitter"></i>
-  </a>
-  <a href="#" class="youtube" title="YouTube" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-youtube"></i>
-  </a>
+  <section class="roadmap" aria-label="Roadmap">
+    <h2>Roadmap</h2>
+    <ul>
+      <li>3M — Launch NFT Collection</li>
+      <li>10M — Merch: T-shirts, Caps, Mugs</li>
+      <li>50M — Golden Badge</li>
+      <li>100M — Plush Toys</li>
+      <li>300M — Full Animated Series</li>
+      <li>1B — Feature Film</li>
+    </ul>
+  </section>
+
+  <nav class="socials" aria-label="Social media links">
+    <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-telegram-plane"></i>
+    </a>
+    <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-youtube"></i>
+    </a>
+  </nav>
+
 </div>
 
 </body>
