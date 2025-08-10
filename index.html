@@ -1,289 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CADO Token — The Legend</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CADO Token — The Legend</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-    body, html {
-      margin: 0; padding: 0;
-      font-family: 'Roboto', sans-serif;
-      scroll-behavior: smooth;
-      background: linear-gradient(135deg, #3a0d0d, #7a1c1c);
-      color: #fff;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+<style>
+  /* Reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    font-family: 'Roboto', sans-serif;
+    scroll-behavior: smooth;
+    background: url('file_00000000198861f581eb6192921a6f6c.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    min-height: 100vh;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-    header {
-      min-height: 100vh;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: radial-gradient(circle at center, #7a1c1c, #3a0d0d);
-      color: #ffd700;
-      overflow: visible;
-      padding: 40px 20px 80px;
-      box-sizing: border-box;
-      z-index: 10;
-    }
-    header::before {
-      content: "";
-      position: absolute;
-      top: -20%;
-      left: -10%;
-      width: 120%;
-      height: 140%;
-      background: url('file_00000000198861f581eb6192921a6f6c.png') no-repeat center/contain;
-      opacity: 0.08;
-      filter: drop-shadow(0 0 20px #ffcc00);
-      z-index: 0;
-      animation: slowSpin 60s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes slowSpin {
-      from { transform: rotate(0deg);}
-      to { transform: rotate(360deg);}
-    }
+  /* Overlay for readability */
+  body::before {
+    content: "";
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(30,10,10,0.85);
+    z-index: -1;
+  }
 
+  /* Container for content */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* HEADER SECTION */
+  header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 20px 100px;
+    position: relative;
+    z-index: 10;
+  }
+  .logo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 8px solid #ffd700;
+    box-shadow:
+      0 0 60px #ffd700cc,
+      inset 0 0 70px #ffcc0080;
+    margin-bottom: 30px;
+    background: radial-gradient(circle at center, #ffcc00, #b27300);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: transform 0.4s ease;
+  }
+  .logo img {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 5px solid #fff4b8;
+    box-shadow: 0 0 30px #fff4b8;
+  }
+  .logo:hover {
+    transform: scale(1.2);
+    box-shadow:
+      0 0 80px #ffd700ff,
+      inset 0 0 90px #ffcc00ff;
+  }
+  header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 5rem;
+    letter-spacing: 5px;
+    text-shadow:
+      0 0 15px #ffcc00,
+      0 0 40px #ff9900;
+    margin-bottom: 25px;
+  }
+  header p {
+    max-width: 720px;
+    font-size: 1.6rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #fff2a8;
+    margin-bottom: 60px;
+    user-select: none;
+  }
+
+  /* SOCIAL BUTTONS */
+  .social-buttons {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .social-buttons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #ffd700;
+    color: #4a2c00;
+    font-size: 38px;
+    box-shadow: 0 0 50px #ffcc00;
+    transition: 0.3s ease;
+    border: 3px solid transparent;
+    cursor: pointer;
+    user-select: none;
+  }
+  .social-buttons a:hover {
+    background-color: #ffb800;
+    color: #3a2200;
+    box-shadow: 0 0 70px #ffdd33;
+    transform: scale(1.3);
+    border-color: #fff;
+  }
+
+  /* BUTTON BUY NOW */
+  .btn-buy {
+    background: linear-gradient(45deg, #ffcc00, #ff9900);
+    border: none;
+    padding: 18px 60px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #3a2200;
+    border-radius: 50px;
+    box-shadow:
+      0 0 40px #ffcc00,
+      inset 0 0 20px #ffb800;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+  }
+  .btn-buy:hover {
+    transform: scale(1.15);
+    box-shadow:
+      0 0 70px #ffdd33,
+      inset 0 0 30px #ffcc00;
+  }
+
+  /* SECTION TITLES */
+  h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 50px;
+    color: #ffdb4d;
+    text-align: center;
+    text-shadow: 0 0 30px #ffdb4dcc;
+  }
+
+  /* SECTIONS */
+  section {
+    background: rgba(19,9,0,0.9);
+    border-radius: 25px;
+    padding: 80px 40px;
+    margin-bottom: 100px;
+    box-shadow: inset 0 0 120px #7f5500cc;
+  }
+
+  /* TOKENOMICS */
+  .tokenomics {
+    max-width: 900px;
+    margin: 0 auto;
+    color: #fff7b8;
+    font-size: 1.5rem;
+    line-height: 1.8;
+    user-select: none;
+    text-align: center;
+  }
+  .tokenomics strong {
+    color: #ffd700;
+    font-weight: 700;
+  }
+
+  /* ROADMAP */
+  .timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-left: 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(to bottom, #ffd700, #ff9900);
+    border-radius: 3px;
+    box-shadow: 0 0 15px #ffcc0080;
+  }
+  .timeline-item {
+    position: relative;
+    padding-left: 70px;
+    margin-bottom: 45px;
+    color: #3b2a00;
+    font-weight: 700;
+    font-size: 1.3rem;
+    cursor: default;
+    user-select: none;
+    transition: transform 0.3s ease;
+    background: linear-gradient(135deg, #ffdb4dcc, #ffcc00aa);
+    border-radius: 15px;
+    box-shadow: 0 0 30px #ffdb4d88;
+    padding: 18px 25px 18px 70px;
+  }
+  .timeline-item:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 50px #ffcc00cc;
+  }
+  .timeline-item::before {
+    content: "★";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 28px;
+    color: #ffd700;
+    text-shadow: 0 0 15px #ffd700cc;
+    user-select: none;
+  }
+
+  /* JOIN THE LEGEND */
+  .join-legend {
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+    color: #ffd;
+  }
+  .join-legend h2 {
+    margin-bottom: 40px;
+  }
+  .join-legend p {
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 50px;
+    color: #fff4b8;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    header h1 {
+      font-size: 3.8rem;
+    }
+    header p {
+      font-size: 1.3rem;
+      max-width: 90vw;
+    }
     .logo {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      border: 6px solid #ffd700;
-      box-shadow: 0 0 40px #ffd700cc, inset 0 0 50px #ffcc0080;
-      margin-bottom: 30px;
-      position: relative;
-      z-index: 2;
-      transition: transform 0.4s ease;
-      background: radial-gradient(circle at center, #ffcc00, #b27300);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-    .logo img {
       width: 140px;
       height: 140px;
-      border-radius: 50%;
-      border: 4px solid #fff4b8;
-      box-shadow: 0 0 25px #fff4b8;
-      object-fit: contain;
     }
-    .logo:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 60px #ffd700ee, inset 0 0 70px #ffcc00ff;
-    }
-
-    /* Улучшенный заголовок с эффектом свечения */
-    .glow-text {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 900;
-      font-size: 5rem;
-      letter-spacing: 6px;
-      background: linear-gradient(90deg, #ffcc00, #ff9900, #ffcc00);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow:
-        0 0 15px #ffcc00,
-        0 0 30px #ff9900,
-        0 0 40px #ffd700bb;
-      margin-bottom: 25px;
-      z-index: 2;
-    }
-
-    /* Стиль легенды */
-    .legend-text {
-      font-size: 1.8rem;
-      font-weight: 400;
-      max-width: 720px;
-      margin: 0 auto 60px;
-      color: #fff9b0;
-      line-height: 1.8;
-      text-shadow:
-        0 0 8px rgba(255, 204, 0, 0.6);
-      user-select: none;
-      z-index: 2;
-    }
-    .legend-text span {
-      color: #ffd700;
-      font-weight: 700;
-      text-shadow: 0 0 10px #ffdd33;
-    }
-    .legend-text strong {
-      color: #ffbb00;
-      font-weight: 900;
-      text-shadow: 0 0 15px #ffbb00;
-    }
-    .legend-text em {
-      font-style: italic;
-      color: #ffe066;
-      text-shadow: 0 0 12px #ffe066aa;
-    }
-
-    .social-buttons {
-      display: flex;
-      gap: 40px;
-      justify-content: center;
-      z-index: 2;
-      margin-bottom: 20px;
+    .logo img {
+      width: 110px;
+      height: 110px;
     }
     .social-buttons a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: #ffd700;
-      color: #4a2c00;
-      font-size: 34px;
-      box-shadow: 0 0 40px #ffcc00;
-      transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
-      border: 3px solid transparent;
-      cursor: pointer;
-      user-select: none;
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
     }
-    .social-buttons a:hover {
-      background-color: #ffb800;
-      color: #3a2200;
-      box-shadow: 0 0 55px #ffdd33;
-      transform: scale(1.25);
-      border-color: #fff;
+    .btn-buy {
+      padding: 14px 40px;
+      font-size: 1.3rem;
     }
-
     section {
-      padding: 80px 20px;
-      background: #130900;
-      box-shadow: inset 0 0 100px #7f5500cc;
-      border-radius: 20px;
-      max-width: 1100px;
-      margin: 0 auto 80px;
-      color: #ffd;
-    }
-    .legend {
-      font-size: 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-      line-height: 1.75;
-      font-weight: 300;
-      color: #ffd700dd;
-      text-shadow: 0 0 8px #ffcc00aa;
-      user-select: none;
-      letter-spacing: 0.03em;
-    }
-
-    .roadmap h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      margin-bottom: 40px;
-      color: #ffdb4d;
-      text-shadow: 0 0 20px #ffdb4dcc;
-      letter-spacing: 1.5px;
-    }
-    .timeline {
-      position: relative;
-      max-width: 850px;
-      margin: 0 auto;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      left: 50%;
-      width: 4px;
-      background: #ffcc00dd;
-      transform: translateX(-50%);
-      border-radius: 2px;
-      box-shadow: 0 0 15px #ffcc00bb;
+      padding: 60px 20px;
+      margin-bottom: 60px;
     }
     .timeline-item {
-      position: relative;
-      width: 45%;
-      padding: 20px 30px;
-      background: linear-gradient(135deg, #ffdb4dcc, #ffcc00aa);
-      border-radius: 15px;
-      box-shadow: 0 0 20px #ffdb4d88;
-      color: #3b2a00;
-      font-weight: 600;
-      font-size: 1.2rem;
-      margin: 30px 0;
-      transition: transform 0.3s ease;
-      cursor: default;
-      user-select: none;
+      font-size: 1.1rem;
+      padding-left: 60px;
+      padding-right: 15px;
     }
-    .timeline-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 40px #ffcc00cc;
-    }
-    .timeline-item.left {
-      left: 0;
-    }
-    .timeline-item.right {
-      left: 55%;
-    }
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      top: 24px;
-      width: 25px;
-      height: 25px;
-      background: #ffd700;
-      border-radius: 50%;
-      box-shadow: 0 0 15px #ffd700cc;
-      border: 3px solid #b27300;
-      z-index: 10;
-    }
-    .timeline-item.left::before {
-      right: -38px;
-    }
-    .timeline-item.right::before {
-      left: -38px;
-    }
-    @media (max-width: 900px) {
-      .timeline::before {
-        left: 10px;
-      }
-      .timeline-item {
-        width: 90%;
-        left: 20px !important;
-        margin: 40px 0 40px 40px;
-      }
-      .timeline-item::before {
-        left: -38px !important;
-      }
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 20px;
-      font-size: 1rem;
-      color: #aa8a00cc;
-      user-select: none;
-    }
-
-  </style>
+  }
+</style>
 </head>
 <body>
 
@@ -291,12 +306,12 @@
   <div class="logo" aria-label="CADO Token Logo">
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
-  <h1 class="glow-text">CADO Token</h1>
-  <p class="legend-text">
-    Nobody believed in my <span>strength</span> and <span>dreams</span> — everyone thought I would fail.<br />
-    But I <em>never gave up</em>.<br />
-    I created <strong>CADO</strong> to prove that even when the world is against you, <span>greatness</span> is possible.<br />
-    This token is my <strong>challenge</strong> to the world and an invitation to <em>victory</em> for everyone.
+  <h1>CADO Token</h1>
+  <p>
+    Nobody believed in my strength and dreams — everyone thought I would fail.<br />
+    But I never gave up.<br />
+    I created CADO to prove that even when the world is against you, greatness is possible.<br />
+    This token is my challenge to the world and an invitation to victory for everyone.
   </p>
   <div class="social-buttons" role="navigation" aria-label="Social media links">
     <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane"></i></a>
@@ -306,50 +321,48 @@
   <button class="btn-buy" aria-label="Buy CADO Token now">BUY NOW</button>
 </header>
 
-<section>
-  <div class="container">
-    <h2 class="roadmap-title">Roadmap</h2>
-    <div class="timeline">
-      <div class="timeline-item left">3M — Launch NFT Collection</div>
-      <div class="timeline-item right">10M — Merch: T-shirts, Caps, Mugs</div>
-      <div class="timeline-item left">50M — Golden Talisman</div>
-      <div class="timeline-item right">100M — Plush Toys</div>
-      <div class="timeline-item left">300M — Full Animated Series</div>
-      <div class="timeline-item right">1B — Feature Film</div>
-      <div class="timeline-item left">1B Supply — Total Token Supply</div>
-    </div>
+<section class="tokenomics" aria-labelledby="tokenomics-title">
+  <h2 id="tokenomics-title">Tokenomics</h2>
+  <p>
+    Total Supply: <strong>1,000,000,000 CADO</strong><br />
+    Max Wallet: <strong>2% of total supply</strong><br />
+    Transaction Tax: <strong>5% (3% Liquidity, 2% Marketing)</strong><br />
+    Launch Date: <strong>Q4 2025</strong>
+  </p>
+</section>
+
+<section aria-labelledby="roadmap-title">
+  <h2 id="roadmap-title">Roadmap</h2>
+  <div class="timeline" role="list">
+    <div class="timeline-item" role="listitem">3M — Launch NFT Collection</div>
+    <div class="timeline-item" role="listitem">10M — Merch: T-shirts, Caps, Mugs</div>
+    <div class="timeline-item" role="listitem">25M — CADO Staking Platform Launch</div>
+    <div class="timeline-item" role="listitem">50M — Golden Talisman</div>
+    <div class="timeline-item" role="listitem">75M — Community Giveaways & Competitions</div>
+    <div class="timeline-item" role="listitem">100M — Plush Toys</div>
+    <div class="timeline-item" role="listitem">150M — Partnership Announcements</div>
+    <div class="timeline-item" role="listitem">200M — Mobile Wallet Release</div>
+    <div class="timeline-item" role="listitem">300M — Full Animated Series</div>
+    <div class="timeline-item" role="listitem">500M — CADO Metaverse Integration</div>
+    <div class="timeline-item" role="listitem">750M — Listing on Major Exchanges</div>
+    <div class="timeline-item" role="listitem">1B — Feature Film Release</div>
   </div>
+</section>
+
+<section class="join-legend" aria-labelledby="join-title">
+  <h2 id="join-title">Join the Legend</h2>
+  <p>
+    Be part of the CADO revolution.<br />
+    Connect with our vibrant community on Telegram and Twitter.<br />
+    Stay updated and never miss an opportunity.<br />
+    Together, we’ll redefine the future of crypto.
+  </p>
+  <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
 </section>
 
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
-
-<script>
-  // Пример простой анимации кнопки BUY
-  const btnBuy = document.querySelector('.btn-buy');
-  btnBuy.style.cssText = `
-    margin-top: 20px;
-    padding: 15px 50px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #3a2200;
-    background: linear-gradient(90deg, #ffd700, #ffb800);
-    border: none;
-    border-radius: 40px;
-    box-shadow: 0 0 25px #ffcc00cc;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  `;
-  btnBuy.addEventListener('mouseenter', () => {
-    btnBuy.style.transform = 'scale(1.1)';
-    btnBuy.style.boxShadow = '0 0 40px #ffd700ff';
-  });
-  btnBuy.addEventListener('mouseleave', () => {
-    btnBuy.style.transform = 'scale(1)';
-    btnBuy.style.boxShadow = '0 0 25px #ffcc00cc';
-  });
-</script>
 
 </body>
 </html>
