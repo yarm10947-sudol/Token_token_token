@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
-    /* Reset */
     *, *::before, *::after {
       box-sizing: border-box;
     }
@@ -24,20 +23,16 @@
       overflow-x: hidden;
       min-height: 100vh;
     }
-
     a {
       text-decoration: none;
       color: inherit;
     }
-
-    /* Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
-    /* HEADER / HERO */
     header {
       min-height: 100vh;
       position: relative;
@@ -49,7 +44,7 @@
       background: radial-gradient(circle at center, #7a1c1c, #3a0d0d);
       color: #ffd700;
       overflow: visible;
-      padding: 40px 20px 80px; /* увеличен padding снизу */
+      padding: 40px 20px 80px;
       box-sizing: border-box;
       z-index: 10;
     }
@@ -60,8 +55,8 @@
       left: -10%;
       width: 120%;
       height: 140%;
-      background: url('https://cdn-icons-png.flaticon.com/512/5903/5903685.png') no-repeat center/contain;
-      opacity: 0.05;
+      background: url('file_00000000198861f581eb6192921a6f6c.png') no-repeat center/contain;
+      opacity: 0.08;
       filter: drop-shadow(0 0 20px #ffcc00);
       z-index: 0;
       animation: slowSpin 60s linear infinite;
@@ -77,9 +72,7 @@
       height: 180px;
       border-radius: 50%;
       border: 6px solid #ffd700;
-      box-shadow:
-        0 0 40px #ffd700cc,
-        inset 0 0 50px #ffcc0080;
+      box-shadow: 0 0 40px #ffd700cc, inset 0 0 50px #ffcc0080;
       margin-bottom: 30px;
       position: relative;
       z-index: 2;
@@ -88,7 +81,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: visible;
+      overflow: hidden;
     }
     .logo img {
       width: 140px;
@@ -100,9 +93,7 @@
     }
     .logo:hover {
       transform: scale(1.15);
-      box-shadow:
-        0 0 60px #ffd700ee,
-        inset 0 0 70px #ffcc00ff;
+      box-shadow: 0 0 60px #ffd700ee, inset 0 0 70px #ffcc00ff;
     }
 
     header h1 {
@@ -110,13 +101,10 @@
       font-weight: 700;
       font-size: 4.5rem;
       letter-spacing: 4px;
-      text-shadow:
-        0 0 12px #ffcc00,
-        0 0 28px #ff9900;
+      text-shadow: 0 0 12px #ffcc00, 0 0 28px #ff9900;
       margin-bottom: 15px;
       z-index: 2;
     }
-
     header p {
       max-width: 700px;
       font-size: 1.5rem;
@@ -127,7 +115,6 @@
       margin-bottom: 50px;
     }
 
-    /* BUTTONS SOCIALS */
     .social-buttons {
       display: flex;
       gap: 40px;
@@ -145,8 +132,7 @@
       background: #ffd700;
       color: #4a2c00;
       font-size: 34px;
-      box-shadow:
-        0 0 40px #ffcc00;
+      box-shadow: 0 0 40px #ffcc00;
       transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
       border: 3px solid transparent;
       cursor: pointer;
@@ -155,13 +141,11 @@
     .social-buttons a:hover {
       background-color: #ffb800;
       color: #3a2200;
-      box-shadow:
-        0 0 55px #ffdd33;
+      box-shadow: 0 0 55px #ffdd33;
       transform: scale(1.25);
       border-color: #fff;
     }
 
-    /* SECTIONS */
     section {
       padding: 80px 20px;
       background: #130900;
@@ -171,8 +155,6 @@
       margin: 0 auto 80px;
       color: #ffd;
     }
-
-    /* LEGEND */
     .legend {
       font-size: 1.5rem;
       max-width: 900px;
@@ -180,13 +162,11 @@
       line-height: 1.75;
       font-weight: 300;
       color: #ffd700dd;
-      text-shadow:
-        0 0 8px #ffcc00aa;
+      text-shadow: 0 0 8px #ffcc00aa;
       user-select: none;
       letter-spacing: 0.03em;
     }
 
-    /* ROADMAP */
     .roadmap h2 {
       font-family: 'Orbitron', sans-serif;
       font-size: 3rem;
@@ -195,7 +175,6 @@
       text-shadow: 0 0 20px #ffdb4dcc;
       letter-spacing: 1.5px;
     }
-
     .timeline {
       position: relative;
       max-width: 850px;
@@ -231,19 +210,12 @@
       transform: scale(1.05);
       box-shadow: 0 0 40px #ffcc00cc;
     }
-
-    /* Left timeline items */
     .timeline-item.left {
       left: 0;
-      transform-origin: right center;
     }
-    /* Right timeline items */
     .timeline-item.right {
       left: 55%;
-      transform-origin: left center;
     }
-
-    /* Circles on timeline */
     .timeline-item::before {
       content: '';
       position: absolute;
@@ -262,8 +234,6 @@
     .timeline-item.right::before {
       left: -38px;
     }
-
-    /* Responsive timeline */
     @media (max-width: 900px) {
       .timeline::before {
         left: 10px;
@@ -278,7 +248,6 @@
       }
     }
 
-    /* FOOTER */
     footer {
       text-align: center;
       padding: 30px 20px;
@@ -286,14 +255,13 @@
       color: #aa8a00cc;
       user-select: none;
     }
-
   </style>
 </head>
 <body>
 
 <header>
   <div class="logo" aria-label="CADO Token Logo">
-    <img src="https://cdn-icons-png.flaticon.com/512/5903/5903685.png" alt="CADO Token Logo" />
+    <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
   <h1>CADO Token</h1>
   <p>
@@ -302,26 +270,23 @@
     I created CADO to prove that even when the world is against you, greatness is possible.<br />
     This token is my challenge to the world and an invitation to victory for everyone.
   </p>
-
-  <div class="social-buttons" role="navigation" aria-label="Social media links">
-    <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane"></i></a>
-    <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
-    <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+  <div class="social-buttons">
+    <a href="#"><i class="fab fa-telegram-plane"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-youtube"></i></a>
   </div>
 </header>
 
 <section>
   <div class="container">
     <h2 class="roadmap-title">Roadmap</h2>
-    <div class="timeline" aria-label="Roadmap timeline">
-
+    <div class="timeline">
       <div class="timeline-item left">3M — Launch NFT Collection</div>
       <div class="timeline-item right">10M — Merch: T-shirts, Caps, Mugs</div>
       <div class="timeline-item left">50M — Golden Badge</div>
       <div class="timeline-item right">100M — Plush Toys</div>
       <div class="timeline-item left">300M — Full Animated Series</div>
       <div class="timeline-item right">1B — Feature Film</div>
-
     </div>
   </div>
 </section>
