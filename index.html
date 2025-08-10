@@ -5,48 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CADO Token — The Legend</title>
 
-<!-- FontAwesome for social icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Open+Sans:wght@300;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;600&display=swap');
 
   /* Reset */
-  * {
+  *, *::before, *::after {
     box-sizing: border-box;
   }
   body, html {
     margin: 0; padding: 0;
     height: 100%;
-    font-family: 'Open Sans', sans-serif;
-    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
-    color: #1f2937;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
+    background: linear-gradient(135deg, #1a0000, #4b0000);
+    color: #ffd700;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
   }
 
+  /* Container */
   .container {
     max-width: 900px;
-    background: white;
-    padding: 50px 60px;
-    border-radius: 20px;
-    box-shadow:
-      0 20px 30px rgba(0, 0, 0, 0.1),
-      0 8px 15px rgba(31, 41, 55, 0.1);
+    margin: 0 auto;
+    padding: 80px 40px;
     text-align: center;
+    position: relative;
+    z-index: 10;
   }
 
+  /* Logo */
   .logo {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto 30px;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: radial-gradient(circle at center, #ffcc00, #b27300);
     box-shadow:
-      0 0 25px #667eea80,
-      inset 0 0 30px #764ba280;
+      0 0 40px #ffcc00aa,
+      inset 0 0 30px #b27300cc;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,88 +50,101 @@
   }
   .logo:hover {
     transform: scale(1.1);
+    box-shadow:
+      0 0 60px #ffdd33ee,
+      inset 0 0 50px #d2a500ff;
   }
   .logo img {
-    width: 90px;
-    height: 90px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
-    border: 3px solid #c3dafe;
-    box-shadow: 0 0 15px #c3dafe;
+    border: 5px solid #ffd700;
+    box-shadow: 0 0 25px #ffd700;
   }
 
+  /* Heading */
   h1 {
     font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    font-size: 3.8rem;
-    margin-bottom: 25px;
-    color: #3b82f6;
-    text-shadow: 0 2px 8px rgba(59, 130, 246, 0.6);
+    font-size: 4rem;
+    margin-bottom: 20px;
+    text-shadow:
+      0 0 10px #ffd700,
+      0 0 20px #ffcc00,
+      0 0 30px #ff9900;
+    letter-spacing: 2px;
   }
 
+  /* Legend text */
   .legend {
-    font-size: 1.35rem;
-    font-weight: 300;
-    color: #475569;
+    font-size: 1.4rem;
     line-height: 1.8;
-    max-width: 720px;
-    margin: 0 auto 55px;
-    user-select: none;
+    max-width: 700px;
+    margin: 0 auto 60px;
+    color: #ffe066;
+    text-shadow: 0 0 10px #ffb700aa;
   }
 
   /* Roadmap */
   .roadmap {
-    text-align: left;
-    margin: 0 auto 45px;
+    max-width: 700px;
+    margin: 0 auto 60px;
   }
 
   .roadmap h2 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 2.2rem;
-    margin-bottom: 25px;
-    color: #4338ca;
-    text-shadow: 0 1px 4px rgba(67, 56, 202, 0.6);
+    font-size: 2.8rem;
+    margin-bottom: 30px;
+    color: #ffdd33;
+    text-shadow: 0 0 15px #ffdd33cc;
   }
 
   .roadmap ul {
     list-style: none;
-    padding-left: 0;
+    padding: 0;
+    margin: 0;
   }
 
   .roadmap li {
-    background: #e0e7ff;
-    color: #1e293b;
+    background: linear-gradient(135deg, #ffec99cc, #f7c94844);
+    padding: 20px 30px;
+    margin-bottom: 20px;
+    border-radius: 15px;
     font-weight: 600;
-    font-size: 1.1rem;
-    padding: 16px 22px;
-    border-radius: 12px;
-    margin-bottom: 18px;
-    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.15);
+    font-size: 1.2rem;
+    color: #3d2200;
+    box-shadow:
+      0 0 15px #f7c948cc,
+      inset 0 0 10px #d4a300aa;
     position: relative;
-    transition: box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: default;
   }
   .roadmap li:hover {
-    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+    transform: scale(1.05);
+    box-shadow:
+      0 0 30px #ffdd33ee,
+      inset 0 0 20px #f7c948dd;
   }
 
   .roadmap li::before {
     content: counter(item);
     counter-increment: item;
     position: absolute;
-    left: -40px;
+    left: -50px;
     top: 50%;
     transform: translateY(-50%);
-    background: #4338ca;
-    color: white;
+    background: #ffcc00;
+    color: #3d2200;
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    line-height: 32px;
+    line-height: 40px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(67, 56, 202, 0.6);
+    box-shadow: 0 0 15px #ffcc00aa;
   }
+
   .roadmap ul {
     counter-reset: item;
   }
@@ -144,54 +153,75 @@
   .socials {
     display: flex;
     justify-content: center;
-    gap: 28px;
-    margin-top: 10px;
+    gap: 40px;
   }
 
   .socials a {
-    width: 60px;
-    height: 60px;
-    background: #4338ca;
+    width: 70px;
+    height: 70px;
+    background: #663300;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    font-size: 28px;
-    box-shadow: 0 8px 15px rgba(67, 56, 202, 0.4);
-    transition: background 0.3s ease, transform 0.3s ease;
+    color: #ffd700;
+    font-size: 32px;
+    box-shadow:
+      0 0 25px #ffcc00bb;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     text-decoration: none;
   }
   .socials a:hover {
-    background: #6366f1;
-    transform: scale(1.15);
-    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.7);
+    background: #ffcc00;
+    color: #663300;
+    transform: scale(1.2);
+    box-shadow: 0 0 40px #ffd700ff;
+  }
+
+  /* Background subtle particles (using canvas) */
+  #bg-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 0 3px #ffdd00);
   }
 
   /* Responsive */
-  @media (max-width: 640px) {
+  @media (max-width: 720px) {
     .container {
-      padding: 35px 25px;
+      padding: 60px 25px;
     }
     h1 {
       font-size: 3rem;
     }
-    .legend {
-      font-size: 1.15rem;
+    .roadmap h2 {
+      font-size: 2rem;
     }
     .roadmap li {
       font-size: 1rem;
-      padding: 14px 18px;
+      padding: 15px 20px;
     }
     .socials a {
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
+      width: 55px;
+      height: 55px;
+      font-size: 26px;
+    }
+    .logo {
+      width: 120px;
+      height: 120px;
+    }
+    .logo img {
+      width: 80px;
+      height: 80px;
     }
   }
 </style>
 </head>
 <body>
+
+<canvas id="bg-canvas"></canvas>
 
 <div class="container" role="main" aria-label="CADO Token Legend and Roadmap">
 
@@ -202,8 +232,8 @@
   <h1>CADO Token</h1>
 
   <p class="legend">
-    Nobody believed in my strength and dreams — everyone thought I would fail. But I never gave up.  
-    I created CADO to prove that even when the world is against you, greatness is still possible.  
+    No one believed in my strength and dreams — everyone thought I would fail. But I never gave up.  
+    I created CADO to prove that even when the world is against you, greatness is possible.  
     This token is my challenge to the world and an invitation to victory for everyone.
   </p>
 
@@ -232,6 +262,61 @@
   </nav>
 
 </div>
+
+<script>
+  // Canvas background particles (simple glowing dots floating upward)
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+
+  let w, h;
+  let particles = [];
+
+  function init() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    particles = [];
+
+    for(let i=0; i<120; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        size: Math.random()*2 + 1,
+        speed: Math.random()*0.6 + 0.2,
+        alpha: Math.random() * 0.5 + 0.3
+      });
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0,0,w,h);
+    for(let p of particles) {
+      ctx.beginPath();
+      const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 10);
+      gradient.addColorStop(0, `rgba(255, 204, 0, ${p.alpha})`);
+      gradient.addColorStop(1, 'rgba(255, 204, 0, 0)');
+      ctx.fillStyle = gradient;
+      ctx.arc(p.x, p.y, p.size * 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      p.y -= p.speed;
+      if (p.y < -10) {
+        p.x = Math.random() * w;
+        p.y = h + 10;
+        p.size = Math.random()*2 + 1;
+        p.speed = Math.random()*0.6 + 0.2;
+        p.alpha = Math.random() * 0.5 + 0.3;
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    init();
+  });
+
+  init();
+  animate();
+</script>
 
 </body>
 </html>
