@@ -97,14 +97,38 @@
       0 0 40px #ff9900;
     margin-bottom: 25px;
   }
-  header p {
+
+  /* --- ЯРКАЯ ЛЕГЕНДА --- */
+  .legend-bright {
     max-width: 720px;
+    margin: 0 auto 60px;
     font-size: 1.6rem;
-    font-weight: 300;
+    font-weight: 700;
     line-height: 1.7;
-    color: #fff2a8;
-    margin-bottom: 60px;
+    color: transparent;
+    background: linear-gradient(90deg, #fff700, #ffd700, #ffae00, #ff7f00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow:
+      0 0 5px #fff700,
+      0 0 15px #ffd700,
+      0 0 30px #ffae00,
+      0 0 40px #ff7f00;
     user-select: none;
+    text-align: center;
+  }
+  .legend-bright span {
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+  .legend-bright span:hover {
+    color: #fff;
+    text-shadow:
+      0 0 10px #fff,
+      0 0 25px #ffec00,
+      0 0 40px #ffbb00,
+      0 0 60px #ff8800;
+    cursor: default;
   }
 
   /* SOCIAL BUTTONS */
@@ -267,7 +291,7 @@
     header h1 {
       font-size: 3.8rem;
     }
-    header p {
+    .legend-bright {
       font-size: 1.3rem;
       max-width: 90vw;
     }
@@ -307,11 +331,11 @@
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
   <h1>CADO Token</h1>
-  <p>
-    Nobody believed in my strength and dreams — everyone thought I would fail.<br />
-    But I never gave up.<br />
-    I created CADO to prove that even when the world is against you, greatness is possible.<br />
-    This token is my challenge to the world and an invitation to victory for everyone.
+  <p class="legend-bright">
+    <span>Nobody believed</span> in my <span>strength</span> and <span>dreams</span> — everyone thought I would fail.<br />
+    <span>But I never gave up.</span><br />
+    I created <span>CADO</span> to prove that even when the world is against you, <span>greatness</span> is possible.<br />
+    This token is my <span>challenge</span> to the world and an invitation to <span>victory</span> for everyone.
   </p>
   <div class="social-buttons" role="navigation" aria-label="Social media links">
     <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane"></i></a>
