@@ -3,158 +3,179 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CADO Token</title>
+<title>CADO Token — Roadmap и соцсети</title>
+
+<!-- Подключаем FontAwesome CSS для иконок соцсетей -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto:wght@300;400;700&display=swap');
 
   body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background: radial-gradient(circle at center, #000 40%, #111 100%);
-    color: white;
-    overflow-x: hidden;
-  }
-
-  /* Фон с анимацией */
-  canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
-
-  header {
-    text-align: center;
-    padding: 40px 20px;
-    animation: fadeIn 1.5s ease;
-  }
-
-  header img {
-    width: 200px;
-    border-radius: 50%;
-    border: 5px solid gold;
-    box-shadow: 0 0 30px gold;
-    animation: glow 2s infinite alternate;
+    background: radial-gradient(circle at center, #0a0a0a 40%, #1a1a1a 100%);
+    color: #ffd700; /* золотой */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    padding: 30px 15px;
   }
 
   h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 3em;
-    color: gold;
-    margin-top: 20px;
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #ffd700;
   }
 
-  p {
-    max-width: 900px;
-    margin: 20px auto;
-    font-size: 1.2em;
-    line-height: 1.6em;
-  }
-
-  section {
-    padding: 50px 20px;
+  p.lead {
+    max-width: 700px;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: 50px;
     text-align: center;
+    color: #fff7cc;
+    text-shadow: 0 0 6px #b8860b;
   }
 
-  h2 {
-    color: gold;
-    font-size: 2.2em;
-    margin-bottom: 20px;
+  /* Roadmap */
+  .roadmap {
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+    max-width: 700px;
+    width: 100%;
+    padding: 30px 40px;
+    margin-bottom: 60px;
+  }
+
+  .roadmap h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.4rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #ffd700;
+    text-shadow: 0 0 8px #ffd700;
   }
 
   .roadmap ul {
     list-style: none;
     padding: 0;
-    font-size: 1.1em;
-    max-width: 800px;
-    margin: auto;
+    margin: 0;
   }
 
   .roadmap li {
-    margin: 15px 0;
-    background: rgba(255, 215, 0, 0.1);
-    padding: 10px;
-    border-left: 3px solid gold;
-    text-align: left;
+    background: linear-gradient(135deg, #ffd700aa, #b8860b88);
+    padding: 15px 25px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    font-size: 1.3rem;
+    box-shadow:
+      0 0 8px #ffd700aa,
+      inset 0 0 6px #fff4b8aa;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+
+  .roadmap li:hover {
+    transform: scale(1.05);
+    box-shadow:
+      0 0 20px #ffec5c,
+      inset 0 0 15px #fff9aa;
+  }
+
+  /* Нумерация с кружком слева */
+  .roadmap li::before {
+    content: counter(item);
+    counter-increment: item;
+    position: absolute;
+    left: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ffd700;
+    color: #000;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 35px;
+    box-shadow: 0 0 8px #ffd700;
+  }
+
+  .roadmap ul {
+    counter-reset: item;
   }
 
   /* Соцсети */
   .socials {
-    margin-top: 40px;
     display: flex;
     justify-content: center;
-    gap: 25px;
-    padding: 15px;
-    background: rgba(255, 215, 0, 0.1);
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-    max-width: 350px;
-    margin-left: auto;
-    margin-right: auto;
+    gap: 30px;
+    max-width: 300px;
+    width: 100%;
   }
 
-  .social-btn {
+  .socials a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 55px;
-    height: 55px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    font-size: 1.8em;
-    color: gold;
-    background: rgba(0, 0, 0, 0.3);
-    box-shadow: 0 0 8px gold;
-    transition: color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
-    cursor: pointer;
+    background: #222;
+    color: #ffd700;
+    font-size: 2.4rem;
+    box-shadow: 0 0 15px #ffd700;
+    transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
     text-decoration: none;
   }
 
-  .social-btn:hover {
-    /* базовый эффект при наведении, если нет отдельного */
-    color: #ff0000;
-    background-color: rgba(255, 0, 0, 0.2);
-    box-shadow: 0 0 15px #ff0000;
+  .socials a:hover {
+    box-shadow: 0 0 25px currentColor;
   }
 
-  .social-btn.telegram:hover {
+  /* Цвета при наведении */
+  .socials a.telegram:hover {
     color: #0088cc;
-    background-color: rgba(0, 136, 204, 0.2);
-    box-shadow: 0 0 15px #0088cc;
+    background: #002f4b;
   }
 
-  .social-btn.twitter:hover {
+  .socials a.twitter:hover {
     color: #1DA1F2;
-    background-color: rgba(29, 161, 242, 0.2);
-    box-shadow: 0 0 15px #1DA1F2;
+    background: #003c6e;
   }
 
-  .social-btn.youtube:hover {
+  .socials a.youtube:hover {
     color: #ff0000;
-    background-color: rgba(255, 0, 0, 0.2);
-    box-shadow: 0 0 15px #ff0000;
+    background: #4d0000;
   }
 
-  @keyframes glow {
-    from { box-shadow: 0 0 20px gold; }
-    to { box-shadow: 0 0 40px gold; }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px);}
-    to { opacity: 1; transform: translateY(0);}
+  /* Адаптив */
+  @media(max-width: 480px) {
+    h1 {
+      font-size: 2.8rem;
+    }
+    .roadmap li {
+      font-size: 1.1rem;
+      padding: 12px 18px;
+    }
+    .socials a {
+      width: 50px;
+      height: 50px;
+      font-size: 2rem;
+    }
   }
 </style>
-<script src="https://kit.fontawesome.com/a2e0e9c6c2.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<canvas id="bg"></canvas>
 
-<header>
-  <img src="logo.png" alt="CADO Logo" />
-  <h1>CADO</h1>
-  <p>Никто не верил в мои силы и мечты, все считали, что я ничего не добьюсь. Но я не сдался.
-    Я создал Cado, чтобы доказать — даже когда все против тебя, можно добиться великого.
-    Этот токен — мой вызов миру и приглашение к победе для каждого.</p>
-</header>
+<h1>CADO Token</h1>
+<p class="lead">Никто не верил в мои силы и мечты, все считали, что я ничего не добьюсь. Но я не сдался. Я создал Cado, чтобы доказать — даже когда все против тебя, можно добиться великого. Этот токен — мой вызов миру и приглашение к победе для каждого.</p>
 
 <section class="roadmap">
   <h2>Roadmap</h2>
@@ -169,80 +190,16 @@
 </section>
 
 <div class="socials">
-  <a href="#" title="Telegram" class="social-btn telegram" target="_blank" rel="noopener">
+  <a href="#" class="telegram" title="Telegram" target="_blank" rel="noopener noreferrer">
     <i class="fab fa-telegram-plane"></i>
   </a>
-  <a href="#" title="Twitter" class="social-btn twitter" target="_blank" rel="noopener">
+  <a href="#" class="twitter" title="Twitter" target="_blank" rel="noopener noreferrer">
     <i class="fab fa-twitter"></i>
   </a>
-  <a href="#" title="YouTube" class="social-btn youtube" target="_blank" rel="noopener">
+  <a href="#" class="youtube" title="YouTube" target="_blank" rel="noopener noreferrer">
     <i class="fab fa-youtube"></i>
   </a>
 </div>
-
-<script>
-  const canvas = document.getElementById('bg');
-  const ctx = canvas.getContext('2d');
-  let particlesArray;
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  window.addEventListener('resize', function() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    init();
-  });
-
-  class Particle {
-    constructor(x, y, size, color, speedX, speedY) {
-      this.x = x;
-      this.y = y;
-      this.size = size;
-      this.color = color;
-      this.speedX = speedX;
-      this.speedY = speedY;
-    }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      if (this.size > 0.2) this.size -= 0.02;
-    }
-    draw() {
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.fill();
-    }
-  }
-
-  function init() {
-    particlesArray = [];
-    const numberOfParticles = 150;
-    for (let i = 0; i < numberOfParticles; i++) {
-      const size = Math.random() * 3 + 1;
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
-      const color = 'gold';
-      const speedX = (Math.random() - 0.5) * 0.5;
-      const speedY = (Math.random() - 0.5) * 0.5;
-      particlesArray.push(new Particle(x, y, size, color, speedX, speedY));
-    }
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < particlesArray.length; i++) {
-      particlesArray[i].update();
-      particlesArray[i].draw();
-    }
-    requestAnimationFrame(animate);
-  }
-
-  init();
-  animate();
-</script>
 
 </body>
 </html>
