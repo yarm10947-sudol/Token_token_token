@@ -1,322 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CADO Token — The Legend</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CADO Token — The Legend</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;600&display=swap');
+  <style>
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0; padding: 0;
+      font-family: 'Roboto', sans-serif;
+      scroll-behavior: smooth;
+      background: linear-gradient(135deg, #0b0a0a, #300000);
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-  /* Reset */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  body, html {
-    margin: 0; padding: 0;
-    height: 100%;
-    background: linear-gradient(135deg, #1a0000, #4b0000);
-    color: #ffd700;
-    font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden;
-  }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-  /* Container */
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 80px 40px;
-    text-align: center;
-    position: relative;
-    z-index: 10;
-  }
-
-  /* Logo */
-  .logo {
-    width: 160px;
-    height: 160px;
-    margin: 0 auto 40px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, #ffcc00, #b27300);
-    box-shadow:
-      0 0 40px #ffcc00aa,
-      inset 0 0 30px #b27300cc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.4s ease;
-  }
-  .logo:hover {
-    transform: scale(1.1);
-    box-shadow:
-      0 0 60px #ffdd33ee,
-      inset 0 0 50px #d2a500ff;
-  }
-  .logo img {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    border: 5px solid #ffd700;
-    box-shadow: 0 0 25px #ffd700;
-  }
-
-  /* Heading */
-  h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 4rem;
-    margin-bottom: 20px;
-    text-shadow:
-      0 0 10px #ffd700,
-      0 0 20px #ffcc00,
-      0 0 30px #ff9900;
-    letter-spacing: 2px;
-  }
-
-  /* Legend text */
-  .legend {
-    font-size: 1.4rem;
-    line-height: 1.8;
-    max-width: 700px;
-    margin: 0 auto 60px;
-    color: #ffe066;
-    text-shadow: 0 0 10px #ffb700aa;
-  }
-
-  /* Roadmap */
-  .roadmap {
-    max-width: 700px;
-    margin: 0 auto 60px;
-  }
-
-  .roadmap h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.8rem;
-    margin-bottom: 30px;
-    color: #ffdd33;
-    text-shadow: 0 0 15px #ffdd33cc;
-  }
-
-  .roadmap ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .roadmap li {
-    background: linear-gradient(135deg, #ffec99cc, #f7c94844);
-    padding: 20px 30px;
-    margin-bottom: 20px;
-    border-radius: 15px;
-    font-weight: 600;
-    font-size: 1.2rem;
-    color: #3d2200;
-    box-shadow:
-      0 0 15px #f7c948cc,
-      inset 0 0 10px #d4a300aa;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: default;
-  }
-  .roadmap li:hover {
-    transform: scale(1.05);
-    box-shadow:
-      0 0 30px #ffdd33ee,
-      inset 0 0 20px #f7c948dd;
-  }
-
-  .roadmap li::before {
-    content: counter(item);
-    counter-increment: item;
-    position: absolute;
-    left: -50px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #ffcc00;
-    color: #3d2200;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    line-height: 40px;
-    text-align: center;
-    box-shadow: 0 0 15px #ffcc00aa;
-  }
-
-  .roadmap ul {
-    counter-reset: item;
-  }
-
-  /* Socials */
-  .socials {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-  }
-
-  .socials a {
-    width: 70px;
-    height: 70px;
-    background: #663300;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ffd700;
-    font-size: 32px;
-    box-shadow:
-      0 0 25px #ffcc00bb;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    text-decoration: none;
-  }
-  .socials a:hover {
-    background: #ffcc00;
-    color: #663300;
-    transform: scale(1.2);
-    box-shadow: 0 0 40px #ffd700ff;
-  }
-
-  /* Background subtle particles (using canvas) */
-  #bg-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: 0;
-    pointer-events: none;
-    filter: drop-shadow(0 0 3px #ffdd00);
-  }
-
-  /* Responsive */
-  @media (max-width: 720px) {
+    /* Container */
     .container {
-      padding: 60px 25px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
-    h1 {
-      font-size: 3rem;
+
+    /* HEADER / HERO */
+    header {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: radial-gradient(circle at center, #300000, #0b0a0a);
+      color: #ffd700;
+      overflow: hidden;
+      padding: 0 20px;
     }
-    .roadmap h2 {
-      font-size: 2rem;
+    header::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      left: -10%;
+      width: 120%;
+      height: 140%;
+      background: url('https://cdn-icons-png.flaticon.com/512/5903/5903685.png') no-repeat center/contain;
+      opacity: 0.05;
+      filter: drop-shadow(0 0 20px #ffcc00);
+      z-index: 0;
+      animation: slowSpin 60s linear infinite;
     }
-    .roadmap li {
-      font-size: 1rem;
-      padding: 15px 20px;
+    @keyframes slowSpin {
+      from { transform: rotate(0deg);}
+      to { transform: rotate(360deg);}
     }
-    .socials a {
-      width: 55px;
-      height: 55px;
-      font-size: 26px;
-    }
+
     .logo {
-      width: 120px;
-      height: 120px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 6px solid #ffd700;
+      box-shadow:
+        0 0 30px #ffd700cc,
+        inset 0 0 40px #ffcc0080;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 2;
+      transition: transform 0.4s ease;
+      background: radial-gradient(circle at center, #ffcc00, #b27300);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .logo img {
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid #fff4b8;
+      box-shadow: 0 0 20px #fff4b8;
     }
-  }
-</style>
+    .logo:hover {
+      transform: scale(1.15);
+      box-shadow:
+        0 0 50px #ffd700ee,
+        inset 0 0 60px #ffcc00ff;
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 4.5rem;
+      letter-spacing: 4px;
+      text-shadow:
+        0 0 10px #ffcc00,
+        0 0 25px #ff9900;
+      margin-bottom: 15px;
+      z-index: 2;
+    }
+
+    header p {
+      max-width: 600px;
+      font-size: 1.5rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: #fff2a8;
+      z-index: 2;
+      margin-bottom: 50px;
+    }
+
+    /* BUTTONS SOCIALS */
+    .social-buttons {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      z-index: 2;
+    }
+    .social-buttons a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: #ffd700;
+      color: #4a2c00;
+      font-size: 32px;
+      box-shadow:
+        0 0 30px #ffcc00;
+      transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+      border: 3px solid transparent;
+      cursor: pointer;
+      user-select: none;
+    }
+    .social-buttons a:hover {
+      background-color: #ffb800;
+      color: #3a2200;
+      box-shadow:
+        0 0 45px #ffdd33;
+      transform: scale(1.2);
+      border-color: #fff;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 80px 20px;
+      background: #130900;
+      box-shadow: inset 0 0 100px #7f5500cc;
+      border-radius: 20px;
+      max-width: 1100px;
+      margin: 0 auto 80px;
+      color: #ffd;
+    }
+
+    /* LEGEND */
+    .legend {
+      font-size: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.75;
+      font-weight: 300;
+      color: #ffd700dd;
+      text-shadow:
+        0 0 8px #ffcc00aa;
+      user-select: none;
+      letter-spacing: 0.03em;
+    }
+
+    /* ROADMAP */
+    .roadmap h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 40px;
+      color: #ffdb4d;
+      text-shadow: 0 0 20px #ffdb4dcc;
+      letter-spacing: 1.5px;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: #ffcc00dd;
+      transform: translateX(-50%);
+      border-radius: 2px;
+      box-shadow: 0 0 15px #ffcc00bb;
+    }
+    .timeline-item {
+      position: relative;
+      width: 45%;
+      padding: 20px 30px;
+      background: linear-gradient(135deg, #ffdb4dcc, #ffcc00aa);
+      border-radius: 15px;
+      box-shadow: 0 0 20px #ffdb4d88;
+      color: #3b2a00;
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin: 30px 0;
+      transition: transform 0.3s ease;
+      cursor: default;
+      user-select: none;
+    }
+    .timeline-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px #ffcc00cc;
+    }
+
+    /* Left timeline items */
+    .timeline-item.left {
+      left: 0;
+      transform-origin: right center;
+    }
+    /* Right timeline items */
+    .timeline-item.right {
+      left: 55%;
+      transform-origin: left center;
+    }
+
+    /* Circles on timeline */
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: 24px;
+      width: 25px;
+      height: 25px;
+      background: #ffd700;
+      border-radius: 50%;
+      box-shadow: 0 0 15px #ffd700cc;
+      border: 3px solid #b27300;
+      z-index: 10;
+    }
+    .timeline-item.left::before {
+      right: -38px;
+    }
+    .timeline-item.right::before {
+      left: -38px;
+    }
+
+    /* Responsive timeline */
+    @media (max-width: 900px) {
+      .timeline::before {
+        left: 10px;
+      }
+      .timeline-item {
+        width: 90%;
+        left: 20px !important;
+        margin: 40px 0 40px 40px;
+      }
+      .timeline-item::before {
+        left: -38px !important;
+      }
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 1rem;
+      color: #aa8a00cc;
+      user-select: none;
+    }
+
+  </style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
-
-<div class="container" role="main" aria-label="CADO Token Legend and Roadmap">
-
+<header>
   <div class="logo" aria-label="CADO Token Logo">
     <img src="https://cdn-icons-png.flaticon.com/512/5903/5903685.png" alt="CADO Token Logo" />
   </div>
-
   <h1>CADO Token</h1>
-
-  <p class="legend">
-    No one believed in my strength and dreams — everyone thought I would fail. But I never gave up.  
-    I created CADO to prove that even when the world is against you, greatness is possible.  
+  <p>
+    Nobody believed in my strength and dreams — everyone thought I would fail.<br />
+    But I never gave up.<br />
+    I created CADO to prove that even when the world is against you, greatness is possible.<br />
     This token is my challenge to the world and an invitation to victory for everyone.
   </p>
 
-  <section class="roadmap" aria-label="Roadmap">
-    <h2>Roadmap</h2>
-    <ul>
-      <li>3M — Launch NFT Collection</li>
-      <li>10M — Merch: T-shirts, Caps, Mugs</li>
-      <li>50M — Golden Badge</li>
-      <li>100M — Plush Toys</li>
-      <li>300M — Full Animated Series</li>
-      <li>1B — Feature Film</li>
-    </ul>
-  </section>
+  <div class="social-buttons" role="navigation" aria-label="Social media links">
+    <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane"></i></a>
+    <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+    <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+  </div>
+</header>
 
-  <nav class="socials" aria-label="Social media links">
-    <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
-      <i class="fab fa-telegram-plane"></i>
-    </a>
-    <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
-      <i class="fab fa-twitter"></i>
-    </a>
-    <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
-      <i class="fab fa-youtube"></i>
-    </a>
-  </nav>
+<section>
+  <div class="container">
+    <h2 class="roadmap-title">Roadmap</h2>
+    <div class="timeline" aria-label="Roadmap timeline">
 
-</div>
+      <div class="timeline-item left">3M — Launch NFT Collection</div>
+      <div class="timeline-item right">10M — Merch: T-shirts, Caps, Mugs</div>
+      <div class="timeline-item left">50M — Golden Badge</div>
+      <div class="timeline-item right">100M — Plush Toys</div>
+      <div class="timeline-item left">300M — Full Animated Series</div>
+      <div class="timeline-item right">1B — Feature Film</div>
 
-<script>
-  // Canvas background particles (simple glowing dots floating upward)
-  const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas.getContext('2d');
+    </div>
+  </div>
+</section>
 
-  let w, h;
-  let particles = [];
-
-  function init() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-    particles = [];
-
-    for(let i=0; i<120; i++) {
-      particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        size: Math.random()*2 + 1,
-        speed: Math.random()*0.6 + 0.2,
-        alpha: Math.random() * 0.5 + 0.3
-      });
-    }
-  }
-
-  function animate() {
-    ctx.clearRect(0,0,w,h);
-    for(let p of particles) {
-      ctx.beginPath();
-      const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 10);
-      gradient.addColorStop(0, `rgba(255, 204, 0, ${p.alpha})`);
-      gradient.addColorStop(1, 'rgba(255, 204, 0, 0)');
-      ctx.fillStyle = gradient;
-      ctx.arc(p.x, p.y, p.size * 5, 0, Math.PI * 2);
-      ctx.fill();
-
-      p.y -= p.speed;
-      if (p.y < -10) {
-        p.x = Math.random() * w;
-        p.y = h + 10;
-        p.size = Math.random()*2 + 1;
-        p.speed = Math.random()*0.6 + 0.2;
-        p.alpha = Math.random() * 0.5 + 0.3;
-      }
-    }
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('resize', () => {
-    init();
-  });
-
-  init();
-  animate();
-</script>
+<footer>
+  © 2025 CADO Token — All rights reserved.
+</footer>
 
 </body>
 </html>
