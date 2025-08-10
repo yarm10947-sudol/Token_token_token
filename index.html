@@ -1,145 +1,201 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CADO Token</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: black;
-      color: white;
-      overflow-x: hidden;
-    }
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-    header {
-      text-align: center;
-      padding: 50px 20px;
-    }
-    header img {
-      width: 180px;
-      border-radius: 50%;
-      border: 3px solid gold;
-    }
-    h1 {
-      font-size: 3em;
-      color: gold;
-    }
-    p {
-      max-width: 800px;
-      margin: 20px auto;
-      font-size: 1.2em;
-      line-height: 1.5em;
-    }
-    section {
-      padding: 50px 20px;
-      text-align: center;
-    }
-    .roadmap {
-      background: rgba(255, 215, 0, 0.05);
-      border-top: 2px solid gold;
-      border-bottom: 2px solid gold;
-    }
-    .roadmap ul {
-      list-style: none;
-      padding: 0;
-      font-size: 1.1em;
-    }
-    .roadmap li {
-      margin: 15px 0;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CADO Token</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto:wght@300;400;700&display=swap');
+
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: radial-gradient(circle at center, #000 40%, #111 100%);
+    color: white;
+    overflow-x: hidden;
+  }
+
+  /* Фон с анимацией */
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 20px;
+    animation: fadeIn 1.5s ease;
+  }
+
+  header img {
+    width: 200px;
+    border-radius: 50%;
+    border: 5px solid gold;
+    box-shadow: 0 0 30px gold;
+    animation: glow 2s infinite alternate;
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3em;
+    color: gold;
+    margin-top: 20px;
+  }
+
+  p {
+    max-width: 900px;
+    margin: 20px auto;
+    font-size: 1.2em;
+    line-height: 1.6em;
+  }
+
+  section {
+    padding: 50px 20px;
+    text-align: center;
+  }
+
+  h2 {
+    color: gold;
+    font-size: 2.2em;
+    margin-bottom: 20px;
+  }
+
+  .roadmap ul {
+    list-style: none;
+    padding: 0;
+    font-size: 1.1em;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .roadmap li {
+    margin: 15px 0;
+    background: rgba(255, 215, 0, 0.1);
+    padding: 10px;
+    border-left: 3px solid gold;
+    text-align: left;
+  }
+
+  /* Соцсети */
+  .socials {
+    margin-top: 30px;
+  }
+  .socials a {
+    display: inline-block;
+    margin: 0 10px;
+    color: gold;
+    font-size: 2em;
+    transition: color 0.3s;
+  }
+  .socials a:hover {
+    color: red;
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 20px gold; }
+    to { box-shadow: 0 0 40px gold; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+</style>
+<script src="https://kit.fontawesome.com/a2e0e9c6c2.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <canvas id="bg"></canvas>
+<canvas id="bg"></canvas>
 
-  <header>
-    <img src="logo.png" alt="CADO Logo" />
-    <h1>CADO</h1>
-    <p>
-      Никто не верил в мои силы и мечты, все считали, что я ничего не добьюсь. Но я не сдался.  
-      Я создал Cado, чтобы доказать — даже когда все против тебя, можно добиться великого.  
-      Этот токен — мой вызов миру и приглашение к победе для каждого.
-    </p>
-  </header>
+<header>
+  <img src="logo.png" alt="CADO Logo">
+  <h1>CADO</h1>
+  <p>Никто не верил в мои силы и мечты, все считали, что я ничего не добьюсь. Но я не сдался.
+    Я создал Cado, чтобы доказать — даже когда все против тебя, можно добиться великого.
+    Этот токен — мой вызов миру и приглашение к победе для каждого.</p>
+</header>
 
-  <section class="roadmap">
-    <h2>Roadmap</h2>
-    <ul>
-      <li>3 млн кап — запуск NFT коллекции</li>
-      <li>10 млн кап — мерч (майки и т.д.)</li>
-      <li>Дальше — новые цели и коллаборации</li>
-    </ul>
-  </section>
+<section class="roadmap">
+  <h2>Roadmap</h2>
+  <ul>
+    <li>3 млн — Запуск NFT коллекции</li>
+    <li>10 млн — Майки, кепки, кружки</li>
+    <li>50 млн — Золотой знак</li>
+    <li>100 млн — Плюшевые игрушки</li>
+    <li>300 млн — Создание полноценного мультфильма</li>
+    <li>1 млрд — Фильм</li>
+  </ul>
+</section>
 
-  <script>
-    const canvas = document.getElementById('bg');
-    const ctx = canvas.getContext('2d');
-    let particlesArray;
+<div class="socials">
+  <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+  <a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
+  <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+</div>
 
+<script>
+  const canvas = document.getElementById('bg');
+  const ctx = canvas.getContext('2d');
+  let particlesArray;
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  window.addEventListener('resize', function() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
-    window.addEventListener('resize', function() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      init();
-    });
-
-    class Particle {
-      constructor(x, y, size, color, speedX, speedY) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.color = color;
-        this.speedX = speedX;
-        this.speedY = speedY;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.size > 0.2) this.size -= 0.02;
-      }
-      draw() {
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.fill();
-      }
-    }
-
-    function init() {
-      particlesArray = [];
-      const numberOfParticles = 100;
-      for (let i = 0; i < numberOfParticles; i++) {
-        const size = Math.random() * 3 + 1;
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const color = 'gold';
-        const speedX = (Math.random() - 0.5) * 0.5;
-        const speedY = (Math.random() - 0.5) * 0.5;
-        particlesArray.push(new Particle(x, y, size, color, speedX, speedY));
-      }
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-        particlesArray[i].draw();
-      }
-      requestAnimationFrame(animate);
-    }
-
     init();
-    animate();
-  </script>
+  });
+
+  class Particle {
+    constructor(x, y, size, color, speedX, speedY) {
+      this.x = x;
+      this.y = y;
+      this.size = size;
+      this.color = color;
+      this.speedX = speedX;
+      this.speedY = speedY;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.size > 0.2) this.size -= 0.02;
+    }
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+
+  function init() {
+    particlesArray = [];
+    const numberOfParticles = 150;
+    for (let i = 0; i < numberOfParticles; i++) {
+      const size = Math.random() * 3 + 1;
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      const color = 'gold';
+      const speedX = (Math.random() - 0.5) * 0.5;
+      const speedY = (Math.random() - 0.5) * 0.5;
+      particlesArray.push(new Particle(x, y, size, color, speedX, speedY));
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particlesArray.length; i++) {
+      particlesArray[i].update();
+      particlesArray[i].draw();
+    }
+    requestAnimationFrame(animate);
+  }
+
+  init();
+  animate();
+</script>
+
 </body>
 </html>
