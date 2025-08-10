@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CADO Token</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto:wght@300;400;700&display=swap');
@@ -80,17 +80,58 @@
 
   /* Соцсети */
   .socials {
-    margin-top: 30px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 15px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
   }
-  .socials a {
-    display: inline-block;
-    margin: 0 10px;
+
+  .social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    font-size: 1.8em;
     color: gold;
-    font-size: 2em;
-    transition: color 0.3s;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 8px gold;
+    transition: color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    text-decoration: none;
   }
-  .socials a:hover {
-    color: red;
+
+  .social-btn:hover {
+    /* базовый эффект при наведении, если нет отдельного */
+    color: #ff0000;
+    background-color: rgba(255, 0, 0, 0.2);
+    box-shadow: 0 0 15px #ff0000;
+  }
+
+  .social-btn.telegram:hover {
+    color: #0088cc;
+    background-color: rgba(0, 136, 204, 0.2);
+    box-shadow: 0 0 15px #0088cc;
+  }
+
+  .social-btn.twitter:hover {
+    color: #1DA1F2;
+    background-color: rgba(29, 161, 242, 0.2);
+    box-shadow: 0 0 15px #1DA1F2;
+  }
+
+  .social-btn.youtube:hover {
+    color: #ff0000;
+    background-color: rgba(255, 0, 0, 0.2);
+    box-shadow: 0 0 15px #ff0000;
   }
 
   @keyframes glow {
@@ -108,7 +149,7 @@
 <canvas id="bg"></canvas>
 
 <header>
-  <img src="logo.png" alt="CADO Logo">
+  <img src="logo.png" alt="CADO Logo" />
   <h1>CADO</h1>
   <p>Никто не верил в мои силы и мечты, все считали, что я ничего не добьюсь. Но я не сдался.
     Я создал Cado, чтобы доказать — даже когда все против тебя, можно добиться великого.
@@ -128,9 +169,15 @@
 </section>
 
 <div class="socials">
-  <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
-  <a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
-  <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+  <a href="#" title="Telegram" class="social-btn telegram" target="_blank" rel="noopener">
+    <i class="fab fa-telegram-plane"></i>
+  </a>
+  <a href="#" title="Twitter" class="social-btn twitter" target="_blank" rel="noopener">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a href="#" title="YouTube" class="social-btn youtube" target="_blank" rel="noopener">
+    <i class="fab fa-youtube"></i>
+  </a>
 </div>
 
 <script>
