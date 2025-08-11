@@ -65,7 +65,12 @@
     0 0 60px #ffd700cc,
     inset 0 0 70px #ffcc0080;
   margin-bottom: 30px;
-  background: radial-gradient(circle at center, #ff3300 0%, #ff9900 50%, #ffd700 100%);
+  background: radial-gradient(circle, 
+    rgba(255, 255, 255, 0) 40%, /* прозрачный центр */
+    #ff3300 100% /* красный по краям */
+  ), 
+  radial-gradient(circle at center, #ff9900 0%, #ffd700 70%);
+  background-blend-mode: screen;
   display: flex;
   justify-content: center;
   align-items: center;
