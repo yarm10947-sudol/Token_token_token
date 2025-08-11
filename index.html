@@ -97,6 +97,7 @@
       0 0 40px #ff9900;
     margin-bottom: 25px;
   }
+  /* Легенда в рамке */
   header p {
     max-width: 720px;
     font-size: 1.6rem;
@@ -105,6 +106,15 @@
     color: #fff2a8;
     margin-bottom: 60px;
     user-select: none;
+
+    border: 3px solid #ffd700;
+    padding: 25px 40px;
+    border-radius: 20px;
+    background: rgba(255, 215, 0, 0.12);
+    box-shadow:
+      0 0 15px #ffd700bb,
+      inset 0 0 25px #ffcc0080;
+    text-shadow: 0 0 8px #fff8b8;
   }
 
   /* SOCIAL BUTTONS */
@@ -186,7 +196,6 @@
     line-height: 1.8;
     user-select: none;
 
-    /* Fix to avoid disappearing */
     opacity: 1 !important;
     animation: none !important;
   }
@@ -275,6 +284,9 @@
     header p {
       font-size: 1.3rem;
       max-width: 90vw;
+      padding: 20px 25px; /* чуть меньше паддинга на мобилках */
+      border-width: 2px;
+      border-radius: 15px;
     }
     .logo {
       width: 140px;
@@ -366,7 +378,7 @@
 </section>
 
 <footer>
-    © 2025 CADO Token — All rights reserved.
+  © 2025 CADO Token — All rights reserved.
 </footer>
 
 </body>
