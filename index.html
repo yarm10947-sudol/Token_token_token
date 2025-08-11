@@ -2,29 +2,58 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Simple SVG CSS animation test</title>
+<title>Logo with jumping circles</title>
 <style>
-  svg circle {
-    fill: orange;
-    animation: jump 2s ease-in-out infinite;
-    transform-origin: 50% 50%;
+  .logo {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 100px auto;
+    background: radial-gradient(circle at center, #ffcc00, #b27300);
+    border-radius: 50%;
+    border: 8px solid #ffd700;
   }
+
+  .main-logo {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: white;
+    margin: 20px auto;
+    box-shadow: 0 0 30px #fff4b8;
+  }
+
+  .circle {
+    position: absolute;
+    bottom: 10%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  .circle.cat {
+    background: orange;
+    left: 70%;
+    animation: jump 1.5s ease-in-out infinite;
+  }
+  .circle.dog {
+    background: brown;
+    left: 10%;
+    animation: jump 1.5s ease-in-out infinite 0.75s;
+  }
+
   @keyframes jump {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-40px); }
-  }
-  body {
-    background: #222;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    50% { transform: translateY(-50px); }
   }
 </style>
 </head>
-<body>
-  <svg width="100" height="100" viewBox="0 0 100 100" aria-label="Simple animated circle">
-    <circle cx="50" cy="50" r="40" />
-  </svg>
+<body style="background:#222; color:#fff; font-family:sans-serif;">
+
+<div class="logo" aria-label="CADO Token Logo">
+  <div class="main-logo" aria-hidden="true"></div>
+  <div class="circle cat" aria-label="Cat"></div>
+  <div class="circle dog" aria-label="Dog"></div>
+</div>
+
 </body>
 </html>
