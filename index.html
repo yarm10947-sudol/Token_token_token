@@ -19,7 +19,7 @@
     margin: 0; padding: 0;
     font-family: 'Roboto', sans-serif;
     scroll-behavior: smooth;
-    background: linear-gradient(135deg, #b30000, #ff9900, #ffd700, #000000);
+    background: linear-gradient(135deg, #ff0000, #ffd700, #ff9900, #000000);
     color: #fff;
     min-height: 100vh;
   }
@@ -56,7 +56,6 @@
     position: relative;
     z-index: 10;
   }
-  /* Вращающийся логотип */
   .logo {
     width: 180px;
     height: 180px;
@@ -65,18 +64,13 @@
     box-shadow:
       0 0 60px #ffd700cc,
       inset 0 0 70px #ffcc0080;
-    margin-bottom: 30px;
-    /* Фон с красным градиентом по краям и золотисто-оранжевым в центре */
-    background:
-      radial-gradient(circle, rgba(255, 0, 0, 0.7) 40%, transparent 80%),
-      radial-gradient(circle at center, #ff9900 0%, #ffd700 70%);
-    background-blend-mode: screen;
+    margin-top: 30px;
+    background: radial-gradient(circle at center, #ffcc00, #b27300);
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     transition: transform 0.4s ease;
-    animation: spin 15s linear infinite;
   }
   .logo img {
     width: 140px;
@@ -100,19 +94,23 @@
     text-shadow:
       0 0 15px #ffcc00,
       0 0 40px #ff9900;
-    margin-bottom: 25px;
+    margin-bottom: 0;
   }
-  header p {
+
+  /* Легенда в рамке, как Tokenomics */
+  .legend-text {
+    background: rgba(19,9,0,0.9);
+    border-radius: 25px;
+    padding: 40px 30px;
+    margin: 60px auto 60px auto;
     max-width: 720px;
+    color: #fff7b8;
     font-size: 1.6rem;
-    font-weight: 300;
     line-height: 1.7;
-    color: #fff2a8;
-    margin-bottom: 60px;
     user-select: none;
   }
 
-  /* Социальные кнопки */
+  /* SOCIAL BUTTONS */
   .social-buttons {
     display: flex;
     gap: 50px;
@@ -143,7 +141,7 @@
     border-color: #fff;
   }
 
-  /* Кнопка BUY NOW */
+  /* BUTTON BUY NOW */
   .btn-buy {
     background: linear-gradient(45deg, #ffcc00, #ff9900);
     border: none;
@@ -166,7 +164,7 @@
       inset 0 0 30px #ffcc00;
   }
 
-  /* Заголовки секций */
+  /* SECTION TITLES */
   h2 {
     font-family: 'Orbitron', sans-serif;
     font-size: 3.2rem;
@@ -176,7 +174,7 @@
     text-shadow: 0 0 30px #ffdb4dcc;
   }
 
-  /* Секции */
+  /* SECTIONS */
   section {
     background: rgba(19,9,0,0.9);
     border-radius: 25px;
@@ -196,7 +194,7 @@
     animation: none !important;
   }
 
-  /* Tokenomics */
+  /* TOKENOMICS */
   .tokenomics {
     text-align: center;
   }
@@ -205,7 +203,37 @@
     font-weight: 700;
   }
 
-  /* Roadmap */
+  /* Вращающееся лого */
+  .logo-spin-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+  }
+
+  .logo-spin {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 6px solid #ffd700;
+    box-shadow:
+      0 0 40px #ffd700cc,
+      inset 0 0 50px #ffcc0080;
+    animation: spin 10s linear infinite;
+    background: radial-gradient(circle at center, #ffcc00, #b27300);
+    object-fit: contain;
+    user-select: none;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ROADMAP */
   .timeline {
     position: relative;
     max-width: 900px;
@@ -254,7 +282,7 @@
     user-select: none;
   }
 
-  /* Join the legend */
+  /* JOIN THE LEGEND */
   .join-legend {
     max-width: 850px;
     margin: 0 auto;
@@ -272,28 +300,23 @@
     color: #fff4b8;
   }
 
-  /* Вращение лого */
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
   /* Responsive */
   @media (max-width: 900px) {
     header h1 {
       font-size: 3.8rem;
     }
-    header p {
+    .legend-text {
       font-size: 1.3rem;
       max-width: 90vw;
+      padding: 30px 20px;
+    }
+    header p {
+      margin: 0; /* убрать стандартный отступ, чтобы не дублировался */
     }
     .logo {
       width: 140px;
       height: 140px;
+      margin-top: 20px;
     }
     .logo img {
       width: 110px;
@@ -327,12 +350,12 @@
   <div class="logo" aria-label="CADO Token Logo">
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
-  <p>
+  <div class="legend-text">
     Nobody believed in my strength and dreams — everyone thought I would fail.<br />
     But I never gave up.<br />
     I created CADO to prove that even when the world is against you, greatness is possible.<br />
     This token is my challenge to the world and an invitation to victory for everyone.
-  </p>
+  </div>
   <div class="social-buttons" role="navigation" aria-label="Social media links">
     <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane"></i></a>
     <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
@@ -350,6 +373,11 @@
     Launch Date: <strong>Q4 2025</strong>
   </p>
 </section>
+
+<!-- Вращающееся лого -->
+<div class="logo-spin-container" aria-label="CADO Token rotating logo">
+  <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-spin" />
+</div>
 
 <section aria-labelledby="roadmap-title">
   <h2 id="roadmap-title">Roadmap</h2>
