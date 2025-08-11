@@ -172,6 +172,20 @@
       inset 0 0 90px #ffcc00ff;
   }
 
+  /* Легенда в рамке (восстановлена, не исчезает) */
+  .legend-text {
+    background: rgba(19,9,0,0.9);
+    border-radius: 25px;
+    padding: 40px 30px;
+    margin: 60px auto 60px auto;
+    max-width: 720px;
+    color: #fff7b8;
+    font-size: 1.6rem;
+    line-height: 1.7;
+    user-select: none;
+    box-shadow: 0 0 25px #ffcc0080;
+  }
+
   /* SOCIAL BUTTONS */
   .social-buttons {
     display: flex;
@@ -409,10 +423,10 @@
 
 <header>
   <h1>CADO Token</h1>
-  <div class="logo" id="logo" aria-label="CADO Token Logo">
+  <div class="logo" id="logo" aria-label="CADO Token Logo" tabindex="0">
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-main" />
-    <span class="logo-animal logo-cat" aria-hidden="true">🐱</span>
-    <span class="logo-animal logo-dog" aria-hidden="true">🐶</span>
+    <span class="logo-animal logo-cat" aria-hidden="true" role="img" aria-label="Cat">🐱</span>
+    <span class="logo-animal logo-dog" aria-hidden="true" role="img" aria-label="Dog">🐶</span>
   </div>
   <div class="legend-text">
     Nobody believed in my strength and dreams — everyone thought I would fail.<br />
@@ -479,18 +493,4 @@
 <script>
   const logo = document.getElementById('logo');
   const cat = logo.querySelector('.logo-cat');
-  const dog = logo.querySelector('.logo-dog');
-
-  logo.addEventListener('mouseenter', () => {
-    cat.style.animation = 'cat-jump 3s ease forwards';
-    dog.style.animation = 'dog-jump 3s ease forwards';
-  });
-
-  logo.addEventListener('mouseleave', () => {
-    cat.style.animation = 'none';
-    dog.style.animation = 'none';
-  });
-</script>
-
-</body>
-</html>
+  const dog = logo.query
