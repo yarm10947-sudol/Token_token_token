@@ -88,7 +88,7 @@
     pointer-events: none;
   }
 
-  /* Анимированные животные — это спаны с emoji */
+  /* Анимированные животные */
   .logo-animal {
     position: absolute;
     top: 50%;
@@ -108,35 +108,60 @@
     background: #fff;
   }
 
-  .logo-cat {
-    /* будет выпрыгивать вправо */
-  }
-  .logo-dog {
-    /* будет выпрыгивать влево */
-  }
-
   /* Анимация кота */
   @keyframes cat-jump {
-    0% {opacity:0; transform: translate(-50%, -50%) scale(0);}
-    10% {opacity:1; transform: translate(-50%, -50%) scale(1);}
-    25% {transform: translate(80px, -120px) scale(1.1) rotate(-15deg);}
-    40% {transform: translate(120px, -60px) scale(1) rotate(10deg);}
-    55% {transform: translate(80px, -80px) scale(1.05) rotate(-10deg);}
-    70% {transform: translate(100px, -100px) scale(1) rotate(5deg);}
-    85% {transform: translate(20px, -50px) scale(1) rotate(0deg);}
-    100% {opacity:0; transform: translate(-50%, -50%) scale(0);}
+    0% {
+      opacity: 0; 
+      transform: translate(-50%, -50%) scale(0);
+    }
+    10% {
+      opacity: 1; 
+      transform: translate(-50%, -120%) scale(1.2);
+    }
+    30% {
+      transform: translate(100px, -180%) scale(1.1) rotate(-15deg);
+    }
+    50% {
+      transform: translate(80px, -160%) scale(1.05) rotate(10deg);
+    }
+    70% {
+      transform: translate(110px, -170%) scale(1.1) rotate(-10deg);
+    }
+    90% {
+      transform: translate(20px, -120%) scale(1) rotate(5deg);
+    }
+    100% {
+      opacity: 0; 
+      transform: translate(-50%, -50%) scale(0);
+    }
   }
 
   /* Анимация собаки */
   @keyframes dog-jump {
-    0% {opacity:0; transform: translate(-50%, -50%) scale(0);}
-    10% {opacity:1; transform: translate(-50%, -50%) scale(1);}
-    25% {transform: translate(-80px, -120px) scale(1.1) rotate(15deg);}
-    40% {transform: translate(-120px, -60px) scale(1) rotate(-10deg);}
-    55% {transform: translate(-80px, -80px) scale(1.05) rotate(10deg);}
-    70% {transform: translate(-100px, -100px) scale(1) rotate(-5deg);}
-    85% {transform: translate(-20px, -50px) scale(1) rotate(0deg);}
-    100% {opacity:0; transform: translate(-50%, -50%) scale(0);}
+    0% {
+      opacity: 0; 
+      transform: translate(-50%, -50%) scale(0);
+    }
+    10% {
+      opacity: 1; 
+      transform: translate(-50%, -120%) scale(1.2);
+    }
+    30% {
+      transform: translate(-100px, -180%) scale(1.1) rotate(15deg);
+    }
+    50% {
+      transform: translate(-80px, -160%) scale(1.05) rotate(-10deg);
+    }
+    70% {
+      transform: translate(-110px, -170%) scale(1.1) rotate(10deg);
+    }
+    90% {
+      transform: translate(-20px, -120%) scale(1) rotate(-5deg);
+    }
+    100% {
+      opacity: 0; 
+      transform: translate(-50%, -50%) scale(0);
+    }
   }
 
   /* При ховере масштабируем лого */
@@ -147,31 +172,7 @@
       inset 0 0 90px #ffcc00ff;
   }
 
-  /* Другие стили твоего сайта ниже (сокращено для читаемости) */
-
-  header h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    font-size: 5rem;
-    letter-spacing: 5px;
-    text-shadow:
-      0 0 15px #ffcc00,
-      0 0 40px #ff9900;
-    margin-bottom: 0;
-  }
-
-  .legend-text {
-    background: rgba(19,9,0,0.9);
-    border-radius: 25px;
-    padding: 40px 30px;
-    margin: 60px auto 60px auto;
-    max-width: 720px;
-    color: #fff7b8;
-    font-size: 1.6rem;
-    line-height: 1.7;
-    user-select: none;
-  }
-
+  /* SOCIAL BUTTONS */
   .social-buttons {
     display: flex;
     gap: 50px;
@@ -202,6 +203,7 @@
     border-color: #fff;
   }
 
+  /* BUTTON BUY NOW */
   .btn-buy {
     background: linear-gradient(45deg, #ffcc00, #ff9900);
     border: none;
@@ -224,6 +226,183 @@
       inset 0 0 30px #ffcc00;
   }
 
+  /* SECTION TITLES */
+  h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 50px;
+    color: #ffdb4d;
+    text-align: center;
+    text-shadow: 0 0 30px #ffdb4dcc;
+  }
+
+  /* SECTIONS */
+  section {
+    background: rgba(19,9,0,0.9);
+    border-radius: 25px;
+    padding: 80px 40px;
+    margin-bottom: 100px;
+    box-shadow: inset 0 0 120px #7f5500cc;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #fff7b8;
+    font-size: 1.5rem;
+    line-height: 1.8;
+    user-select: none;
+
+    /* Fix to avoid disappearing */
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  /* TOKENOMICS */
+  .tokenomics {
+    text-align: center;
+  }
+  .tokenomics strong {
+    color: #ffd700;
+    font-weight: 700;
+  }
+
+  /* Вращающееся лого */
+  .logo-spin-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+  }
+
+  .logo-spin {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 6px solid #ffd700;
+    box-shadow:
+      0 0 40px #ffd700cc,
+      inset 0 0 50px #ffcc0080;
+    animation: spin 10s linear infinite;
+    background: radial-gradient(circle at center, #ffcc00, #b27300);
+    object-fit: contain;
+    user-select: none;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ROADMAP */
+  .timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-left: 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(to bottom, #ffd700, #ff9900);
+    border-radius: 3px;
+    box-shadow: 0 0 15px #ffcc0080;
+  }
+  .timeline-item {
+    position: relative;
+    padding-left: 70px;
+    margin-bottom: 45px;
+    color: #3b2a00;
+    font-weight: 700;
+    font-size: 1.3rem;
+    cursor: default;
+    user-select: none;
+    transition: transform 0.3s ease;
+    background: linear-gradient(135deg, #ffdb4dcc, #ffcc00aa);
+    border-radius: 15px;
+    box-shadow: 0 0 30px #ffdb4d88;
+    padding: 18px 25px 18px 70px;
+  }
+  .timeline-item:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 50px #ffcc00cc;
+  }
+  .timeline-item::before {
+    content: "★";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 28px;
+    color: #ffd700;
+    text-shadow: 0 0 15px #ffd700cc;
+    user-select: none;
+  }
+
+  /* JOIN THE LEGEND */
+  .join-legend {
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+    color: #ffd;
+  }
+  .join-legend h2 {
+    margin-bottom: 40px;
+  }
+  .join-legend p {
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 50px;
+    color: #fff4b8;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    header h1 {
+      font-size: 3.8rem;
+    }
+    .legend-text {
+      font-size: 1.3rem;
+      max-width: 90vw;
+      padding: 30px 20px;
+    }
+    header p {
+      margin: 0; /* убрать стандартный отступ, чтобы не дублировался */
+    }
+    .logo {
+      width: 140px;
+      height: 140px;
+      margin-top: 20px;
+    }
+    .logo-main {
+      width: 110px;
+      height: 110px;
+    }
+    .social-buttons a {
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+    }
+    .btn-buy {
+      padding: 14px 40px;
+      font-size: 1.3rem;
+    }
+    section {
+      padding: 60px 20px;
+      margin-bottom: 60px;
+    }
+    .timeline-item {
+      font-size: 1.1rem;
+      padding-left: 60px;
+      padding-right: 15px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -232,8 +411,8 @@
   <h1>CADO Token</h1>
   <div class="logo" id="logo" aria-label="CADO Token Logo">
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-main" />
-    <img src="81f8038d46d9ab8f42755fa5ab2e4e14_high.webp" alt="Cat" class="logo-animal logo-cat" />
-<img src="37ff3ea295d275ad295463541047c9b2_high.webp" alt="Dog" class="logo-animal logo-dog" />
+    <span class="logo-animal logo-cat" aria-hidden="true">🐱</span>
+    <span class="logo-animal logo-dog" aria-hidden="true">🐶</span>
   </div>
   <div class="legend-text">
     Nobody believed in my strength and dreams — everyone thought I would fail.<br />
@@ -248,6 +427,54 @@
   </div>
   <button class="btn-buy" aria-label="Buy CADO Token now">BUY NOW</button>
 </header>
+
+<section class="tokenomics" aria-labelledby="tokenomics-title">
+  <h2 id="tokenomics-title">Tokenomics</h2>
+  <p>
+    Total Supply: <strong>1,000,000,000 CADO</strong><br />
+    Max Wallet: <strong>2% of total supply</strong><br />
+    Transaction Tax: <strong>5% (3% Liquidity, 2% Marketing)</strong><br />
+    Launch Date: <strong>Q4 2025</strong>
+  </p>
+</section>
+
+<!-- Вращающееся лого -->
+<div class="logo-spin-container" aria-label="CADO Token rotating logo">
+  <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-spin" />
+</div>
+
+<section aria-labelledby="roadmap-title">
+  <h2 id="roadmap-title">Roadmap</h2>
+  <div class="timeline" role="list">
+    <div class="timeline-item" role="listitem">3M — Launch NFT Collection</div>
+    <div class="timeline-item" role="listitem">10M — Merch: T-shirts, Caps, Mugs</div>
+    <div class="timeline-item" role="listitem">25M — CADO Staking Platform Launch</div>
+    <div class="timeline-item" role="listitem">50M — Golden Talisman</div>
+    <div class="timeline-item" role="listitem">75M — Community Giveaways & Competitions</div>
+    <div class="timeline-item" role="listitem">100M — Plush Toys</div>
+    <div class="timeline-item" role="listitem">150M — Partnership Announcements</div>
+    <div class="timeline-item" role="listitem">200M — Mobile Wallet Release</div>
+    <div class="timeline-item" role="listitem">300M — Full Animated Series</div>
+    <div class="timeline-item" role="listitem">500M — CADO Metaverse Integration</div>
+    <div class="timeline-item" role="listitem">750M — Listing on Major Exchanges</div>
+    <div class="timeline-item" role="listitem">1B — Feature Film Release</div>
+  </div>
+</section>
+
+<section class="join-legend" aria-labelledby="join-title">
+  <h2 id="join-title">Join the Legend</h2>
+  <p>
+    Be part of the CADO revolution.<br />
+    Connect with our vibrant community on Telegram and Twitter.<br />
+    Stay updated and never miss an opportunity.<br />
+    Together, we’ll redefine the future of crypto.
+  </p>
+  <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
+</section>
+
+<footer>
+  © 2025 CADO Token — All rights reserved.
+</footer>
 
 <script>
   const logo = document.getElementById('logo');
