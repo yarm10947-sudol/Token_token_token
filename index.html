@@ -19,26 +19,17 @@
     margin: 0; padding: 0;
     font-family: 'Roboto', sans-serif;
     scroll-behavior: smooth;
-
-    /* Плавный анимированный градиент */
-    background: linear-gradient(270deg, #7a1c1c, #3a0d0d, #7a1c1c, #3a0d0d);
-    background-size: 800% 800%;
-    animation: gradientShift 20s ease infinite;
-
+    background: url('file_00000000198861f581eb6192921a6f6c.png') no-repeat center center fixed;
+    background-size: cover;
     color: #fff;
     min-height: 100vh;
-  }
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
   }
   a {
     color: inherit;
     text-decoration: none;
   }
 
-  /* Overlay for better readability */
+  /* Overlay for readability */
   body::before {
     content: "";
     position: fixed;
@@ -47,14 +38,14 @@
     z-index: -1;
   }
 
-  /* Container */
+  /* Container for content */
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
   }
 
-  /* HEADER */
+  /* HEADER SECTION */
   header {
     min-height: 100vh;
     display: flex;
@@ -67,8 +58,8 @@
     z-index: 10;
   }
   .logo {
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     border: 8px solid #ffd700;
     box-shadow:
@@ -83,8 +74,8 @@
     transition: transform 0.4s ease;
   }
   .logo img {
-    width: 130px;
-    height: 130px;
+    width: 140px;
+    height: 140px;
     object-fit: contain;
     border-radius: 50%;
     border: 5px solid #fff4b8;
@@ -105,8 +96,6 @@
       0 0 15px #ffcc00,
       0 0 40px #ff9900;
     margin-bottom: 25px;
-    opacity: 0;
-    animation: fadeInUp 1s forwards 0.2s;
   }
   header p {
     max-width: 720px;
@@ -116,8 +105,6 @@
     color: #fff2a8;
     margin-bottom: 60px;
     user-select: none;
-    opacity: 0;
-    animation: fadeInUp 1s forwards 0.6s;
   }
 
   /* SOCIAL BUTTONS */
@@ -126,8 +113,6 @@
     gap: 50px;
     justify-content: center;
     margin-bottom: 20px;
-    opacity: 0;
-    animation: fadeInUp 1s forwards 1s;
   }
   .social-buttons a {
     display: flex;
@@ -146,15 +131,11 @@
     user-select: none;
   }
   .social-buttons a:hover {
-    animation: jump 0.5s ease;
     background-color: #ffb800;
     color: #3a2200;
     box-shadow: 0 0 70px #ffdd33;
+    transform: scale(1.3);
     border-color: #fff;
-  }
-  @keyframes jump {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
   }
 
   /* BUTTON BUY NOW */
@@ -172,26 +153,12 @@
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     user-select: none;
-    opacity: 0;
-    animation: fadeInUp 1s forwards 1.4s;
   }
   .btn-buy:hover {
-    transform: scale(1.15) rotate(-2deg);
+    transform: scale(1.15);
     box-shadow:
-      0 0 80px #ffd700cc,
-      inset 0 0 50px #ffcc00cc;
-  }
-
-  /* Fade in animation */
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      0 0 70px #ffdd33,
+      inset 0 0 30px #ffcc00;
   }
 
   /* SECTION TITLES */
@@ -218,20 +185,16 @@
     font-size: 1.5rem;
     line-height: 1.8;
     user-select: none;
-    opacity: 0;
-    animation: fadeInUp 1s forwards;
-  }
-  section:nth-of-type(1) {
-    animation-delay: 1.7s;
-  }
-  section:nth-of-type(2) {
-    animation-delay: 2s;
-  }
-  section:nth-of-type(3) {
-    animation-delay: 2.3s;
+
+    /* Fix to avoid disappearing */
+    opacity: 1 !important;
+    animation: none !important;
   }
 
   /* TOKENOMICS */
+  .tokenomics {
+    text-align: center;
+  }
   .tokenomics strong {
     color: #ffd700;
     font-weight: 700;
@@ -288,6 +251,8 @@
 
   /* JOIN THE LEGEND */
   .join-legend {
+    max-width: 850px;
+    margin: 0 auto;
     text-align: center;
     color: #ffd;
   }
@@ -401,7 +366,7 @@
 </section>
 
 <footer>
-  © 2025 CADO Token — All rights reserved.
+    © 2025 CADO Token — All rights reserved.
 </footer>
 
 </body>
