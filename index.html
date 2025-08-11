@@ -19,13 +19,22 @@
     margin: 0; padding: 0;
     font-family: 'Roboto', sans-serif;
     scroll-behavior: smooth;
-    background: linear-gradient(135deg, #b22222, #ffcc00, #ff6600, #000000);
+    background: linear-gradient(135deg, #ff0000, #ffd700, #ff9900, #000000);
     color: #fff;
     min-height: 100vh;
   }
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  /* Overlay for readability */
+  body::before {
+    content: "";
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(30,10,10,0.85);
+    z-index: -1;
   }
 
   /* Container for content */
@@ -175,6 +184,10 @@
     font-size: 1.5rem;
     line-height: 1.8;
     user-select: none;
+
+    /* Fix to avoid disappearing */
+    opacity: 1 !important;
+    animation: none !important;
   }
 
   /* TOKENOMICS */
@@ -184,6 +197,36 @@
   .tokenomics strong {
     color: #ffd700;
     font-weight: 700;
+  }
+
+  /* Вращающееся лого */
+  .logo-spin-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+  }
+
+  .logo-spin {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 6px solid #ffd700;
+    box-shadow:
+      0 0 40px #ffd700cc,
+      inset 0 0 50px #ffcc0080;
+    animation: spin 10s linear infinite;
+    background: radial-gradient(circle at center, #ffcc00, #b27300);
+    object-fit: contain;
+    user-select: none;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   /* ROADMAP */
@@ -241,10 +284,6 @@
     margin: 0 auto;
     text-align: center;
     color: #ffd;
-    border: 3px solid #ffd700;
-    border-radius: 20px;
-    padding: 40px 40px 60px;
-    box-shadow: 0 0 30px #ffd700cc;
   }
   .join-legend h2 {
     margin-bottom: 40px;
@@ -325,6 +364,11 @@
     Launch Date: <strong>Q4 2025</strong>
   </p>
 </section>
+
+<!-- Вращающееся лого -->
+<div class="logo-spin-container" aria-label="CADO Token rotating logo">
+  <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-spin" />
+</div>
 
 <section aria-labelledby="roadmap-title">
   <h2 id="roadmap-title">Roadmap</h2>
