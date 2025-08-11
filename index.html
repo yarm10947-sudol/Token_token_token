@@ -1,496 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CADO Token — The Legend</title>
-
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
-<!-- FontAwesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
+<meta charset="UTF-8">
+<title>Анимация кота и собаки</title>
 <style>
-  /* Reset */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  body, html {
-    margin: 0; padding: 0;
-    font-family: 'Roboto', sans-serif;
-    scroll-behavior: smooth;
-    background: linear-gradient(135deg, #ff0000, #ffd700, #ff9900, #000000);
-    color: #fff;
-    min-height: 100vh;
-  }
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  /* Overlay for readability */
-  body::before {
-    content: "";
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(30,10,10,0.85); /* затемнённый фон */
-    z-index: -1;
-  }
-
-  /* Container for content */
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-
-  /* HEADER SECTION */
-  header {
-    min-height: 100vh;
+body {
+    background: #111;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    padding: 60px 20px 100px;
+    height: 100vh;
+}
+
+.logo-container {
     position: relative;
-    z-index: 10;
-  }
-  .logo {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    border: 8px solid #ffd700;
-    box-shadow:
-      0 0 60px #ffd700cc,
-      inset 0 0 70px #ffcc0080;
-    margin-top: 30px;
-    background: radial-gradient(circle at center, #ffcc00, #b27300);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    transition: transform 0.4s ease;
-  }
-  .logo img {
-    width: 140px;
-    height: 140px;
-    object-fit: contain;
-    border-radius: 50%;
-    border: 5px solid #fff4b8;
-    box-shadow: 0 0 30px #fff4b8;
-  }
-  .logo:hover {
-    transform: scale(1.2);
-    box-shadow:
-      0 0 80px #ffd700ff,
-      inset 0 0 90px #ffcc00ff;
-  }
-  header h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    font-size: 5rem;
-    letter-spacing: 5px;
-    text-shadow:
-      0 0 15px #ffcc00,
-      0 0 40px #ff9900;
-    margin-bottom: 0;
-  }
+    width: 200px;
+    height: 200px;
+}
 
-  /* Легенда в рамке, как Tokenomics */
-  .legend-text {
-    background: rgba(19,9,0,0.9);
-    border-radius: 25px;
-    padding: 40px 30px;
-    margin: 60px auto 60px auto;
-    max-width: 720px;
-    color: #fff7b8;
-    font-size: 1.6rem;
-    line-height: 1.7;
-    user-select: none;
-  }
+.logo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: url('logo.png') center/cover no-repeat;
+    position: relative;
+    z-index: 1;
+}
 
-  /* SOCIAL BUTTONS */
-  .social-buttons {
-    display: flex;
-    gap: 50px;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  .social-buttons a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.pet {
+    position: absolute;
     width: 80px;
     height: 80px;
-    border-radius: 50%;
-    background: #ffd700;
-    color: #4a2c00;
-    font-size: 38px;
-    box-shadow: 0 0 50px #ffcc00;
-    transition: 0.3s ease;
-    border: 3px solid transparent;
-    cursor: pointer;
-    user-select: none;
-  }
-  .social-buttons a:hover {
-    background-color: #ffb800;
-    color: #3a2200;
-    box-shadow: 0 0 70px #ffdd33;
-    transform: scale(1.3);
-    border-color: #fff;
-  }
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    z-index: 2;
+}
 
-  /* BUTTON BUY NOW */
-  .btn-buy {
-    background: linear-gradient(45deg, #ffcc00, #ff9900);
-    border: none;
-    padding: 18px 60px;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #3a2200;
-    border-radius: 50px;
-    box-shadow:
-      0 0 40px #ffcc00,
-      inset 0 0 20px #ffb800;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    user-select: none;
-  }
-  .btn-buy:hover {
-    transform: scale(1.15);
-    box-shadow:
-      0 0 70px #ffdd33,
-      inset 0 0 30px #ffcc00;
-  }
+.cat {
+    background-image: url('cat.png'); /* кот */
+}
 
-  /* SECTION TITLES */
-  h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3.2rem;
-    margin-bottom: 50px;
-    color: #ffdb4d;
-    text-align: center;
-    text-shadow: 0 0 30px #ffdb4dcc;
-  }
+.dog {
+    background-image: url('dog.png'); /* собака */
+}
 
-  /* SECTIONS */
-  section {
-    background: rgba(19,9,0,0.9);
-    border-radius: 25px;
-    padding: 80px 40px;
-    margin-bottom: 100px;
-    box-shadow: inset 0 0 120px #7f5500cc;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #fff7b8;
-    font-size: 1.5rem;
-    line-height: 1.8;
-    user-select: none;
+@keyframes catAnimation {
+    0% { opacity: 0; transform: translate(0,0) scale(0.5) rotate(0deg); }
+    10% { opacity: 1; transform: translate(-150px, -80px) scale(1) rotate(-15deg); }
+    40% { transform: translate(-100px, -50px) scale(1) rotate(15deg); }
+    70% { transform: translate(-150px, -80px) scale(1) rotate(-15deg); }
+    90% { opacity: 1; transform: translate(0,0) scale(0.8) rotate(0deg); }
+    100% { opacity: 0; transform: translate(0,0) scale(0.5); }
+}
 
-    /* Fix to avoid disappearing */
-    opacity: 1 !important;
-    animation: none !important;
-  }
+@keyframes dogAnimation {
+    0% { opacity: 0; transform: translate(0,0) scale(0.5) rotate(0deg); }
+    10% { opacity: 1; transform: translate(150px, -80px) scale(1) rotate(15deg); }
+    40% { transform: translate(100px, -50px) scale(1) rotate(-15deg); }
+    70% { transform: translate(150px, -80px) scale(1) rotate(15deg); }
+    90% { opacity: 1; transform: translate(0,0) scale(0.8) rotate(0deg); }
+    100% { opacity: 0; transform: translate(0,0) scale(0.5); }
+}
 
-  /* TOKENOMICS */
-  .tokenomics {
-    text-align: center;
-  }
-  .tokenomics strong {
-    color: #ffd700;
-    font-weight: 700;
-  }
+.cat.animate {
+    animation: catAnimation 5s ease-in-out forwards;
+}
 
-  /* Вращающееся лого */
-  .logo-spin-container {
-    display: flex;
-    justify-content: center;
-    margin: 40px 0;
-  }
-
-  .logo-spin {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    border: 6px solid #ffd700;
-    box-shadow:
-      0 0 40px #ffd700cc,
-      inset 0 0 50px #ffcc0080;
-    animation: spin 10s linear infinite;
-    background: radial-gradient(circle at center, #ffcc00, #b27300);
-    object-fit: contain;
-    user-select: none;
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  /* ROADMAP */
-  .timeline {
-    position: relative;
-    max-width: 900px;
-    margin: 0 auto;
-    padding-left: 20px;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 20px;
-    top: 0;
-    bottom: 0;
-    width: 6px;
-    background: linear-gradient(to bottom, #ffd700, #ff9900);
-    border-radius: 3px;
-    box-shadow: 0 0 15px #ffcc0080;
-  }
-  .timeline-item {
-    position: relative;
-    padding-left: 70px;
-    margin-bottom: 45px;
-    color: #3b2a00;
-    font-weight: 700;
-    font-size: 1.3rem;
-    cursor: default;
-    user-select: none;
-    transition: transform 0.3s ease;
-    background: linear-gradient(135deg, #ffdb4dcc, #ffcc00aa);
-    border-radius: 15px;
-    box-shadow: 0 0 30px #ffdb4d88;
-    padding: 18px 25px 18px 70px;
-  }
-  .timeline-item:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 50px #ffcc00cc;
-  }
-  .timeline-item::before {
-    content: "★";
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 28px;
-    color: #ffd700;
-    text-shadow: 0 0 15px #ffd700cc;
-    user-select: none;
-  }
-
-  /* JOIN THE LEGEND */
-  .join-legend {
-    max-width: 850px;
-    margin: 0 auto;
-    text-align: center;
-    color: #ffd;
-  }
-  .join-legend h2 {
-    margin-bottom: 40px;
-  }
-  .join-legend p {
-    font-size: 1.4rem;
-    font-weight: 300;
-    line-height: 1.7;
-    margin-bottom: 50px;
-    color: #fff4b8;
-  }
-
-  /* Responsive */
-  @media (max-width: 900px) {
-    header h1 {
-      font-size: 3.8rem;
-    }
-    .legend-text {
-      font-size: 1.3rem;
-      max-width: 90vw;
-      padding: 30px 20px;
-    }
-    header p {
-      margin: 0; /* убрать стандартный отступ, чтобы не дублировался */
-    }
-    .logo {
-      width: 140px;
-      height: 140px;
-      margin-top: 20px;
-    }
-    .logo img {
-      width: 110px;
-      height: 110px;
-    }
-    .social-buttons a {
-      width: 60px;
-      height: 60px;
-      font-size: 28px;
-    }
-    .btn-buy {
-      padding: 14px 40px;
-      font-size: 1.3rem;
-    }
-    section {
-      padding: 60px 20px;
-      margin-bottom: 60px;
-    }
-    .timeline-item {
-      font-size: 1.1rem;
-      padding-left: 60px;
-      padding-right: 15px;
-    }
-  }
-
-  /* Птички на заднем фоне */
-  .birds-container {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; /* чтобы не мешали кликам */
-    z-index: 0; /* под контентом */
-    overflow: visible;
-  }
-
-  .bird {
-    position: absolute;
-    top: var(--top);
-    left: -5%;
-    width: 30px;
-    height: 20px;
-    background: transparent;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 20px solid #fff4b8; /* светло-жёлтый цвет */
-    filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
-    animation: fly linear infinite;
-    animation-duration: var(--speed);
-    animation-delay: var(--delay);
-    transform-origin: center bottom;
-    opacity: 0.8;
-  }
-
-  /* Крылья птички */
-  .bird::before, .bird::after {
-    content: "";
-    position: absolute;
-    top: 2px;
-    width: 15px;
-    height: 15px;
-    background: #fff4b8;
-    border-radius: 50%;
-    opacity: 0.8;
-    filter: drop-shadow(0 0 1px rgba(255,255,255,0.5));
-  }
-
-  .bird::before {
-    left: -10px;
-    transform-origin: right center;
-    animation: wing-flap 2s ease-in-out infinite;
-  }
-
-  .bird::after {
-    right: -10px;
-    transform-origin: left center;
-    animation: wing-flap 2s ease-in-out infinite;
-    animation-delay: 1s;
-  }
-
-  /* Анимация полёта */
-  @keyframes fly {
-    0% {
-      left: -5%;
-      transform: translateY(0) rotate(0deg);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translateY(-10px) rotate(10deg);
-      opacity: 1;
-    }
-    100% {
-      left: 105%;
-      transform: translateY(0) rotate(0deg);
-      opacity: 0.8;
-    }
-  }
-
-  /* Анимация взмахов крыльев */
-  @keyframes wing-flap {
-    0%, 100% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(20deg) scale(1.1); }
-  }
+.dog.animate {
+    animation: dogAnimation 5s ease-in-out forwards;
+}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>CADO Token</h1>
-  <div class="logo" aria-label="CADO Token Logo">
-    <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
-  </div>
-  <div class="legend-text">
-    Nobody believed in my strength and dreams — everyone thought I would fail.<br />
-    But I never gave up.<br />
-    I created CADO to prove that even when the world is against you, greatness is possible.<br />
-    This token is my challenge to the world and an invitation to victory for everyone.
-  </div>
-  <div class="social-buttons" role="navigation" aria-label="Social media links">
-    <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane"></i></a>
-    <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
-    <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
-  </div>
-  <button class="btn-buy" aria-label="Buy CADO Token now">BUY NOW</button>
-</header>
-
-<section class="tokenomics" aria-labelledby="tokenomics-title">
-  <h2 id="tokenomics-title">Tokenomics</h2>
-  <p>
-    Total Supply: <strong>1,000,000,000 CADO</strong><br />
-    Max Wallet: <strong>2% of total supply</strong><br />
-    Transaction Tax: <strong>5% (3% Liquidity, 2% Marketing)</strong><br />
-    Launch Date: <strong>Q4 2025</strong>
-  </p>
-</section>
-
-<!-- Вращающееся лого -->
-<div class="logo-spin-container" aria-label="CADO Token rotating logo">
-  <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-spin" />
+<div class="logo-container">
+    <div class="logo"></div>
+    <div class="pet cat"></div>
+    <div class="pet dog"></div>
 </div>
 
-<section aria-labelledby="roadmap-title">
-  <h2 id="roadmap-title">Roadmap</h2>
-  <div class="timeline" role="list">
-    <div class="timeline-item" role="listitem">3M — Launch NFT Collection</div>
-    <div class="timeline-item" role="listitem">10M — Merch: T-shirts, Caps, Mugs</div>
-    <div class="timeline-item" role="listitem">25M — CADO Staking Platform Launch</div>
-    <div class="timeline-item" role="listitem">50M — Golden Talisman</div>
-    <div class="timeline-item" role="listitem">75M — Community Giveaways & Competitions</div>
-    <div class="timeline-item" role="listitem">100M — Plush Toys</div>
-    <div class="timeline-item" role="listitem">150M — Partnership Announcements</div>
-    <div class="timeline-item" role="listitem">200M — Mobile Wallet Release</div>
-    <div class="timeline-item" role="listitem">300M — Full Animated Series</div>
-    <div class="timeline-item" role="listitem">500M — CADO Metaverse Integration</div>
-    <div class="timeline-item" role="listitem">750M — Listing on Major Exchanges</div>
-    <div class="timeline-item" role="listitem">1B — Feature Film Release</div>
-  </div>
-</section>
+<script>
+function startAnimation() {
+    const cat = document.querySelector('.cat');
+    const dog = document.querySelector('.dog');
+    cat.classList.add('animate');
+    dog.classList.add('animate');
 
-<section class="join-legend" aria-labelledby="join-title">
-  <h2 id="join-title">Join the Legend</h2>
-  <p>
-    Be part of the CADO revolution.<br />
-    Connect with our vibrant community on Telegram and Twitter.<br />
-    Stay updated and never miss an opportunity.<br />
-    Together, we’ll redefine the future of crypto.
-  </p>
-  <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
-</section>
+    setTimeout(() => {
+        cat.classList.remove('animate');
+        dog.classList.remove('animate');
+    }, 5000); // сброс после анимации
+}
 
-<footer>
-  © 2025 CADO Token — All rights reserved.
-</footer>
+// Запускаем анимацию каждые 7 секунд
+setInterval(startAnimation, 7000);
+</script>
 
-<!-- Птички на фоне -->
-<div class="birds-container" aria-hidden="true">
-  <div class="bird" style="--delay: 0s; --top: 20%; --speed: 25s;"></div>
-  <div class="bird" style="--delay: 10s; --top: 40%; --speed: 30s;"></div>
-  <div class="bird" style="--delay: 5s; --top: 60%; --speed:
+</body>
+</html>
