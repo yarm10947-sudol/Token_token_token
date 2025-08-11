@@ -19,8 +19,7 @@
     margin: 0; padding: 0;
     font-family: 'Roboto', sans-serif;
     scroll-behavior: smooth;
-    /* Мягкий красный с золотисто-оранжевым переходом, чтобы глаза не болели */
-    background: linear-gradient(135deg, #b33030, #ffd76b, #ffad3c, #3d1a00);
+    background: linear-gradient(135deg, #ff0000, #ffd700, #ff9900, #000000);
     color: #fff;
     min-height: 100vh;
   }
@@ -220,10 +219,10 @@
       0 0 40px #ffd700cc,
       inset 0 0 50px #ffcc0080;
     animation: spin 10s linear infinite;
-    /* Новый фон: мягкий красный радиальный градиент из краёв внутрь с мягким центром */
+    /* Изменён только фон - добавлен плавный красный градиент с центром */
     background: 
-      radial-gradient(circle, rgba(255, 60, 60, 0.8) 70%, transparent 95%), /* красный снаружи */
-      radial-gradient(circle at center, #ffb86c 40%, #d17b00 90%);         /* золотисто-оранжевый в центре */
+      radial-gradient(circle, rgba(255, 50, 50, 0.6) 70%, transparent 95%), 
+      radial-gradient(circle at center, #ffcc00 40%, #b27300 90%);
     background-blend-mode: screen;
     object-fit: contain;
     user-select: none;
