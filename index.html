@@ -15,7 +15,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
 
 <style>
-  /* Reset and base */
   *, *::before, *::after {
     box-sizing: border-box;
   }
@@ -40,7 +39,6 @@
     text-decoration: none;
   }
 
-  /* HEADER */
   header {
     min-height: 100vh;
     display: flex;
@@ -63,7 +61,6 @@
     margin-bottom: 0;
   }
 
-  /* LOGO */
   .logo {
     position: relative;
     width: 180px;
@@ -95,15 +92,14 @@
       inset 0 0 90px #ffcc00ff;
   }
 
-  /* Lottie containers for cat and dog */
   .logo-lottie {
     position: absolute;
     width: 70px;
     height: 70px;
     pointer-events: none;
     user-select: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    opacity: 0.8; /* всегда видны */
+    transition: transform 0.3s ease;
   }
   .logo-cat {
     left: 85%;
@@ -116,12 +112,7 @@
     transform-origin: center bottom;
   }
 
-  /* Show Lottie on hover */
-  .logo:hover .logo-lottie {
-    opacity: 1;
-  }
-
-  /* Jump animations */
+  /* Прыжки при ховере */
   @keyframes jump {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-50px); }
@@ -133,7 +124,6 @@
     animation: jump 1.5s ease-in-out infinite 0.75s;
   }
 
-  /* LEGEND TEXT */
   .legend-text {
     background: rgba(19,9,0,0.9);
     border-radius: 25px;
@@ -147,7 +137,6 @@
     box-shadow: 0 0 25px #ffcc0080;
   }
 
-  /* SOCIAL BUTTONS */
   .social-buttons {
     display: flex;
     gap: 50px;
@@ -178,7 +167,6 @@
     border-color: #fff;
   }
 
-  /* BUY BUTTON */
   .btn-buy {
     background: linear-gradient(45deg, #ffcc00, #ff9900);
     border: none;
@@ -201,7 +189,6 @@
       inset 0 0 30px #ffcc00;
   }
 
-  /* SECTION TITLES */
   h2 {
     font-family: 'Orbitron', sans-serif;
     font-size: 3.2rem;
@@ -211,7 +198,6 @@
     text-shadow: 0 0 30px #ffdb4dcc;
   }
 
-  /* SECTIONS */
   section {
     background: rgba(19,9,0,0.9);
     border-radius: 25px;
@@ -227,13 +213,11 @@
     user-select: none;
   }
 
-  /* TOKENOMICS */
   .tokenomics strong {
     color: #ffd700;
     font-weight: 700;
   }
 
-  /* TIMELINE (ROADMAP) */
   .timeline {
     position: relative;
     max-width: 900px;
@@ -282,7 +266,6 @@
     user-select: none;
   }
 
-  /* JOIN THE LEGEND */
   .join-legend {
     max-width: 850px;
     margin: 0 auto;
@@ -300,7 +283,6 @@
     color: #fff4b8;
   }
 
-  /* Responsive */
   @media (max-width: 900px) {
     header h1 {
       font-size: 3.8rem;
@@ -410,33 +392,22 @@
 </footer>
 
 <script>
-  // Инициализация Lottie для кота
+  // Загружаем Lottie-анимацию кота
   const catAnimation = lottie.loadAnimation({
     container: document.getElementById('cat-lottie'),
     renderer: 'svg',
     loop: true,
-    autoplay: false,
-    path: 'https://assets9.lottiefiles.com/packages/lf20_bztqoozh.json' // простая анимация кота
+    autoplay: true,
+    path: 'https://assets9.lottiefiles.com/packages/lf20_bztqoozh.json'
   });
 
-  // Инициализация Lottie для собаки
+  // Загружаем Lottie-анимацию собаки
   const dogAnimation = lottie.loadAnimation({
     container: document.getElementById('dog-lottie'),
     renderer: 'svg',
     loop: true,
-    autoplay: false,
-    path: 'https://assets9.lottiefiles.com/packages/lf20_pni45pyr.json' // простая анимация собаки
-  });
-
-  // Запуск и остановка анимаций при наведении на логотип
-  const logo = document.querySelector('.logo');
-  logo.addEventListener('mouseenter', () => {
-    catAnimation.play();
-    dogAnimation.play();
-  });
-  logo.addEventListener('mouseleave', () => {
-    catAnimation.stop();
-    dogAnimation.stop();
+    autoplay: true,
+    path: 'https://assets9.lottiefiles.com/packages/lf20_pni45pyr.json'
   });
 </script>
 
