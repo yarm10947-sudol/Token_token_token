@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Test Lottie Cat</title>
+<title>Test Lottie Inline Animation</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
 <style>
-  #cat-lottie {
+  #animation {
     width: 300px;
     height: 300px;
     margin: 50px auto;
@@ -16,15 +15,59 @@
 </head>
 <body>
 
-<div id="cat-lottie"></div>
+<div id="animation"></div>
 
 <script>
+  // Минималистичная анимация: движущийся круг
+  const animationData = {
+    "v":"5.5.7",
+    "fr":30,
+    "ip":0,
+    "op":60,
+    "w":100,
+    "h":100,
+    "nm":"circle move",
+    "ddd":0,
+    "assets":[],
+    "layers":[
+      {
+        "ty":4,
+        "shapes":[
+          {
+            "ty":"el",
+            "p":{"a":0,"k":[50,50]},
+            "s":{"a":1,"k":[
+              {"t":0,"s":[40,40]},
+              {"t":30,"s":[40,40]},
+              {"t":60,"s":[40,40]}
+            ]},
+            "nm":"Ellipse Path 1"
+          },
+          {
+            "ty":"fl",
+            "c":{"a":0,"k":[1,0.7,0,1]},
+            "o":{"a":0,"k":100},
+            "nm":"Fill 1"
+          }
+        ],
+        "ks":{
+          "p":{"a":1,"k":[
+            {"t":0,"s":[50,50],"to":[0,0],"ti":[0,0]},
+            {"t":30,"s":[50,90],"to":[0,0],"ti":[0,0]},
+            {"t":60,"s":[50,50],"to":[0,0],"ti":[0,0]}
+          ]}
+        },
+        "nm":"Ellipse 1"
+      }
+    ]
+  };
+
   lottie.loadAnimation({
-    container: document.getElementById('cat-lottie'),
+    container: document.getElementById('animation'),
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://assets9.lottiefiles.com/packages/lf20_bztqoozh.json' // Кот анимация
+    animationData: animationData
   });
 </script>
 
