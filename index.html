@@ -19,23 +19,13 @@
     margin: 0; padding: 0;
     font-family: 'Roboto', sans-serif;
     scroll-behavior: smooth;
-    background: url('file_00000000198861f581eb6192921a6f6c.png') no-repeat center center fixed;
-    background-size: cover;
+    background: linear-gradient(135deg, #ffcc00, #ff9900, #b27300);
     color: #fff;
     min-height: 100vh;
   }
   a {
     color: inherit;
     text-decoration: none;
-  }
-
-  /* Overlay for readability */
-  body::before {
-    content: "";
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(30,10,10,0.85);
-    z-index: -1;
   }
 
   /* Container for content */
@@ -97,21 +87,14 @@
       0 0 40px #ff9900;
     margin-bottom: 25px;
   }
-  /* Легенда в рамке как в Roadmap */
   header p {
     max-width: 720px;
     font-size: 1.6rem;
     font-weight: 300;
     line-height: 1.7;
-    color: #3b2a00;
+    color: #fff2a8;
     margin-bottom: 60px;
     user-select: none;
-
-    background: linear-gradient(135deg, #ffdb4dcc, #ffcc00aa);
-    border-radius: 15px;
-    box-shadow: 0 0 30px #ffdb4d88;
-    padding: 18px 25px;
-    cursor: default;
   }
 
   /* SOCIAL BUTTONS */
@@ -192,10 +175,6 @@
     font-size: 1.5rem;
     line-height: 1.8;
     user-select: none;
-
-    /* Fix to avoid disappearing */
-    opacity: 1 !important;
-    animation: none !important;
   }
 
   /* TOKENOMICS */
@@ -262,6 +241,10 @@
     margin: 0 auto;
     text-align: center;
     color: #ffd;
+    border: 3px solid #ffd700;
+    border-radius: 20px;
+    padding: 40px 40px 60px;
+    box-shadow: 0 0 30px #ffd700cc;
   }
   .join-legend h2 {
     margin-bottom: 40px;
