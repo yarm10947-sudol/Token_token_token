@@ -19,7 +19,8 @@
     margin: 0; padding: 0;
     font-family: 'Roboto', sans-serif;
     scroll-behavior: smooth;
-    background: linear-gradient(135deg, #ff0000, #ffd700, #ff9900, #000000);
+    /* Мягкий красный с золотисто-оранжевым переходом, чтобы глаза не болели */
+    background: linear-gradient(135deg, #b33030, #ffd76b, #ffad3c, #3d1a00);
     color: #fff;
     min-height: 100vh;
   }
@@ -219,7 +220,11 @@
       0 0 40px #ffd700cc,
       inset 0 0 50px #ffcc0080;
     animation: spin 10s linear infinite;
-    background: radial-gradient(circle at center, #ffcc00, #b27300);
+    /* Новый фон: мягкий красный радиальный градиент из краёв внутрь с мягким центром */
+    background: 
+      radial-gradient(circle, rgba(255, 60, 60, 0.8) 70%, transparent 95%), /* красный снаружи */
+      radial-gradient(circle at center, #ffb86c 40%, #d17b00 90%);         /* золотисто-оранжевый в центре */
+    background-blend-mode: screen;
     object-fit: contain;
     user-select: none;
   }
