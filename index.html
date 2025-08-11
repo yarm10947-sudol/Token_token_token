@@ -3,15 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CADO Token — The Legend</title>
+<title>CADO Token — The Legend with Lottie Animation</title>
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+
 <!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+<!-- Lottie -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+
 <style>
-  /* Reset and base styles */
+  /* Reset and base */
   *, *::before, *::after {
     box-sizing: border-box;
   }
@@ -91,79 +95,42 @@
       inset 0 0 90px #ffcc00ff;
   }
 
-  /* ANIMATED ANIMALS */
-  .logo-animal {
+  /* Lottie containers for cat and dog */
+  .logo-lottie {
     position: absolute;
-    width: 60px;
-    height: 60px;
-    font-size: 50px;
-    line-height: 60px;
-    text-align: center;
-    border-radius: 50%;
-    border: 3px solid #ffd700cc;
-    background: #fff;
-    box-shadow: 0 0 10px #ffd700aa;
-    top: 50%;
-    opacity: 0;
+    width: 70px;
+    height: 70px;
     pointer-events: none;
     user-select: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   .logo-cat {
-    left: 80%;
+    left: 85%;
     bottom: 10%;
-    transform: translate(-50%, 0);
+    transform-origin: center bottom;
   }
   .logo-dog {
-    left: 20%;
+    left: 15%;
     bottom: 10%;
-    transform: translate(-50%, 0);
+    transform-origin: center bottom;
   }
 
-  @keyframes jump-right {
-    0%, 100% {
-      opacity: 0;
-      transform: translate(calc(-50% + 0), 0) scale(1) rotate(0deg);
-    }
-    10% {
-      opacity: 1;
-      transform: translate(calc(-50% + 30px), -60px) scale(1.2) rotate(-15deg);
-    }
-    40% {
-      transform: translate(calc(-50% + 70px), -20px) scale(1.1) rotate(10deg);
-    }
-    70% {
-      transform: translate(calc(-50% + 40px), -50px) scale(1.15) rotate(-10deg);
-    }
-    90% {
-      opacity: 1;
-      transform: translate(calc(-50% + 25px), -20px) scale(1) rotate(5deg);
-    }
+  /* Show Lottie on hover */
+  .logo:hover .logo-lottie {
+    opacity: 1;
   }
-  @keyframes jump-left {
-    0%, 100% {
-      opacity: 0;
-      transform: translate(calc(-50% + 0), 0) scale(1) rotate(0deg);
-    }
-    10% {
-      opacity: 1;
-      transform: translate(calc(-50% - 30px), -60px) scale(1.2) rotate(15deg);
-    }
-    40% {
-      transform: translate(calc(-50% - 70px), -20px) scale(1.1) rotate(-10deg);
-    }
-    70% {
-      transform: translate(calc(-50% - 40px), -50px) scale(1.15) rotate(10deg);
-    }
-    90% {
-      opacity: 1;
-      transform: translate(calc(-50% - 25px), -20px) scale(1) rotate(-5deg);
-    }
+
+  /* Jump animations */
+  @keyframes jump {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-50px); }
   }
   .logo:hover .logo-cat {
-    animation: jump-right 3s forwards;
+    animation: jump 1.5s ease-in-out infinite;
   }
   .logo:hover .logo-dog {
-    animation: jump-left 3s forwards;
+    animation: jump 1.5s ease-in-out infinite 0.75s;
   }
 
   /* LEGEND TEXT */
@@ -378,8 +345,9 @@
   <h1>CADO Token</h1>
   <div class="logo" aria-label="CADO Token Logo" tabindex="0">
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-main" />
-    <span class="logo-animal logo-cat" aria-hidden="true" role="img" aria-label="Cat">🐱</span>
-    <span class="logo-animal logo-dog" aria-hidden="true" role="img" aria-label="Dog">🐶</span>
+    
+    <div id="cat-lottie" class="logo-lottie logo-cat" aria-hidden="true"></div>
+    <div id="dog-lottie" class="logo-lottie logo-dog" aria-hidden="true"></div>
   </div>
 
   <div class="legend-text">
@@ -440,6 +408,37 @@
 <footer style="text-align:center; padding:20px 0; color:#fff4b8;">
   © 2025 CADO Token — All rights reserved.
 </footer>
+
+<script>
+  // Инициализация Lottie для кота
+  const catAnimation = lottie.loadAnimation({
+    container: document.getElementById('cat-lottie'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: false,
+    path: 'https://assets9.lottiefiles.com/packages/lf20_bztqoozh.json' // простая анимация кота
+  });
+
+  // Инициализация Lottie для собаки
+  const dogAnimation = lottie.loadAnimation({
+    container: document.getElementById('dog-lottie'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: false,
+    path: 'https://assets9.lottiefiles.com/packages/lf20_pni45pyr.json' // простая анимация собаки
+  });
+
+  // Запуск и остановка анимаций при наведении на логотип
+  const logo = document.querySelector('.logo');
+  logo.addEventListener('mouseenter', () => {
+    catAnimation.play();
+    dogAnimation.play();
+  });
+  logo.addEventListener('mouseleave', () => {
+    catAnimation.stop();
+    dogAnimation.stop();
+  });
+</script>
 
 </body>
 </html>
