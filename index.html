@@ -19,7 +19,7 @@
     margin: 0; padding: 0;
     font-family: 'Roboto', sans-serif;
     scroll-behavior: smooth;
-    background: linear-gradient(135deg, #ff0000, #ffd700, #ff9900, #000000);
+    background: linear-gradient(135deg, #aa0000, #ffd700, #ff9900, #000000);
     color: #fff;
     min-height: 100vh;
   }
@@ -56,6 +56,17 @@
     position: relative;
     z-index: 10;
   }
+  header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 5rem;
+    letter-spacing: 5px;
+    text-shadow:
+      0 0 15px #ffcc00,
+      0 0 40px #ff9900;
+    margin-bottom: 0;
+  }
+
   .logo {
     width: 180px;
     height: 180px;
@@ -85,16 +96,6 @@
     box-shadow:
       0 0 80px #ffd700ff,
       inset 0 0 90px #ffcc00ff;
-  }
-  header h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    font-size: 5rem;
-    letter-spacing: 5px;
-    text-shadow:
-      0 0 15px #ffcc00,
-      0 0 40px #ff9900;
-    margin-bottom: 0;
   }
 
   /* Легенда в рамке, как Tokenomics */
@@ -203,7 +204,7 @@
     font-weight: 700;
   }
 
-  /* Вращающееся лого */
+  /* Вращающееся лого с красным мягким фоном */
   .logo-spin-container {
     display: flex;
     justify-content: center;
@@ -219,13 +220,23 @@
       0 0 40px #ffd700cc,
       inset 0 0 50px #ffcc0080;
     animation: spin 10s linear infinite;
-    /* Изменён только фон - добавлен плавный красный градиент с центром */
-    background: 
-      radial-gradient(circle, rgba(255, 50, 50, 0.6) 70%, transparent 95%), 
-      radial-gradient(circle at center, #ffcc00 40%, #b27300 90%);
-    background-blend-mode: screen;
+    background: radial-gradient(circle at center, rgba(255, 50, 50, 0.6), transparent 70%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .logo-spin img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
     object-fit: contain;
+    border: 5px solid #fff4b8;
+    box-shadow: 0 0 30px #fff4b8;
     user-select: none;
+    pointer-events: none;
   }
 
   @keyframes spin {
@@ -380,7 +391,9 @@
 
 <!-- Вращающееся лого -->
 <div class="logo-spin-container" aria-label="CADO Token rotating logo">
-  <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-spin" />
+  <div class="logo-spin">
+    <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
+  </div>
 </div>
 
 <section aria-labelledby="roadmap-title">
