@@ -96,13 +96,18 @@
       0 0 40px #ff9900;
     margin-bottom: 25px;
   }
-  header p {
-    max-width: 720px;
-    font-size: 1.6rem;
-    font-weight: 300;
-    line-height: 1.7;
-    color: #fff2a8;
+
+  /* Легенда в рамке, как Tokenomics */
+  .legend-text {
+    background: rgba(19,9,0,0.9);
+    border-radius: 25px;
+    padding: 40px 30px;
     margin-bottom: 60px;
+    box-shadow: inset 0 0 120px #7f5500cc;
+    max-width: 720px;
+    color: #fff7b8;
+    font-size: 1.6rem;
+    line-height: 1.7;
     user-select: none;
   }
 
@@ -301,9 +306,13 @@
     header h1 {
       font-size: 3.8rem;
     }
-    header p {
+    .legend-text {
       font-size: 1.3rem;
       max-width: 90vw;
+      padding: 30px 20px;
+    }
+    header p {
+      margin: 0; /* убрать стандартный отступ, чтобы не дублировался */
     }
     .logo {
       width: 140px;
@@ -341,12 +350,12 @@
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
   <h1>CADO Token</h1>
-  <p>
+  <div class="legend-text">
     Nobody believed in my strength and dreams — everyone thought I would fail.<br />
     But I never gave up.<br />
     I created CADO to prove that even when the world is against you, greatness is possible.<br />
     This token is my challenge to the world and an invitation to victory for everyone.
-  </p>
+  </div>
   <div class="social-buttons" role="navigation" aria-label="Social media links">
     <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane"></i></a>
     <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
