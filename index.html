@@ -3,16 +3,25 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CADO Token — The Legend with Animated Pets</title>
+<title>CADO Token — The Legend with Animated Pets on Click</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
-  body {
-    margin: 0;
+  /* Reset и базовые стили */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
     font-family: 'Roboto', sans-serif;
+    scroll-behavior: smooth;
     background: linear-gradient(135deg, #ff0000, #ffd700, #ff9900, #000000);
     color: #fff;
     min-height: 100vh;
-    overflow-x: hidden;
   }
   body::before {
     content: "";
@@ -22,6 +31,14 @@
     z-index: -1;
   }
 
+  /* Контейнер */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* HEADER SECTION */
   header {
     min-height: 100vh;
     display: flex;
@@ -42,6 +59,7 @@
     margin-bottom: 0;
   }
 
+  /* Лого с позицией для анимации животных */
   .logo {
     position: relative;
     width: 180px;
@@ -69,9 +87,16 @@
     pointer-events: none;
     top: 0;
     left: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
   }
 
-  /* Кот и собака - позиции и анимация прыжка */
+  /* При активном классе - показываем и анимируем */
+  .pets.active {
+    opacity: 1;
+  }
+
+  /* Кот и собака - позиционирование и стиль */
   .pet {
     position: absolute;
     width: 70px;
@@ -84,11 +109,9 @@
   }
   .pet.cat {
     left: 75%;
-    animation: jump 1.5s infinite;
   }
   .pet.dog {
     left: 10%;
-    animation: jump 1.5s infinite 0.75s;
   }
 
   /* Анимация прыжка с масштабированием и поворотом */
@@ -97,6 +120,15 @@
     50% { transform: translateY(-50px) scale(1.1) rotate(10deg); }
   }
 
+  /* Запуск анимации при активном классе */
+  .pets.active .cat {
+    animation: jump 1.5s infinite;
+  }
+  .pets.active .dog {
+    animation: jump 1.5s infinite 0.75s;
+  }
+
+  /* Легенда */
   .legend-text {
     background: rgba(19,9,0,0.9);
     border-radius: 25px;
@@ -109,7 +141,259 @@
     user-select: none;
   }
 
-  /* Остальной твой CSS сюда, например кнопки, соцсети и т.д. */
+  /* Кнопка Buy Now */
+  .btn-buy {
+    background: linear-gradient(45deg, #ffcc00, #ff9900);
+    border: none;
+    padding: 18px 60px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #3a2200;
+    border-radius: 50px;
+    box-shadow: 0 0 40px #ffcc00, inset 0 0 20px #ffb800;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    margin-top: 40px;
+  }
+  .btn-buy:hover:not(:disabled) {
+    transform: scale(1.15);
+    box-shadow: 0 0 70px #ffdd33, inset 0 0 30px #ffcc00;
+  }
+  .btn-buy:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+
+  /* SOCIAL BUTTONS */
+  .social-buttons {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 50px;
+  }
+  .social-buttons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #ffd700;
+    color: #4a2c00;
+    font-size: 38px;
+    box-shadow: 0 0 50px #ffcc00;
+    transition: 0.3s ease;
+    border: 3px solid transparent;
+    cursor: pointer;
+    user-select: none;
+  }
+  .social-buttons a:hover {
+    background-color: #ffb800;
+    color: #3a2200;
+    box-shadow: 0 0 70px #ffdd33;
+    transform: scale(1.3);
+    border-color: #fff;
+  }
+
+  /* TOKENOMICS SECTION */
+  section.tokenomics {
+    text-align: center;
+    background: rgba(19,9,0,0.9);
+    border-radius: 25px;
+    padding: 80px 40px;
+    margin: 0 auto 100px;
+    max-width: 900px;
+    color: #fff7b8;
+    font-size: 1.5rem;
+    line-height: 1.8;
+    box-shadow: inset 0 0 120px #7f5500cc;
+    user-select: none;
+  }
+  section.tokenomics strong {
+    color: #ffd700;
+    font-weight: 700;
+  }
+  section.tokenomics h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 50px;
+    color: #ffdb4d;
+    text-align: center;
+    text-shadow: 0 0 30px #ffdb4dcc;
+  }
+
+  /* Rotating logo */
+  .logo-spin-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+  }
+  .logo-spin {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 6px solid #ffd700;
+    box-shadow: 0 0 40px #ffd700cc, inset 0 0 50px #ffcc0080;
+    animation: spin 10s linear infinite;
+    background: radial-gradient(circle at center, #ffcc00, #b27300);
+    object-fit: contain;
+    user-select: none;
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg);}
+    to { transform: rotate(360deg);}
+  }
+
+  /* Roadmap */
+  section#roadmap {
+    background: rgba(19,9,0,0.9);
+    border-radius: 25px;
+    padding: 80px 40px;
+    margin: 0 auto 100px;
+    max-width: 900px;
+    color: #fff7b8;
+    font-size: 1.5rem;
+    line-height: 1.8;
+    box-shadow: inset 0 0 120px #7f5500cc;
+    user-select: none;
+  }
+  section#roadmap h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 50px;
+    color: #ffdb4d;
+    text-align: center;
+    text-shadow: 0 0 30px #ffdb4dcc;
+  }
+  .timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-left: 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(to bottom, #ffd700, #ff9900);
+    border-radius: 3px;
+    box-shadow: 0 0 15px #ffcc0080;
+  }
+  .timeline-item {
+    position: relative;
+    padding-left: 70px;
+    margin-bottom: 45px;
+    color: #3b2a00;
+    font-weight: 700;
+    font-size: 1.3rem;
+    cursor: default;
+    user-select: none;
+    transition: transform 0.3s ease;
+    background: linear-gradient(135deg, #ffdb4dcc, #ffcc00aa);
+    border-radius: 15px;
+    box-shadow: 0 0 30px #ffdb4d88;
+    padding: 18px 25px 18px 70px;
+  }
+  .timeline-item:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 50px #ffcc00cc;
+  }
+  .timeline-item::before {
+    content: "★";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 28px;
+    color: #ffd700;
+    text-shadow: 0 0 15px #ffd700cc;
+    user-select: none;
+  }
+
+  /* Join the legend */
+  section.join-legend {
+    max-width: 850px;
+    margin: 0 auto 80px;
+    text-align: center;
+    color: #ffd;
+  }
+  section.join-legend h2 {
+    margin-bottom: 40px;
+  }
+  section.join-legend p {
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 50px;
+    color: #fff4b8;
+  }
+  section.join-legend a.btn-buy {
+    background: linear-gradient(45deg, #ffcc00, #ff9900);
+    border: none;
+    padding: 18px 60px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #3a2200;
+    border-radius: 50px;
+    box-shadow: 0 0 40px #ffcc00, inset 0 0 20px #ffb800;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    text-decoration: none;
+    display: inline-block;
+  }
+  section.join-legend a.btn-buy:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 70px #ffdd33, inset 0 0 30px #ffcc00;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    header h1 {
+      font-size: 3.8rem;
+    }
+    .legend-text {
+      font-size: 1.3rem;
+      max-width: 90vw;
+      padding: 30px 20px;
+    }
+    header p {
+      margin: 0;
+    }
+    .logo {
+      width: 140px;
+      height: 140px;
+      margin-top: 20px;
+    }
+    .logo img {
+      width: 110px;
+      height: 110px;
+    }
+    .social-buttons a {
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+    }
+    .btn-buy {
+      padding: 14px 40px;
+      font-size: 1.3rem;
+    }
+    section.tokenomics,
+    section#roadmap {
+      padding: 60px 20px;
+      margin-bottom: 60px;
+    }
+    .timeline-item {
+      font-size: 1.1rem;
+      padding-left: 60px;
+      padding-right: 15px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -118,21 +402,70 @@
   <h1>CADO Token</h1>
   <div class="logo" aria-label="CADO Token Logo">
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
-    <div class="pets" aria-hidden="true">
-      <img src="81f8038d46d9ab8f42755fa5ab2e4e14_high.webp" alt="Cat" class="pet cat" />
-      <img src="37ff3ea295d275ad295463541047c9b2_high.webp" alt="Dog" class="pet dog" />
+    <div class="pets" id="pets" aria-hidden="true">
+      <img src="cat.png" alt="Cat" class="pet cat" />
+      <img src="dog.png" alt="Dog" class="pet dog" />
     </div>
   </div>
 
-  <div class="legend-text">
+  <div class="legend-text" role="region" aria-label="Token legend">
     Nobody believed in my strength and dreams — everyone thought I would fail.<br />
     But I never gave up.<br />
     I created CADO to prove that even when the world is against you, greatness is possible.<br />
     This token is my challenge to the world and an invitation to victory for everyone.
   </div>
 
-  <!-- Твой остальной контент -->
+  <div class="social-buttons" role="navigation" aria-label="Social media links">
+    <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane"></i></a>
+    <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+    <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+  </div>
+
+  <button class="btn-buy" id="btnBuy" aria-pressed="false" aria-label="Buy CADO Token now">BUY NOW</button>
 </header>
 
-</body>
-</html>
+<section class="tokenomics" aria-labelledby="tokenomics-title">
+  <h2 id="tokenomics-title">Tokenomics</h2>
+  <p>
+    Total Supply: <strong>1,000,000,000 CADO</strong><br />
+    Max Wallet: <strong>2% of total supply</strong><br />
+    Transaction Tax: <strong>5% (3% Liquidity, 2% Marketing)</strong><br />
+    Launch Date: <strong>Q4 2025</strong>
+  </p>
+</section>
+
+<!-- Вращающееся лого -->
+<div class="logo-spin-container" aria-label="CADO Token rotating logo">
+  <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-spin" />
+</div>
+
+<section id="roadmap" aria-labelledby="roadmap-title">
+  <h2 id="roadmap-title">Roadmap</h2>
+  <div class="timeline" role="list">
+    <div class="timeline-item" role="listitem">3M — Launch NFT Collection</div>
+    <div class="timeline-item" role="listitem">10M — Merch: T-shirts, Caps, Mugs</div>
+    <div class="timeline-item" role="listitem">25M — CADO Staking Platform Launch</div>
+    <div class="timeline-item" role="listitem">50M — Golden Talisman</div>
+    <div class="timeline-item" role="listitem">75M — Community Giveaways & Competitions</div>
+    <div class="timeline-item" role="listitem">100M — Plush Toys</div>
+    <div class="timeline-item" role="listitem">150M — Partnership Announcements</div>
+    <div class="timeline-item" role="listitem">200M — Mobile Wallet Release</div>
+    <div class="timeline-item" role="listitem">300M — Full Animated Series</div>
+    <div class="timeline-item" role="listitem">500M — CADO Metaverse Integration</div>
+    <div class="timeline-item" role="listitem">750M — Listing on Major Exchanges</div>
+    <div class="timeline-item" role="listitem">1B — Feature Film Release</div>
+  </div>
+</section>
+
+<section class="join-legend" aria-labelledby="join-title">
+  <h2 id="join-title">Join the Legend</h2>
+  <p>
+    Be part of the CADO revolution.<br />
+    Connect with our vibrant community on Telegram and Twitter.<br />
+    Stay updated and never miss an opportunity.<br />
+    Together, we’ll redefine the future of crypto.
+  </p>
+  <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
+</section>
+
+<footer style="text-align:center; padding:20px 0; color:#fff
