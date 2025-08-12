@@ -37,13 +37,6 @@
     z-index: -1;
   }
 
-  /* Container for content */
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-
   /* HEADER SECTION */
   header {
     min-height: 100vh;
@@ -55,7 +48,10 @@
     padding: 60px 20px 100px;
     position: relative;
     z-index: 10;
-    animation: fadeInUp 1.5s ease forwards;
+
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1s ease forwards;
   }
   .logo {
     width: 180px;
@@ -100,7 +96,7 @@
     margin-bottom: 0;
   }
 
-  /* Легенда в рамке, как Tokenomics */
+  /* Легенда */
   .legend-text {
     background: rgba(19,9,0,0.9);
     border-radius: 25px;
@@ -111,10 +107,11 @@
     font-size: 1.6rem;
     line-height: 1.7;
     user-select: none;
+
     opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 1.2s ease forwards;
-    animation-delay: 0.6s;
+    transform: translateY(40px);
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.4s;
   }
 
   /* SOCIAL BUTTONS */
@@ -123,10 +120,11 @@
     gap: 50px;
     justify-content: center;
     margin-bottom: 20px;
+
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(40px);
     animation: fadeInUp 1s ease forwards;
-    animation-delay: 0.9s;
+    animation-delay: 0.7s;
   }
   .social-buttons a {
     display: flex;
@@ -167,10 +165,11 @@
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     user-select: none;
+
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(40px);
     animation: fadeInUp 1s ease forwards;
-    animation-delay: 1.2s;
+    animation-delay: 1s;
   }
   .btn-buy:hover {
     transform: scale(1.15);
@@ -210,13 +209,13 @@
   }
 
   section.tokenomics {
-    animation-delay: 1.5s;
+    animation-delay: 1.2s;
   }
   section#roadmap-title ~ div.timeline {
-    animation-delay: 1.7s;
+    animation-delay: 1.4s;
   }
   section.join-legend {
-    animation-delay: 1.9s;
+    animation-delay: 1.6s;
   }
 
   /* TOKENOMICS */
@@ -233,9 +232,10 @@
     display: flex;
     justify-content: center;
     margin: 40px 0;
+
     opacity: 0;
     animation: fadeInUp 1s ease forwards;
-    animation-delay: 2.1s;
+    animation-delay: 1.8s;
   }
 
   .logo-spin {
@@ -409,6 +409,7 @@
 <header>
   <h1>CADO Token</h1>
   <div class="logo" aria-label="CADO Token Logo">
+    <!-- Замени src на свой файл лого -->
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
   <div class="legend-text">
@@ -469,7 +470,7 @@
   <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
 </section>
 
-<footer>
+<footer style="text-align:center; padding:20px; color:#ffd;">
   © 2025 CADO Token — All rights reserved.
 </footer>
 
