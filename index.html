@@ -40,28 +40,36 @@
     box-shadow: 0 0 30px #fff4b8;
   }
 
-  /* Элементы анимации */
-  .circle {
+  /* Животные */
+  .cat, .dog {
     position: absolute;
     bottom: 10%;
     width: 50px;
     height: 50px;
     border-radius: 50%;
     opacity: 0;
+    background-size: cover;
   }
-  .cat { background: orange; left: 70%; }
-  .dog { background: brown; left: 10%; }
+  .cat { background-image: url('https://i.imgur.com/CT9iMyP.png'); left: 70%; }
+  .dog { background-image: url('https://i.imgur.com/QpX9tT5.png'); left: 10%; }
 
-  /* Анимация прыжков */
+  /* Прыжки */
   @keyframes jump {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-50px); }
   }
 
-  /* Анимация свечения */
-  @keyframes glow {
-    0%, 100% { box-shadow: 0 0 20px #ffd700; }
-    50% { box-shadow: 0 0 40px #ffef99; }
+  /* Кот подмигивает */
+  @keyframes wink {
+    0%, 90%, 100% { filter: brightness(1); }
+    45%, 55% { filter: brightness(0.5); }
+  }
+
+  /* Собака машет хвостом */
+  @keyframes wag {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
   }
 
   /* Летающие элементы */
@@ -69,20 +77,26 @@
     position: absolute;
     font-size: 24px;
     opacity: 0;
-    animation: fly 1.5s ease-out forwards;
+    animation: explode 1.5s ease-out forwards;
   }
-  @keyframes fly {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
+  @keyframes explode {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(1.5); opacity: 0; }
   }
 
-  /* Активный класс — запускает всё */
+  /* Свечение */
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px #ffd700; }
+    50% { box-shadow: 0 0 40px #ffef99; }
+  }
+
+  /* Актив */
   .active .cat {
-    animation: jump 1.5s ease-in-out infinite;
+    animation: jump 1.5s ease-in-out infinite, wink 2s infinite;
     opacity: 1;
   }
   .active .dog {
-    animation: jump 1.5s ease-in-out infinite 0.75s;
+    animation: jump 1.5s ease-in-out infinite 0.75s, wag 0.5s infinite;
     opacity: 1;
   }
   .active .main-logo {
@@ -96,8 +110,8 @@
 
 <div class="logo" id="logo">
   <div class="main-logo"></div>
-  <div class="circle cat" aria-label="Кот"></div>
-  <div class="circle dog" aria-label="Собака"></div>
+  <div class="cat" aria-label="Кот"></div>
+  <div class="dog" aria-label="Собака"></div>
 </div>
 
 <script>
@@ -109,9 +123,13 @@
     effect.textContent = symbol;
     effect.style.left = `${Math.random() * 140 + 20}px`;
     effect.style.top = `90px`;
+    // случайное направление взрыва
+    const dx = (Math.random() - 0.5) * 200 + 'px';
+    const dy = (-Math.random() * 200 - 50) + 'px';
+    effect.style.setProperty('--dx', dx);
+    effect.style.setProperty('--dy', dy);
     logo.appendChild(effect);
 
-    // удаляем элемент после анимации
     setTimeout(() => effect.remove(), 1500);
   }
 
@@ -119,7 +137,6 @@
     logo.classList.toggle('active');
 
     if (logo.classList.contains('active')) {
-      // Запуск "приколов"
       const symbols = ['❤️', '✨', '🪙'];
       const interval = setInterval(() => {
         if (!logo.classList.contains('active')) {
@@ -127,12 +144,12 @@
           return;
         }
         createEffect(symbols[Math.floor(Math.random() * symbols.length)]);
-      }, 300);
+      }, 200);
     }
   });
 </script>
 
-<p>Нажми на логотип, чтобы оживить его 🐾</p>
+<p>Нажми на логотип и смотри магию 🐾</p>
 
 </body>
 </html>
