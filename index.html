@@ -9,7 +9,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
 <!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  body {
+    position: relative;
+    overflow: hidden;
+  }
 
+  .falling-emoji {
+    position: fixed;
+    top: -50px;
+    font-size: 2rem;
+    animation: fall linear forwards;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(110vh);
+      opacity: 0;
+    }
+  }
+</style>
 <style>
   /* Reset */
   *, *::before, *::after {
@@ -505,6 +526,23 @@
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
+<script>
+  const emojis = ["🐶", "🐱", "🚀", "💰"]; // сюда вставь эмодзи своей криптовалюты
+  function createEmoji() {
+    const emoji = document.createElement("span");
+    emoji.classList.add("falling-emoji");
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 100 + "vw";
+    emoji.style.fontSize = Math.random() * 30 + 20 + "px";
+    emoji.style.animationDuration = Math.random() * 3 + 4 + "s";
+    document.body.appendChild(emoji);
 
+    setTimeout(() => {
+      emoji.remove();
+    }, 7000);
+  }
+
+  setInterval(createEmoji, 500); // Частота появления
+</script>
 </body>
 </html>
