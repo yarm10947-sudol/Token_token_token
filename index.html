@@ -2,19 +2,46 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>CADO Token Logo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CADO Token</title>
 <style>
   body {
+    margin: 0;
     background: #222;
     color: #fff;
-    font-family: sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 50px;
+    font-family: Arial, sans-serif;
     overflow-x: hidden;
   }
-
-  /* Лого */
+  header {
+    background: #111;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+  nav a {
+    color: #ffd700;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  nav a:hover {
+    color: #fff;
+  }
+  h1, h2 {
+    text-align: center;
+  }
+  section {
+    padding: 50px 20px;
+    max-width: 900px;
+    margin: auto;
+  }
+  /* Лого и анимация */
   .logo {
     position: relative;
     width: 180px;
@@ -29,8 +56,6 @@
   .logo:hover {
     transform: scale(1.05);
   }
-
-  /* Центральная часть */
   .main-logo {
     width: 140px;
     height: 140px;
@@ -39,8 +64,6 @@
     margin: 20px auto;
     box-shadow: 0 0 30px #fff4b8;
   }
-
-  /* Животные */
   .cat, .dog {
     position: absolute;
     bottom: 10%;
@@ -52,27 +75,19 @@
   }
   .cat { background-image: url('https://i.imgur.com/CT9iMyP.png'); left: 70%; }
   .dog { background-image: url('https://i.imgur.com/QpX9tT5.png'); left: 10%; }
-
-  /* Прыжки */
   @keyframes jump {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-50px); }
   }
-
-  /* Кот подмигивает */
   @keyframes wink {
     0%, 90%, 100% { filter: brightness(1); }
     45%, 55% { filter: brightness(0.5); }
   }
-
-  /* Собака машет хвостом */
   @keyframes wag {
     0%, 100% { transform: rotate(0deg); }
     25% { transform: rotate(10deg); }
     75% { transform: rotate(-10deg); }
   }
-
-  /* Летающие элементы */
   .effect {
     position: absolute;
     font-size: 24px;
@@ -83,14 +98,10 @@
     0% { transform: translate(0, 0) scale(1); opacity: 1; }
     100% { transform: translate(var(--dx), var(--dy)) scale(1.5); opacity: 0; }
   }
-
-  /* Свечение */
   @keyframes glow {
     0%, 100% { box-shadow: 0 0 20px #ffd700; }
     50% { box-shadow: 0 0 40px #ffef99; }
   }
-
-  /* Актив */
   .active .cat {
     animation: jump 1.5s ease-in-out infinite, wink 2s infinite;
     opacity: 1;
@@ -102,17 +113,71 @@
   .active .main-logo {
     animation: glow 1s ease-in-out infinite;
   }
+  /* Футер */
+  footer {
+    background: #111;
+    padding: 20px;
+    text-align: center;
+  }
+  footer a {
+    color: #ffd700;
+    margin: 0 10px;
+    font-size: 20px;
+    text-decoration: none;
+  }
+  footer a:hover {
+    color: white;
+  }
 </style>
 </head>
 <body>
 
-<h1>Добро пожаловать в CADO Token</h1>
+<header>
+  <div><strong>CADO TOKEN</strong></div>
+  <nav>
+    <a href="#about">О нас</a>
+    <a href="#tokenomics">Токеномика</a>
+    <a href="#community">Сообщество</a>
+  </nav>
+</header>
 
-<div class="logo" id="logo">
-  <div class="main-logo"></div>
-  <div class="cat" aria-label="Кот"></div>
-  <div class="dog" aria-label="Собака"></div>
-</div>
+<section>
+  <div class="logo" id="logo">
+    <div class="main-logo"></div>
+    <div class="cat"></div>
+    <div class="dog"></div>
+  </div>
+  <h1>Добро пожаловать в CADO Token</h1>
+  <p style="text-align:center;">Нажмите на логотип, чтобы увидеть магию 🐾</p>
+</section>
+
+<section id="about">
+  <h2>О нас</h2>
+  <p>Мы создаём уникальный токен, который объединяет любовь к животным и инновации блокчейна. Наши миссии — помощь приютам, поддержка экосистемы и создание веселого комьюнити.</p>
+</section>
+
+<section id="tokenomics">
+  <h2>Токеномика</h2>
+  <p>Общий запас: 1 000 000 000 CADO</p>
+  <ul>
+    <li>50% — Комьюнити</li>
+    <li>20% — Ликвидность</li>
+    <li>20% — Маркетинг</li>
+    <li>10% — Благотворительность</li>
+  </ul>
+</section>
+
+<section id="community">
+  <h2>Наше сообщество</h2>
+  <p>Присоединяйтесь к нам в соцсетях, чтобы быть в курсе новостей, розыгрышей и благотворительных акций.</p>
+</section>
+
+<footer>
+  <p>© 2025 CADO Token</p>
+  <a href="#">🐦</a>
+  <a href="#">💬</a>
+  <a href="#">📷</a>
+</footer>
 
 <script>
   const logo = document.getElementById('logo');
@@ -123,7 +188,6 @@
     effect.textContent = symbol;
     effect.style.left = `${Math.random() * 140 + 20}px`;
     effect.style.top = `90px`;
-    // случайное направление взрыва
     const dx = (Math.random() - 0.5) * 200 + 'px';
     const dy = (-Math.random() * 200 - 50) + 'px';
     effect.style.setProperty('--dx', dx);
@@ -135,7 +199,6 @@
 
   logo.addEventListener('click', () => {
     logo.classList.toggle('active');
-
     if (logo.classList.contains('active')) {
       const symbols = ['❤️', '✨', '🪙'];
       const interval = setInterval(() => {
@@ -148,8 +211,6 @@
     }
   });
 </script>
-
-<p>Нажми на логотип и смотри магию 🐾</p>
 
 </body>
 </html>
