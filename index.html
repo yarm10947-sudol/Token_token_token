@@ -111,13 +111,7 @@
     line-height: 1.7;
     user-select: none;
 
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .legend-text.visible {
-    opacity: 1;
-    transform: translateY(0);
+    /* Анимация пульсации вверх-вниз */
     animation: pulseMove 3s ease-in-out infinite;
   }
 
@@ -237,13 +231,6 @@
     line-height: 1.8;
     user-select: none;
 
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  section.visible {
-    opacity: 1;
-    transform: translateY(0);
     animation: pulseMove 3s ease-in-out infinite;
   }
 
@@ -352,13 +339,6 @@
     margin-bottom: 50px;
     color: #fff4b8;
 
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .join-legend.visible p {
-    opacity: 1;
-    transform: translateY(0);
     animation: pulseMove 3s ease-in-out infinite;
   }
 
@@ -415,7 +395,7 @@
       padding: 30px 20px;
     }
     header p {
-      margin: 0; /* убрать стандартный отступ, чтобы не дублировался */
+      margin: 0;
     }
     .logo {
       width: 140px;
@@ -446,6 +426,7 @@
     }
   }
 
+  /* Анимация пульсации вверх-вниз */
   @keyframes pulseMove {
     0%, 100% {
       transform: translateY(0);
@@ -504,7 +485,7 @@
     <div class="timeline-item" role="listitem">150M — Partnership Announcements</div>
     <div class="timeline-item" role="listitem">200M — Mobile Wallet Release</div>
     <div class="timeline-item" role="listitem">300M — Full Animated Series</div>
-      <div class="timeline-item" role="listitem">500M — CADO Metaverse Integration</div>
+    <div class="timeline-item" role="listitem">500M — CADO Metaverse Integration</div>
     <div class="timeline-item" role="listitem">750M — Listing on Major Exchanges</div>
     <div class="timeline-item" role="listitem">1B — Feature Film Release</div>
   </div>
@@ -518,27 +499,12 @@
     Stay updated and never miss an opportunity.<br />
     Together, we’ll redefine the future of crypto.
   </p>
-  <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
+    <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
 </section>
 
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
-
-<script>
-  // Показываем элементы с задержкой, плавно добавляя класс visible
-  document.addEventListener("DOMContentLoaded", () => {
-    const legend = document.getElementById('legendText');
-    const tokenomics = document.getElementById('tokenomicsSection');
-    const roadmap = document.getElementById('roadmapSection');
-    const joinLegend = document.querySelector('.join-legend');
-
-    setTimeout(() => legend.classList.add('visible'), 300);
-    setTimeout(() => tokenomics.classList.add('visible'), 600);
-    setTimeout(() => roadmap.classList.add('visible'), 900);
-    setTimeout(() => joinLegend.classList.add('visible'), 1200);
-  });
-</script>
 
 </body>
 </html>
