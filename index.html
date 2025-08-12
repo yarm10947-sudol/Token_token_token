@@ -9,30 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
 <!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<style>
-  body {
-    position: relative;
-    overflow: hidden;
-  }
 
-  .falling-coin {
-    position: fixed;
-    top: -50px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%; /* Делаем круглой */
-    animation: fall linear forwards;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  @keyframes fall {
-    to {
-      transform: translateY(110vh);
-      opacity: 0;
-    }
-  }
-</style>
 <style>
   /* Reset */
   *, *::before, *::after {
@@ -528,30 +505,6 @@
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
-<script>
-  const coinImage = "file_00000000198861f581eb6192921a6f6c.png"; // путь к картинке твоей криптовалюты
 
-  function createCoin() {
-    const coin = document.createElement("img");
-    coin.src = coinImage;
-    coin.classList.add("falling-coin");
-
-    // Падение только с левого или правого края
-    if (Math.random() > 0.5) {
-      coin.style.left = "0px";
-    } else {
-      coin.style.right = "0px";
-    }
-
-    coin.style.animationDuration = Math.random() * 3 + 4 + "s";
-    document.body.appendChild(coin);
-
-    setTimeout(() => {
-      coin.remove();
-    }, 7000);
-  }
-
-  setInterval(createCoin, 500); // Частота появления
-</script>
 </body>
 </html>
