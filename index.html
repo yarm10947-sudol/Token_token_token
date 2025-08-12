@@ -624,6 +624,8 @@ function animate() {
 
   drawParticles();
   requestAnimationFrame(animate);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.drawImage(logo, 0, 0, canvas.width, canvas.height);
 }   
 </script>
 </body>
