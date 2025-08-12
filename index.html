@@ -516,117 +516,204 @@
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
-<script> 
- const canvas = document.getElementById("logoCanvas");
-const ctx = canvas.getContext("2d");
-canvas.width = 300;
-canvas.height = 300;
+<script>
+(function(){
+  const canvas = document.getElementById('logoCanvas');
+  if (!canvas) { console.error('canvas #logoCanvas not found'); return; }
+  const ctx = canvas.getContext('2d');
 
-const logo = new Image();
-logo.src = "logo.png"; // замени на путь к твоему логотипу
+  // вычисляем реальный (CSS) размер canvas и масштабируем его под DPR
+  const rect = canvas.getBoundingClientRect();
+  const displayW = Math.max(1, Math.round(rect.width || 300));
+  const displayH = Math.max(1, Math.round(rect.height || 300));
+  const DPR = window.devicePixelRatio || 1;
+  canvas.width = Math.round(displayW * DPR);
+  canvas.height = Math.round(displayH * DPR);
+  canvas.style.width = displayW + 'px';
+  canvas.style.height = displayH + 'px';
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0); // масштабируем контекст
 
-let particles = [];
-let stage = 0;
-let timer = 0;
+  // используем img из DOM, если есть, чтобы не ошибиться с путём
+  const imgEl = document.querySelector('.logo img');
+  const logoSrc = imgEl ? imgEl.src : 'file_00000000198861f581eb6192921a6f6c.png';
 
-logo.onload = () => {
-  createParticles();
-  requestAnimationFrame(animate);
-};
+  // скрываем оригинальный img, чтобы не перекрывал canvas
+  if (imgEl) imgEl.style.visibility = 'hidden';
 
-function createParticles() {
-  const size = 10; // размер кусочка
-  for (let y = 0; y < logo.height; y += size) {
-    for (let x = 0; x < logo.width; x += size) {
-      particles.push({
-        x: x,
-        y: y,
-        homeX: x,
-        homeY: y,
-        vx: 0,
-        vy: 0
+  const logo = new Image();
+  logo.crossOrigin = 'Anonymous'; // на случай, если источник другой
+  logo.onload = () => start(logo);
+  logo.onerror = (e) => { console.error('Не удалось загрузить логотип:', logoSrc, e); };
+
+  logo.src = logoSrc;
+
+  function start(logoImg) {
+    // рисуем логотип в offscreen canvas, чтобы взять пиксели
+    const off = document.createElement('canvas');
+    off.width = displayW;
+    off.height = displayH;
+    const offCtx = off.getContext('2d');
+    offCtx.drawImage(logoImg, 0, 0, displayW, displayH);
+    const imgData = offCtx.getImageData(0, 0, displayW, displayH).data;
+
+    // создаём частицы по сетке, пробуем шаг size
+    const size = 8; // размер кусочков (подгони при необходимости)
+    const particles = [];
+    for (let y = 0; y < displayH; y += size) {
+      for (let x = 0; x < displayW; x += size) {
+        const idx = (y * displayW + x) * 4;
+        const a = imgData[idx + 3];
+        if (a > 16) { // порог прозрачности: если не прозрачный
+          const r = imgData[idx];
+          const g = imgData[idx + 1];
+          const b = imgData[idx + 2];
+          particles.push({
+            homeX: x,
+            homeY: y,
+            x: displayW/2 + (Math.random()-0.5)*8,
+            y: displayH/2 + (Math.random()-0.5)*8,
+            vx: 0,
+            vy: 0,
+            size,
+            color: `rgba(${r},${g},${b},${(a/255).toFixed(2)})`
+          });
+        }
+      }
+    }
+
+    // состояние машины состояний
+    let state = 'idle'; // idle -> electric -> explode -> charged -> assemble -> final
+    let timer = 0;
+    const explosionFrames = 90;
+    const electricFrames = 70;
+    const assembleFrames = 110;
+
+    // helper: рисуем все частицы (возможно с эффектом свечения)
+    function drawParticles(glow = false) {
+      particles.forEach(p => {
+        ctx.save();
+        if (glow) {
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = 'cyan';
+        } else {
+          ctx.shadowBlur = 0;
+        }
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+        ctx.restore();
       });
     }
-  }
-}
 
-function drawParticles() {
-  const size = 10;
-  particles.forEach(p => {
-    ctx.drawImage(logo, p.homeX, p.homeY, size, size, p.x, p.y, size, size);
-  });
-}
-
-// Рисуем молнию
-function drawLightning() {
-  ctx.strokeStyle = `rgba(255,255,255,${Math.random()})`;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  let startX = Math.random() * canvas.width;
-  let startY = 0;
-  ctx.moveTo(startX, startY);
-  for (let i = 0; i < 5; i++) {
-    startX += (Math.random() - 0.5) * 50;
-    startY += canvas.height / 5;
-    ctx.lineTo(startX, startY);
-  }
-  ctx.stroke();
-}
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  if (stage === 0) {
-    // дрожание
-    particles.forEach(p => {
-      p.x = p.homeX + Math.random() * 4 - 2;
-      p.y = p.homeY + Math.random() * 4 - 2;
-    });
-
-    // молнии
-    if (Math.random() > 0.7) {
-      drawLightning();
+    // helper: молния(и) поверх логотипа
+    function drawLightning() {
+      const lines = 2 + Math.floor(Math.random()*3);
+      for (let i=0;i<lines;i++){
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(180,240,255,${0.15 + Math.random()*0.6})`;
+        ctx.lineWidth = 1 + Math.random()*2;
+        let sx = Math.random() * displayW;
+        let sy = 0;
+        ctx.moveTo(sx, sy);
+        const steps = 6;
+        for (let k=0;k<steps;k++){
+          sx += (Math.random()-0.5) * 80;
+          sy += displayH/steps;
+          ctx.lineTo(sx, sy);
+        }
+        ctx.stroke();
+      }
     }
 
-    timer++;
-    if (timer > 50) { stage = 1; timer = 0; }
-  }
+    // запустить взрыв: дать ускорения частицам (вверх/в стороны)
+    function startExplosion() {
+      particles.forEach(p => {
+        // направление преимущественно вверх: angle [-120deg .. -60deg] in radians
+        const ang = (-Math.PI/2) + (Math.random() - 0.5) * Math.PI * 0.7;
+        const s = 2 + Math.random()*6;
+        p.vx = Math.cos(ang) * s * (1 + Math.random()*0.6);
+        p.vy = Math.sin(ang) * s * (1 + Math.random()*0.6);
+      });
+    }
 
-  else if (stage === 1) {
-    // взрыв
-    particles.forEach(p => {
-      p.vx = Math.random() * 6 - 3;
-      p.vy = Math.random() * -4 - 2;
-    });
-    stage = 2;
-  }
+    // анимационный цикл
+    function loop() {
+      ctx.clearRect(0, 0, displayW, displayH);
 
-  else if (stage === 2) {
-    // движение кусочков
-    particles.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vy += 0.1; // гравитация
-    });
-    timer++;
-    if (timer > 80) { stage = 3; timer = 0; }
-  }
+      if (state === 'idle') {
+        // рисуем логотип целиком с лёгкой дрожью
+        ctx.save();
+        const j = 1.2;
+        ctx.translate((Math.random()-0.5)*j, (Math.random()-0.5)*j);
+        ctx.drawImage(logoImg, 0, 0, displayW, displayH);
+        ctx.restore();
 
-  else if (stage === 3) {
-    // сборка обратно
-    particles.forEach(p => {
-      p.x += (p.homeX - p.x) * 0.05;
-      p.y += (p.homeY - p.y) * 0.05;
-    });
-    timer++;
-    if (timer > 60) { stage = 0; timer = 0; }
-  }
+        timer++;
+        if (timer > 35) { timer = 0; state = 'electric'; }
+      }
 
-  drawParticles();
-  requestAnimationFrame(animate);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-ctx.drawImage(logo, 0, 0, canvas.width, canvas.height);
-}   
-</script>
+      else if (state === 'electric') {
+        // рисуем logo + молнии (заряд)
+        ctx.drawImage(logoImg, 0, 0, displayW, displayH);
+        if (Math.random() > 0.25) drawLightning();
+        timer++;
+        if (timer > 30) { timer = 0; startExplosion(); state = 'explode'; }
+      }
+
+      else if (state === 'explode') {
+        // кусочки разлетаются
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.12; // гравитация
+          // можно добавить небольшое трение:
+          p.vx *= 0.995;
+          p.vy *= 0.995;
+        });
+        drawParticles(false);
+        timer++;
+        if (timer > explosionFrames) { timer = 0; state = 'charged'; }
+      }
+
+      else if (state === 'charged') {
+        // кусочки дрожат и светятся (электричество вокруг)
+        drawParticles(true);
+        if (Math.random() > 0.6) drawLightning();
+        timer++;
+        if (timer > electricFrames) { timer = 0; state = 'assemble'; }
+      }
+
+      else if (state === 'assemble') {
+        // частицы сбегаются к home позициям
+        const speedFactor = 0.06; // чем больше - тем быстрее сборка
+        let allClose = true;
+        particles.forEach(p => {
+          p.x += (p.homeX - p.x) * speedFactor;
+          p.y += (p.homeY - p.y) * speedFactor;
+          // небольшая коррекция углов/дрожи
+          if (Math.abs(p.x - p.homeX) > 0.5 || Math.abs(p.y - p.homeY) > 0.5) allClose = false;
+        });
+        drawParticles(false);
+        timer++;
+        // если все частицы близко к своему месту или превысили время, переходим к финалу
+        if (allClose || timer > assembleFrames) { timer = 0; state = 'final'; }
+      }
+
+      else if (state === 'final') {
+        // рисуем чистый логотип в конце (обеспечивает 100% видимость)
+        ctx.drawImage(logoImg, 0, 0, displayW, displayH);
+        // можно показать оригинальный <img> (если нужно)
+        // if (imgEl) imgEl.style.visibility = '';
+        timer++;
+        // задержка затем снова цикл (или можно остановиться)
+        if (timer > 90) { timer = 0; state = 'idle'; }
+      }
+
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  } // end start()
+})();
+         </script>
 </body>
 </html>
