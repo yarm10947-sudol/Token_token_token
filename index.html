@@ -512,6 +512,20 @@
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
+<script>
+  // Функция добавляет класс visible элементам при загрузке страницы
+  document.addEventListener("DOMContentLoaded", () => {
+    const legend = document.getElementById('legendText');
+    const tokenomics = document.getElementById('tokenomicsSection');
+    const roadmap = document.getElementById('roadmapSection');
+    const joinLegend = document.querySelector('.join-legend');
 
+    // Показываем с небольшой задержкой для плавности
+    setTimeout(() => legend.classList.add('visible'), 300);
+    setTimeout(() => tokenomics.classList.add('visible'), 600);
+    setTimeout(() => roadmap.classList.add('visible'), 900);
+    setTimeout(() => joinLegend.classList.add('visible'), 1200);
+  });
+</script>
 </body>
 </html>
