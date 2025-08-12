@@ -585,9 +585,9 @@
     // состояние машины состояний
     let state = 'idle'; // idle -> electric -> explode -> charged -> assemble -> final
     let timer = 0;
-    const explosionFrames = 90;
-    const electricFrames = 70;
-    const assembleFrames = 110;
+    const explosionFrames = 140; // было 90 - увеличил
+    const electricFrames = 110;  // было 70 - увеличил
+    const assembleFrames = 160;  // было 110 - увеличил
 
     // helper: рисуем все частицы (возможно с эффектом свечения)
     function drawParticles(glow = false) {
@@ -630,7 +630,7 @@
       particles.forEach(p => {
         // направление преимущественно вверх: angle [-120deg .. -60deg] in radians
         const ang = (-Math.PI/2) + (Math.random() - 0.5) * Math.PI * 0.7;
-        const s = 2 + Math.random()*6;
+        const s = 1 + Math.random()*3;  // было 2 + Math.random()*6, уменьшил скорость
         p.vx = Math.cos(ang) * s * (1 + Math.random()*0.6);
         p.vy = Math.sin(ang) * s * (1 + Math.random()*0.6);
       });
@@ -649,7 +649,7 @@
         ctx.restore();
 
         timer++;
-        if (timer > 35) { timer = 0; state = 'electric'; }
+        if (timer > 60) { timer = 0; state = 'electric'; } // было 35
       }
 
       else if (state === 'electric') {
@@ -657,7 +657,7 @@
         ctx.drawImage(logoImg, 0, 0, displayW, displayH);
         if (Math.random() > 0.25) drawLightning();
         timer++;
-        if (timer > 30) { timer = 0; startExplosion(); state = 'explode'; }
+        if (timer > 50) { timer = 0; startExplosion(); state = 'explode'; } // было 30
       }
 
       else if (state === 'explode') {
@@ -685,7 +685,7 @@
 
       else if (state === 'assemble') {
         // частицы сбегаются к home позициям
-        const speedFactor = 0.06; // чем больше - тем быстрее сборка
+        const speedFactor = 0.04; // было 0.06
         let allClose = true;
         particles.forEach(p => {
           p.x += (p.homeX - p.x) * speedFactor;
@@ -706,7 +706,7 @@
         // if (imgEl) imgEl.style.visibility = '';
         timer++;
         // задержка затем снова цикл (или можно остановиться)
-        if (timer > 90) { timer = 0; state = 'idle'; }
+        if (timer > 140) { timer = 0; state = 'idle'; } // было 90
       }
 
       requestAnimationFrame(loop);
@@ -715,6 +715,6 @@
     loop();
   } // end start()
 })();
-         </script>
+</script>
 </body>
 </html>
