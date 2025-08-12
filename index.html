@@ -1,213 +1,379 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CADO Token</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CADO Token — The Legend</title>
+
+<!-- Fonts + icons -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
 <style>
+  /* ========== Reset & base ========== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html,body { height:100%; }
   body {
     margin: 0;
-    background: #222;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #ff0000, #ffd700, #ff9900, #000000);
     color: #fff;
-    font-family: Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
     overflow-x: hidden;
   }
+  a { color: inherit; text-decoration: none; }
+
+  /* subtle overlay for readability */
+  body::before {
+    content:"";
+    position:fixed; inset:0;
+    background: rgba(20,10,10,0.95);
+    z-index:-1;
+  }
+
+  .container { max-width:1200px; margin:0 auto; padding:0 20px; }
+
+  /* ========== Header ========== */
   header {
-    background: #111;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    min-height:92vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:60px 20px;
+    gap:24px;
   }
-  nav a {
-    color: #ffd700;
-    text-decoration: none;
-    margin-left: 20px;
-    font-weight: bold;
-    transition: color 0.3s;
+  header h1 {
+    margin:0;
+    font-family:'Orbitron',sans-serif;
+    font-weight:700;
+    font-size: clamp(2.4rem, 5vw, 5rem);
+    letter-spacing:5px;
+    color: #fff7b8;
+    text-shadow: 0 0 15px #ffcc00, 0 0 40px #ff9900;
   }
-  nav a:hover {
-    color: #fff;
-  }
-  h1, h2 {
-    text-align: center;
-  }
-  section {
-    padding: 50px 20px;
-    max-width: 900px;
-    margin: auto;
-  }
-  /* Лого и анимация */
+
+  /* ========== Logo (clickable) ========== */
   .logo {
     position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 50px auto;
-    background: radial-gradient(circle at center, #ffcc00, #b27300);
+    width: 190px;
+    height: 190px;
     border-radius: 50%;
     border: 8px solid #ffd700;
+    background: radial-gradient(circle at center, #ffcc00, #b27300);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 0 60px #ffd700aa, inset 0 0 70px #ffcc0080;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform .28s ease, filter .28s ease;
   }
-  .logo:hover {
-    transform: scale(1.05);
-  }
-  .main-logo {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background: white;
-    margin: 20px auto;
-    box-shadow: 0 0 30px #fff4b8;
-  }
-  .cat, .dog {
-    position: absolute;
-    bottom: 10%;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    opacity: 0;
+  .logo:active { transform: scale(.98); }
+  .logo-main {
+    width: 150px;
+    height: 150px;
+    border-radius:50%;
+    border:6px solid #fff4b8;
+    background-image: url('file_00000000198861f581eb6192921a6f6c.png'); /* change to your logo file */
     background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 30px #fff4b8;
+    pointer-events: none;
   }
-  .cat { background-image: url('https://i.imgur.com/CT9iMyP.png'); left: 70%; }
-  .dog { background-image: url('https://i.imgur.com/QpX9tT5.png'); left: 10%; }
+
+  /* animals */
+  .animal {
+    position: absolute;
+    width: 96px;
+    height: 96px;
+    bottom: -10px;
+    opacity: 0;
+    pointer-events: none;
+    transform-origin: 50% 100%;
+  }
+  .animal img { width:100%; height:100%; object-fit:contain; display:block; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.6)); }
+
+  /* positions */
+  .cat { left: 16px; }
+  .dog { right: 16px; }
+
+  /* animations */
   @keyframes jump {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-50px); }
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-90px); }
   }
   @keyframes wink {
-    0%, 90%, 100% { filter: brightness(1); }
-    45%, 55% { filter: brightness(0.5); }
+    0%, 45%, 55%, 100% { transform: none; filter: none; }
+    50% { filter: brightness(.6) saturate(1.1); }
   }
   @keyframes wag {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(10deg); }
-    75% { transform: rotate(-10deg); }
+    0%,100% { transform: rotate(0deg); }
+    25% { transform: rotate(12deg); }
+    75% { transform: rotate(-12deg); }
   }
+  .logo.active .animal { opacity: 1; }
+  .logo.active .cat { animation: jump 1.6s ease-in-out infinite, wink 2.2s ease-in-out infinite; }
+  .logo.active .dog { animation: jump 1.6s ease-in-out infinite .12s, wag .45s ease-in-out infinite; }
+
+  /* glow for logo when active */
+  @keyframes glow {
+    0%,100% { box-shadow: 0 0 30px #ffd700aa, inset 0 0 70px #ffcc0080; filter: drop-shadow(0 0 6px #ffd70066); }
+    50% { box-shadow: 0 0 60px #ffef99ee, inset 0 0 90px #ffc94d80; filter: drop-shadow(0 0 12px #fff4b8aa); }
+  }
+  .logo.active .logo-main { animation: glow 1s ease-in-out infinite; }
+
+  /* ========== Floating effects (hearts/sparks/coins) ========== */
   .effect {
     position: absolute;
-    font-size: 24px;
-    opacity: 0;
-    animation: explode 1.5s ease-out forwards;
-  }
-  @keyframes explode {
-    0% { transform: translate(0, 0) scale(1); opacity: 1; }
-    100% { transform: translate(var(--dx), var(--dy)) scale(1.5); opacity: 0; }
-  }
-  @keyframes glow {
-    0%, 100% { box-shadow: 0 0 20px #ffd700; }
-    50% { box-shadow: 0 0 40px #ffef99; }
-  }
-  .active .cat {
-    animation: jump 1.5s ease-in-out infinite, wink 2s infinite;
-    opacity: 1;
-  }
-  .active .dog {
-    animation: jump 1.5s ease-in-out infinite 0.75s, wag 0.5s infinite;
-    opacity: 1;
-  }
-  .active .main-logo {
-    animation: glow 1s ease-in-out infinite;
-  }
-  /* Футер */
-  footer {
-    background: #111;
-    padding: 20px;
-    text-align: center;
-  }
-  footer a {
-    color: #ffd700;
-    margin: 0 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%) scale(.9);
     font-size: 20px;
-    text-decoration: none;
+    pointer-events: none;
+    user-select: none;
+    will-change: transform, opacity;
+    opacity: 0;
   }
-  footer a:hover {
-    color: white;
+  @keyframes floatUp {
+    0%   { opacity:1; transform: translate(var(--x0,0), var(--y0,0)) scale(.9) rotate(0deg); }
+    30%  { transform: translate(calc(var(--x0,0) + var(--dx) / 3), calc(var(--y0,0) - 40px)) scale(1.05) rotate(12deg); }
+    60%  { transform: translate(calc(var(--x0,0) + var(--dx) * .6), calc(var(--y0,0) - 90px)) scale(1.15) rotate(-8deg); }
+    100% { opacity:0; transform: translate(calc(var(--x0,0) + var(--dx)), calc(var(--y0,0) - 160px)) scale(1.25) rotate(12deg); }
+  }
+
+  /* ========== Legend card ========== */
+  .legend {
+    background: rgba(19,9,0,0.92);
+    border-radius: 24px;
+    padding: 34px;
+    max-width:760px;
+    color:#fff7b8;
+    font-size: clamp(1rem, 1.5vw, 1.6rem);
+    line-height:1.6;
+    text-align:center;
+    box-shadow: 0 8px 50px rgba(0,0,0,.45), 0 0 36px #b2730022 inset;
+    margin-top:22px;
+  }
+
+  /* ========== Social buttons (small) ========== */
+  .socials { display:flex; gap:18px; justify-content:center; margin-top:18px; }
+  .socials a {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:72px; height:72px; border-radius:50%;
+    background:#ffd700; color:#4a2c00; font-size:28px;
+    border:3px solid transparent; box-shadow: 0 0 36px #ffcc00aa;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .socials a:hover { transform: scale(1.15); box-shadow: 0 0 60px #ffdd33; border-color:#fff; }
+
+  /* ========== Sections ========== */
+  section.section {
+    background: rgba(19,9,0,0.9);
+    border-radius: 20px;
+    padding: 64px 36px;
+    margin: 48px auto;
+    max-width: 920px;
+    color: #fff7b8;
+    box-shadow: inset 0 0 100px #7f5500cc;
+    opacity:0; transform: translateY(18px) scale(.995); transition: opacity .6s ease, transform .6s ease;
+  }
+  section.section.visible { opacity:1; transform: none; }
+
+  section.section h2 { font-family:'Orbitron',sans-serif; margin-top:0; color:#ffdb4d; text-shadow:0 0 22px #ffdb4dcc; }
+
+  /* tokenomics list */
+  .token-list { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin-top:18px; }
+  .token-card { background: linear-gradient(180deg,#ffedb87d,#ffdb4d3b); color:#3b2a00; padding:18px 22px; border-radius:14px; box-shadow: 0 8px 30px #ffdb4d4d; min-width:160px; text-align:left; font-weight:700; }
+
+  /* Roadmap timeline */
+  .timeline { position:relative; padding-left:28px; }
+  .timeline::before { content:""; position:absolute; left:14px; top:0; bottom:0; width:6px; background: linear-gradient(#ffd700,#ff9900); border-radius:4px; box-shadow:0 0 15px #ffcc0080; }
+  .timeline-item { position:relative; margin:18px 0; padding:16px 18px 16px 46px; background: linear-gradient(135deg,#ffdb4dcc,#ffcc00aa); border-radius:12px; color:#3b2a00; font-weight:700; box-shadow:0 10px 30px #ffdb4d66; }
+  .timeline-item::before { content:"★"; position:absolute; left:-6px; top:50%; transform:translateY(-50%); font-size:22px; color:#ffd700; text-shadow:0 0 8px #ffd700cc; }
+
+  /* Join CTA */
+  .join { text-align:center; padding:36px; border-radius:16px; background: linear-gradient(90deg, rgba(255,221,77,0.06), rgba(255,204,0,0.03)); margin-bottom:36px; }
+
+  /* footer */
+  footer {
+    text-align:center; color:#fff4b8;
+    padding: 36px 20px;
+    border-top: 1px solid rgba(255,215,0,0.06);
+    margin-top: 40px;
+  }
+  .footer-row { display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap; }
+  .copyright {
+    font-weight:600; color:#ffd700dd; text-shadow:0 0 8px #ffcc00bb;
+    margin:8px 0;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width:900px) {
+    .logo { width:150px; height:150px; }
+    .logo-main { width:120px; height:120px; }
+    .animal { width:72px; height:72px; bottom:-6px; }
+    .legend { padding:22px; font-size:1.05rem; }
+    section.section { padding:36px 20px; margin:24px 16px; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div><strong>CADO TOKEN</strong></div>
-  <nav>
-    <a href="#about">О нас</a>
-    <a href="#tokenomics">Токеномика</a>
-    <a href="#community">Сообщество</a>
-  </nav>
+<header class="container" aria-label="Hero">
+  <div style="text-align:center;">
+    <div id="logo" class="logo" role="button" aria-pressed="false" title="Кликни, чтобы оживить">
+      <div class="logo-main" aria-hidden="true"></div>
+
+      <!-- animals: change src to your preferred images if you want -->
+      <div class="animal cat" aria-hidden="true">
+        <img src="https://i.imgur.com/CT9iMyP.png" alt="Cat" />
+      </div>
+      <div class="animal dog" aria-hidden="true">
+        <img src="https://i.imgur.com/QpX9tT5.png" alt="Dog" />
+      </div>
+    </div>
+
+    <h1>CADO Token</h1>
+
+    <div class="legend" role="region" aria-label="Легенда">
+      Nobody believed in my strength and dreams — everyone thought I would fail.<br>
+      But I never gave up. I created CADO to prove that even when the world is against you, greatness is possible.
+    </div>
+
+    <div class="socials" role="navigation" aria-label="Social links" style="margin-top:18px;">
+      <a href="#" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+      <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
 </header>
 
-<section>
-  <div class="logo" id="logo">
-    <div class="main-logo"></div>
-    <div class="cat"></div>
-    <div class="dog"></div>
-  </div>
-  <h1>Добро пожаловать в CADO Token</h1>
-  <p style="text-align:center;">Нажмите на логотип, чтобы увидеть магию 🐾</p>
-</section>
+<main class="container" style="padding-bottom:40px;">
 
-<section id="about">
-  <h2>О нас</h2>
-  <p>Мы создаём уникальный токен, который объединяет любовь к животным и инновации блокчейна. Наши миссии — помощь приютам, поддержка экосистемы и создание веселого комьюнити.</p>
-</section>
+  <section id="tokenomics" class="section" aria-labelledby="tokenomics-title">
+    <h2 id="tokenomics-title">Tokenomics</h2>
+    <p style="text-align:center; max-width:780px; margin:10px auto 18px;">
+      Total Supply: <strong>1,000,000,000 CADO</strong> · Max Wallet: <strong>2%</strong> · Transaction Tax: <strong>5%</strong>
+    </p>
 
-<section id="tokenomics">
-  <h2>Токеномика</h2>
-  <p>Общий запас: 1 000 000 000 CADO</p>
-  <ul>
-    <li>50% — Комьюнити</li>
-    <li>20% — Ликвидность</li>
-    <li>20% — Маркетинг</li>
-    <li>10% — Благотворительность</li>
-  </ul>
-</section>
+    <div class="token-list" aria-hidden="false">
+      <div class="token-card">3% — Liquidity</div>
+      <div class="token-card">2% — Marketing</div>
+      <div class="token-card">50% — Community</div>
+      <div class="token-card">10% — Charity</div>
+    </div>
+  </section>
 
-<section id="community">
-  <h2>Наше сообщество</h2>
-  <p>Присоединяйтесь к нам в соцсетях, чтобы быть в курсе новостей, розыгрышей и благотворительных акций.</p>
-</section>
+  <section id="roadmap" class="section" aria-labelledby="roadmap-title">
+    <h2 id="roadmap-title">Roadmap</h2>
+
+    <div class="timeline" role="list" aria-label="Roadmap timeline">
+      <div class="timeline-item" role="listitem">3M — Launch NFT Collection</div>
+      <div class="timeline-item" role="listitem">25M — Staking Platform Launch</div>
+      <div class="timeline-item" role="listitem">200M — Mobile Wallet Release</div>
+      <div class="timeline-item" role="listitem">500M — Metaverse Integration</div>
+      <div class="timeline-item" role="listitem">1B — Feature Film Release</div>
+    </div>
+  </section>
+
+  <section id="community" class="section" aria-labelledby="community-title">
+    <h2 id="community-title">Join the Legend</h2>
+    <p style="max-width:760px; margin:0 auto 18px;">
+      Be part of the CADO revolution. Connect with our vibrant community on Telegram and Twitter. Together, we’ll redefine the future of crypto.
+    </p>
+
+    <div class="join" role="region" aria-label="Join call to action">
+      <a class="btn-cta" href="#" style="display:inline-block; padding:14px 34px; border-radius:999px; background:linear-gradient(45deg,#ffcc00,#ff9900); color:#3a2200; font-weight:700; box-shadow:0 10px 40px #ffcc00aa; text-decoration:none;">JOIN NOW</a>
+    </div>
+  </section>
+
+</main>
 
 <footer>
-  <p>© 2025 CADO Token</p>
-  <a href="#">🐦</a>
-  <a href="#">💬</a>
-  <a href="#">📷</a>
+  <div class="footer-row container">
+    <div class="copyright">© 2025 CADO Token — All rights reserved.</div>
+  </div>
 </footer>
 
 <script>
+  // ========== Logo click behavior: animals + effects ==========
   const logo = document.getElementById('logo');
+  const cat = logo.querySelector('.cat');
+  const dog = logo.querySelector('.dog');
 
-  function createEffect(symbol) {
-    const effect = document.createElement('div');
-    effect.className = 'effect';
-    effect.textContent = symbol;
-    effect.style.left = `${Math.random() * 140 + 20}px`;
-    effect.style.top = `90px`;
-    const dx = (Math.random() - 0.5) * 200 + 'px';
-    const dy = (-Math.random() * 200 - 50) + 'px';
-    effect.style.setProperty('--dx', dx);
-    effect.style.setProperty('--dy', dy);
-    logo.appendChild(effect);
+  let effectInterval = null;
 
-    setTimeout(() => effect.remove(), 1500);
+  function spawnEffect(symbol) {
+    const el = document.createElement('div');
+    el.className = 'effect';
+    el.textContent = symbol;
+
+    // randomize start offset near logo center
+    const startX = (Math.random() - 0.5) * 40; // px
+    const startY = (Math.random() - 0.5) * 20; // px
+    el.style.setProperty('--x0', startX + 'px');
+    el.style.setProperty('--y0', startY + 'px');
+
+    // random destination offset
+    const dx = (Math.random() - 0.5) * 220 + (Math.random() > .5 ? 30 : -30);
+    const dy = - (120 + Math.random() * 120);
+    el.style.setProperty('--dx', dx + 'px');
+    el.style.setProperty('--dy', dy + 'px');
+
+    // random horizontal starting position within logo bounds
+    const left = 50 + (Math.random() - 0.5) * 70; // percent
+    el.style.left = left + '%';
+    el.style.top = 45 + 'px';
+
+    logo.appendChild(el);
+
+    // trigger animation
+    requestAnimationFrame(() => {
+      el.style.animation = 'floatUp 1400ms cubic-bezier(.2,.7,.2,1) forwards';
+      el.style.opacity = '1';
+    });
+
+    setTimeout(()=> {
+      el.remove();
+    }, 1600);
   }
 
   logo.addEventListener('click', () => {
-    logo.classList.toggle('active');
-    if (logo.classList.contains('active')) {
-      const symbols = ['❤️', '✨', '🪙'];
-      const interval = setInterval(() => {
-        if (!logo.classList.contains('active')) {
-          clearInterval(interval);
-          return;
-        }
-        createEffect(symbols[Math.floor(Math.random() * symbols.length)]);
-      }, 200);
+    const isActive = logo.classList.toggle('active');
+    logo.setAttribute('aria-pressed', String(isActive));
+
+    // on activate, start spawning effects
+    if (isActive) {
+      // spawn a burst immediately
+      for (let i=0;i<6;i++) spawnEffect(['❤️','✨','🪙'][Math.floor(Math.random()*3)]);
+
+      // interval for ongoing sparkles
+      effectInterval = setInterval(() => {
+        spawnEffect(['❤️','✨','🪙'][Math.floor(Math.random()*3)]);
+      }, 220);
+    } else {
+      // off: stop interval
+      clearInterval(effectInterval);
+      effectInterval = null;
+    }
+  });
+
+  // ========== Scroll reveal for sections ==========
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('section.section').forEach(s => observer.observe(s));
+
+  // Ensure top hero legend is visible (not inside .section)
+  // Add accessible keyboard activation for logo
+  logo.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      logo.click();
     }
   });
 </script>
