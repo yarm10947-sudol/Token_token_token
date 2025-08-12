@@ -436,15 +436,14 @@
     }
   }
   #logoCanvas {
-  display: block;
-  margin: 30px auto;
-  border-radius: 50%;
-  box-shadow:
-    0 0 30px #ffd700cc,
-    inset 0 0 40px #ffcc0080;
-  background: radial-gradient(circle at center, #ffcc00, #b27300);
-  user-select: none;
-  cursor: default;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  z-index: 10;
+  pointer-events: none;
   }
 </style>
 </head>
@@ -518,173 +517,114 @@
   © 2025 CADO Token — All rights reserved.
 </footer>
 <script> 
-(() => {
-  const canvas = document.getElementById('logoCanvas');
-  const ctx = canvas.getContext('2d');
+ const canvas = document.getElementById("logoCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = 300;
+canvas.height = 300;
 
-  const logoSrc = 'file_00000000198861f581eb6192921a6f6c.png'; // путь к твоему логотипу
-  const piecesSize = 20; // размер кусочка (квадрат)
-  let pieces = [];
-  let imgData = null;
-  let logoImage = new Image();
+const logo = new Image();
+logo.src = "logo.png"; // замени на путь к твоему логотипу
 
-  // Состояния анимации
-  const STATE = {
-    IDLE: 'idle',
-    EXPLODE: 'explode',
-    ELECTRIC: 'electric',
-    ASSEMBLE: 'assemble',
-  };
-  let currentState = STATE.IDLE;
+let particles = [];
+let stage = 0;
+let timer = 0;
 
-  logoImage.onload = () => {
-    ctx.drawImage(logoImage, 0, 0, canvas.width, canvas.height);
-    imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    createPieces();
-    currentState = STATE.EXPLODE;
-    animate();
-  };
-  logoImage.src = logoSrc;
+logo.onload = () => {
+  createParticles();
+  requestAnimationFrame(animate);
+};
 
-  function createPieces() {
-    pieces = [];
-    for(let y=0; y<canvas.height; y+=piecesSize) {
-      for(let x=0; x<canvas.width; x+=piecesSize) {
-        // Получаем средний цвет блока
-        let color = getAverageColor(x, y, piecesSize, piecesSize);
-        if(color[3] > 10) { // alpha > 10 (непрозрачный)
-          pieces.push({
-            x,
-            y,
-            ox: x, // оригинальная позиция
-            oy: y,
-            dx: 0,  // смещение по x
-            dy: 0,  // смещение по y
-            vx: (Math.random()-0.5)*10, // скорость X при взрыве
-            vy: (Math.random()-0.5)*10, // скорость Y при взрыве
-            size: piecesSize,
-            color: `rgba(${color[0]},${color[1]},${color[2]},${color[3]/255})`,
-            angle: 0,
-            va: (Math.random()-0.5)*0.2, // скорость вращения
-          });
-        }
-      }
+function createParticles() {
+  const size = 10; // размер кусочка
+  for (let y = 0; y < logo.height; y += size) {
+    for (let x = 0; x < logo.width; x += size) {
+      particles.push({
+        x: x,
+        y: y,
+        homeX: x,
+        homeY: y,
+        vx: 0,
+        vy: 0
+      });
     }
   }
+}
 
-  function getAverageColor(sx, sy, sw, sh) {
-    let r=0, g=0, b=0, a=0, count=0;
-    for(let y=sy; y<sy+sh; y++) {
-      for(let x=sx; x<sx+sw; x++) {
-        let idx = (y*canvas.width + x)*4;
-        r += imgData.data[idx];
-        g += imgData.data[idx+1];
-        b += imgData.data[idx+2];
-        a += imgData.data[idx+3];
-        count++;
-      }
-    }
-    return [r/count, g/count, b/count, a/count];
+function drawParticles() {
+  const size = 10;
+  particles.forEach(p => {
+    ctx.drawImage(logo, p.homeX, p.homeY, size, size, p.x, p.y, size, size);
+  });
+}
+
+// Рисуем молнию
+function drawLightning() {
+  ctx.strokeStyle = `rgba(255,255,255,${Math.random()})`;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  let startX = Math.random() * canvas.width;
+  let startY = 0;
+  ctx.moveTo(startX, startY);
+  for (let i = 0; i < 5; i++) {
+    startX += (Math.random() - 0.5) * 50;
+    startY += canvas.height / 5;
+    ctx.lineTo(startX, startY);
   }
+  ctx.stroke();
+}
 
-  let explosionDuration = 100; // сколько кадров длится взрыв
-  let explosionFrame = 0;
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  let electricDuration = 100; // сколько кадров длится эффект электричества
-  let electricFrame = 0;
+  if (stage === 0) {
+    // дрожание
+    particles.forEach(p => {
+      p.x = p.homeX + Math.random() * 4 - 2;
+      p.y = p.homeY + Math.random() * 4 - 2;
+    });
 
-  let assembleDuration = 150; // сколько кадров длится сборка
-  let assembleFrame = 0;
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    switch(currentState) {
-      case STATE.EXPLODE:
-        explosionFrame++;
-        pieces.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-          p.angle += p.va;
-          // Замедление со временем
-          p.vx *= 0.95;
-          p.vy *= 0.95;
-
-          drawPiece(p);
-        });
-        if(explosionFrame > explosionDuration) {
-          currentState = STATE.ELECTRIC;
-          explosionFrame = 0;
-        }
-        break;
-
-      case STATE.ELECTRIC:
-        electricFrame++;
-        pieces.forEach(p => {
-          // Легкое дрожание
-          p.x = p.x + (Math.random()-0.5)*2;
-          p.y = p.y + (Math.random()-0.5)*2;
-          p.angle += (Math.random()-0.5)*0.1;
-
-          drawPiece(p, true); // true - включаем эффект свечения
-        });
-        if(electricFrame > electricDuration) {
-          currentState = STATE.ASSEMBLE;
-          electricFrame = 0;
-        }
-        break;
-
-      case STATE.ASSEMBLE:
-        assembleFrame++;
-        let progress = assembleFrame / assembleDuration;
-        if(progress > 1) {
-          progress = 1;
-          currentState = STATE.IDLE;
-        }
-        pieces.forEach(p => {
-          // Линейная интерполяция позиции и угла
-          p.x = lerp(p.x, p.ox, progress);
-          p.y = lerp(p.y, p.oy, progress);
-          p.angle = lerp(p.angle, 0, progress);
-          drawPiece(p);
-        });
-        break;
-
-      case STATE.IDLE:
-        pieces.forEach(p => {
-          drawPiece(p);
-        });
-        break;
+    // молнии
+    if (Math.random() > 0.7) {
+      drawLightning();
     }
 
-    requestAnimationFrame(animate);
+    timer++;
+    if (timer > 50) { stage = 1; timer = 0; }
   }
 
-  function drawPiece(p, electric=false) {
-    ctx.save();
-    ctx.translate(p.x + p.size/2, p.y + p.size/2);
-    ctx.rotate(p.angle);
-    if(electric) {
-      ctx.shadowColor = 'cyan';
-      ctx.shadowBlur = 15;
-      ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 0;
-    } else {
-      ctx.shadowBlur = 0;
-    }
-    ctx.fillStyle = p.color;
-    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
-    ctx.restore();
+  else if (stage === 1) {
+    // взрыв
+    particles.forEach(p => {
+      p.vx = Math.random() * 6 - 3;
+      p.vy = Math.random() * -4 - 2;
+    });
+    stage = 2;
   }
 
-  function lerp(a, b, t) {
-    return a + (b - a) * t;
-    // После окончания анимации
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-ctx.globalAlpha = 1; // Полная непрозрачность
-ctx.drawImage(logoImage, 0, 0, canvas.width, canvas.height);
+  else if (stage === 2) {
+    // движение кусочков
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.1; // гравитация
+    });
+    timer++;
+    if (timer > 80) { stage = 3; timer = 0; }
   }
-})();
+
+  else if (stage === 3) {
+    // сборка обратно
+    particles.forEach(p => {
+      p.x += (p.homeX - p.x) * 0.05;
+      p.y += (p.homeY - p.y) * 0.05;
+    });
+    timer++;
+    if (timer > 60) { stage = 0; timer = 0; }
+  }
+
+  drawParticles();
+  requestAnimationFrame(animate);
+}   
 </script>
 </body>
 </html>
