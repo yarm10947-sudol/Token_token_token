@@ -27,8 +27,6 @@
     color: inherit;
     text-decoration: none;
   }
-
-  /* Overlay for readability */
   body::before {
     content: "";
     position: fixed;
@@ -37,7 +35,6 @@
     z-index: -1;
   }
 
-  /* HEADER SECTION */
   header {
     min-height: 100vh;
     display: flex;
@@ -48,11 +45,24 @@
     padding: 60px 20px 100px;
     position: relative;
     z-index: 10;
-
+    animation: fadeMoveUp 1.2s ease forwards;
     opacity: 0;
-    transform: translateY(40px);
-    animation: fadeInUp 1s ease forwards;
   }
+
+  /* Заголовок с эффектом появления и подъема */
+  header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 5rem;
+    letter-spacing: 5px;
+    text-shadow: 0 0 15px #ffcc00, 0 0 40px #ff9900;
+    margin-bottom: 0;
+    animation: fadeMoveUp 1s ease forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+  }
+
+  /* Логотип с пульсацией */
   .logo {
     width: 180px;
     height: 180px;
@@ -67,8 +77,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    transition: transform 0.4s ease;
-    animation: pulseGlow 4s ease-in-out infinite;
+    animation: pulseScale 3s ease-in-out infinite;
   }
   .logo img {
     width: 140px;
@@ -77,26 +86,9 @@
     border-radius: 50%;
     border: 5px solid #fff4b8;
     box-shadow: 0 0 30px #fff4b8;
-    animation: slightRotate 10s linear infinite;
-  }
-  .logo:hover {
-    transform: scale(1.2);
-    box-shadow:
-      0 0 80px #ffd700ff,
-      inset 0 0 90px #ffcc00ff;
-  }
-  header h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    font-size: 5rem;
-    letter-spacing: 5px;
-    text-shadow:
-      0 0 15px #ffcc00,
-      0 0 40px #ff9900;
-    margin-bottom: 0;
   }
 
-  /* Легенда */
+  /* Текст легенды с плавным появлением */
   .legend-text {
     background: rgba(19,9,0,0.9);
     border-radius: 25px;
@@ -107,24 +99,20 @@
     font-size: 1.6rem;
     line-height: 1.7;
     user-select: none;
-
+    animation: fadeMoveUp 1s ease forwards;
+    animation-delay: 0.6s;
     opacity: 0;
-    transform: translateY(40px);
-    animation: fadeInUp 1s ease forwards;
-    animation-delay: 0.4s;
   }
 
-  /* SOCIAL BUTTONS */
+  /* Социальные кнопки с эффектом выпрыгивания */
   .social-buttons {
     display: flex;
     gap: 50px;
     justify-content: center;
     margin-bottom: 20px;
-
+    animation: jumpIn 0.6s ease forwards;
+    animation-delay: 0.9s;
     opacity: 0;
-    transform: translateY(40px);
-    animation: fadeInUp 1s ease forwards;
-    animation-delay: 0.7s;
   }
   .social-buttons a {
     display: flex;
@@ -137,7 +125,7 @@
     color: #4a2c00;
     font-size: 38px;
     box-shadow: 0 0 50px #ffcc00;
-    transition: 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     border: 3px solid transparent;
     cursor: pointer;
     user-select: none;
@@ -150,7 +138,7 @@
     border-color: #fff;
   }
 
-  /* BUTTON BUY NOW */
+  /* Кнопка купить */
   .btn-buy {
     background: linear-gradient(45deg, #ffcc00, #ff9900);
     border: none;
@@ -159,36 +147,21 @@
     font-weight: 700;
     color: #3a2200;
     border-radius: 50px;
-    box-shadow:
-      0 0 40px #ffcc00,
-      inset 0 0 20px #ffb800;
+    box-shadow: 0 0 40px #ffcc00, inset 0 0 20px #ffb800;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     user-select: none;
-
+    animation: jumpIn 0.6s ease forwards;
+    animation-delay: 1.2s;
     opacity: 0;
-    transform: translateY(40px);
-    animation: fadeInUp 1s ease forwards;
-    animation-delay: 1s;
   }
   .btn-buy:hover {
+    background-color: #ffb000;
+    box-shadow: 0 0 70px #ffdd33, inset 0 0 30px #ffcc00;
     transform: scale(1.15);
-    box-shadow:
-      0 0 70px #ffdd33,
-      inset 0 0 30px #ffcc00;
   }
 
-  /* SECTION TITLES */
-  h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3.2rem;
-    margin-bottom: 50px;
-    color: #ffdb4d;
-    text-align: center;
-    text-shadow: 0 0 30px #ffdb4dcc;
-  }
-
-  /* SECTIONS */
+  /* Секции с плавным появлением */
   section {
     background: rgba(19,9,0,0.9);
     border-radius: 25px;
@@ -202,29 +175,27 @@
     font-size: 1.5rem;
     line-height: 1.8;
     user-select: none;
-
     opacity: 0;
-    transform: translateY(40px);
-    animation: fadeInUp 1s ease forwards;
+    animation: fadeMoveUp 1s ease forwards;
   }
-
   section.tokenomics {
-    animation-delay: 1.2s;
+    animation-delay: 1.5s;
   }
   section#roadmap-title ~ div.timeline {
-    animation-delay: 1.4s;
+    animation-delay: 1.8s;
   }
   section.join-legend {
-    animation-delay: 1.6s;
+    animation-delay: 2.1s;
   }
 
-  /* TOKENOMICS */
-  .tokenomics {
+  /* Заголовки */
+  h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 50px;
+    color: #ffdb4d;
     text-align: center;
-  }
-  .tokenomics strong {
-    color: #ffd700;
-    font-weight: 700;
+    text-shadow: 0 0 30px #ffdb4dcc;
   }
 
   /* Вращающееся лого */
@@ -232,69 +203,23 @@
     display: flex;
     justify-content: center;
     margin: 40px 0;
-
+    animation: fadeMoveUp 1s ease forwards;
+    animation-delay: 2.4s;
     opacity: 0;
-    animation: fadeInUp 1s ease forwards;
-    animation-delay: 1.8s;
   }
-
   .logo-spin {
     width: 160px;
     height: 160px;
     border-radius: 50%;
     border: 6px solid #ffd700;
-    box-shadow:
-      0 0 40px #ffd700cc,
-      inset 0 0 50px #ffcc0080;
-    animation: spin 10s linear infinite, pulseGlow 4s ease-in-out infinite;
+    box-shadow: 0 0 40px #ffd700cc, inset 0 0 50px #ffcc0080;
+    animation: spin 10s linear infinite, pulseScale 3s ease-in-out infinite;
     background: radial-gradient(circle at center, #ffcc00, #b27300);
     object-fit: contain;
     user-select: none;
   }
 
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes pulseGlow {
-    0%, 100% {
-      box-shadow:
-        0 0 60px #ffd700cc,
-        inset 0 0 70px #ffcc0080;
-    }
-    50% {
-      box-shadow:
-        0 0 90px #fff850cc,
-        inset 0 0 100px #fff85080;
-    }
-  }
-
-  @keyframes slightRotate {
-    0%, 100% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(5deg);
-    }
-  }
-
-  /* ROADMAP */
+  /* Таймлайн */
   .timeline {
     position: relative;
     max-width: 900px;
@@ -343,7 +268,7 @@
     user-select: none;
   }
 
-  /* JOIN THE LEGEND */
+  /* Join Legend */
   .join-legend {
     max-width: 850px;
     margin: 0 auto;
@@ -361,6 +286,59 @@
     color: #fff4b8;
   }
 
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #ffd;
+  }
+
+  /* Анимации */
+  @keyframes spin {
+    from { transform: rotate(0deg);}
+    to { transform: rotate(360deg);}
+  }
+
+  @keyframes fadeMoveUp {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulseScale {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 0 60px #ffd700cc,
+        inset 0 0 70px #ffcc0080;
+    }
+    50% {
+      transform: scale(1.1);
+      box-shadow:
+        0 0 90px #fff850cc,
+        inset 0 0 100px #fff85080;
+    }
+  }
+
+  @keyframes jumpIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
   /* Responsive */
   @media (max-width: 900px) {
     header h1 {
@@ -372,7 +350,7 @@
       padding: 30px 20px;
     }
     header p {
-      margin: 0; /* убрать стандартный отступ, чтобы не дублировался */
+      margin: 0;
     }
     .logo {
       width: 140px;
@@ -409,7 +387,7 @@
 <header>
   <h1>CADO Token</h1>
   <div class="logo" aria-label="CADO Token Logo">
-    <!-- Замени src на свой файл лого -->
+    <!-- Замените путь на ваш логотип -->
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
   <div class="legend-text">
@@ -436,7 +414,6 @@
   </p>
 </section>
 
-<!-- Вращающееся лого -->
 <div class="logo-spin-container" aria-label="CADO Token rotating logo">
   <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-spin" />
 </div>
@@ -470,7 +447,7 @@
   <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
 </section>
 
-<footer style="text-align:center; padding:20px; color:#ffd;">
+<footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
 
