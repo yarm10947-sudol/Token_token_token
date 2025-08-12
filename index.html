@@ -4,7 +4,27 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CADO Token — The Legend</title>
-
+<style>
+  body {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+  }
+  #container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+  }
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+</style>
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
 <!-- FontAwesome -->
@@ -505,6 +525,67 @@
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
+<div id="container"></div>
 
+<script>
+  const container = document.getElementById('container');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  container.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  // Создаем частицы
+  const particles = [];
+  const particleSize = 3;
+  const particleCount = 500;
+
+  // Точки-цели будут координатами логотипа (пока рандом, потом можно из изображения)
+  const targets = [];
+
+  // Инициализация частиц
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: particleSize,
+      color: '#ffd700',
+      vx: 0,
+      vy: 0,
+      tx: width/2 + (Math.random() - 0.5) * 150,
+      ty: height/2 + (Math.random() - 0.5) * 150,
+    });
+  }
+
+  // Функция обновления и рисования частиц
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    particles.forEach(p => {
+      // Легкое приближение к цели (tx, ty)
+      const dx = p.tx - p.x;
+      const dy = p.ty - p.y;
+      p.vx += dx * 0.05;
+      p.vy += dy * 0.05;
+
+      p.vx *= 0.85; // демпфинг
+      p.vy *= 0.85;
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Рисуем частицу
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
 </body>
 </html>
