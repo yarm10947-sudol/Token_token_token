@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CADO Token — The Legend with Animated Pets on Click</title>
+<title>CADO Token — The Legend with Click-Activated Pets Animation</title>
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -69,6 +69,7 @@
     box-shadow: 0 0 60px #ffd700cc, inset 0 0 70px #ffcc0080;
     margin: 30px auto 0;
     background: radial-gradient(circle at center, #ffcc00, #b27300);
+    cursor: pointer;
   }
   .logo img {
     width: 140px;
@@ -77,6 +78,7 @@
     border-radius: 50%;
     border: 5px solid #fff4b8;
     box-shadow: 0 0 30px #fff4b8;
+    pointer-events: none; /* чтобы клик попадал на .logo */
   }
 
   /* Контейнер для животных */
@@ -400,7 +402,7 @@
 
 <header>
   <h1>CADO Token</h1>
-  <div class="logo" aria-label="CADO Token Logo">
+  <div class="logo" id="logo" aria-label="CADO Token Logo" role="button" tabindex="0" aria-pressed="false" title="Click to toggle pets animation">
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
     <div class="pets" id="pets" aria-hidden="true">
       <img src="cat.png" alt="Cat" class="pet cat" />
@@ -421,7 +423,7 @@
     <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
   </div>
 
-  <button class="btn-buy" id="btnBuy" aria-pressed="false" aria-label="Buy CADO Token now">BUY NOW</button>
+  <button class="btn-buy" aria-label="Buy CADO Token now">BUY NOW</button>
 </header>
 
 <section class="tokenomics" aria-labelledby="tokenomics-title">
@@ -465,7 +467,4 @@
     Stay updated and never miss an opportunity.<br />
     Together, we’ll redefine the future of crypto.
   </p>
-  <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
-</section>
-
-<footer style="text-align:center; padding:20px 0; color:#fff
+  <a href="#" class="btn-buy" aria-label="Join C
