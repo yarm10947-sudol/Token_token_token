@@ -679,6 +679,10 @@
 
   function lerp(a, b, t) {
     return a + (b - a) * t;
+    // После окончания анимации
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.globalAlpha = 1; // Полная непрозрачность
+ctx.drawImage(logoImage, 0, 0, canvas.width, canvas.height);
   }
 })();
 </script>
