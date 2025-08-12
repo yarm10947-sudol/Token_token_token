@@ -118,6 +118,7 @@
   .legend-text.visible {
     opacity: 1;
     transform: translateY(0);
+    animation: pulseMove 3s ease-in-out infinite;
   }
 
   /* SOCIAL BUTTONS */
@@ -243,6 +244,7 @@
   section.visible {
     opacity: 1;
     transform: translateY(0);
+    animation: pulseMove 3s ease-in-out infinite;
   }
 
   /* TOKENOMICS */
@@ -357,6 +359,7 @@
   .join-legend.visible p {
     opacity: 1;
     transform: translateY(0);
+    animation: pulseMove 3s ease-in-out infinite;
   }
 
   /* FOOTER */
@@ -442,22 +445,15 @@
       padding-right: 15px;
     }
   }
-  @keyframes pulseFade {
-  0%, 100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 0.7;
-    transform: translateY(5px);
-  }
-}
 
-.legend-text,
-.tokenomics,
-.join-legend p {
-  animation: pulseFade 3s ease-in-out infinite;
-}
+  @keyframes pulseMove {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+  }
 </style>
 </head>
 <body>
@@ -508,7 +504,7 @@
     <div class="timeline-item" role="listitem">150M — Partnership Announcements</div>
     <div class="timeline-item" role="listitem">200M — Mobile Wallet Release</div>
     <div class="timeline-item" role="listitem">300M — Full Animated Series</div>
-    <div class="timeline-item" role="listitem">500M — CADO Metaverse Integration</div>
+    <div class="timeline-item" role="listitem">500M
     <div class="timeline-item" role="listitem">750M — Listing on Major Exchanges</div>
     <div class="timeline-item" role="listitem">1B — Feature Film Release</div>
   </div>
@@ -535,13 +531,6 @@
     const tokenomics = document.getElementById('tokenomicsSection');
     const roadmap = document.getElementById('roadmapSection');
     const joinLegend = document.querySelector('.join-legend');
-
-    // Показываем с небольшой задержкой для плавности
-    setTimeout(() => legend.classList.add('visible'), 300);
-    setTimeout(() => tokenomics.classList.add('visible'), 600);
-    setTimeout(() => roadmap.classList.add('visible'), 900);
-    setTimeout(() => joinLegend.classList.add('visible'), 1200);
-  });
 </script>
 </body>
 </html>
