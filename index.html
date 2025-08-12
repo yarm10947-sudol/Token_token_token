@@ -528,22 +528,29 @@
   © 2025 CADO Token — All rights reserved.
 </footer>
 <script>
-  const emojis = ["🐶", "🐱", "🚀", "💰"]; // сюда вставь эмодзи своей криптовалюты
-  function createEmoji() {
-    const emoji = document.createElement("span");
-    emoji.classList.add("falling-emoji");
-    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    emoji.style.left = Math.random() * 100 + "vw";
-    emoji.style.fontSize = Math.random() * 30 + 20 + "px";
-    emoji.style.animationDuration = Math.random() * 3 + 4 + "s";
-    document.body.appendChild(emoji);
+  const coinImage = "coin.png"; // тут путь к твоей картинке криптовалюты
+
+  function createCoin() {
+    const coin = document.createElement("img");
+    coin.src = coinImage;
+    coin.classList.add("falling-coin");
+
+    // Падение только с левого или правого края
+    if (Math.random() > 0.5) {
+      coin.style.left = "0px";
+    } else {
+      coin.style.right = "0px";
+    }
+
+    coin.style.animationDuration = Math.random() * 3 + 4 + "s";
+    document.body.appendChild(coin);
 
     setTimeout(() => {
-      emoji.remove();
+      coin.remove();
     }, 7000);
   }
 
-  setInterval(createEmoji, 500); // Частота появления
+  setInterval(createCoin, 500); // Частота появления
 </script>
 </body>
 </html>
