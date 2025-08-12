@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
-  /* Reset & base */
+  /* Reset */
   *, *::before, *::after {
     box-sizing: border-box;
   }
@@ -36,14 +36,8 @@
 
   /* Animations */
   @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    0% {opacity: 0; transform: translateY(40px);}
+    100% {opacity: 1; transform: translateY(0);}
   }
   @keyframes pulse {
     0%, 100% {
@@ -90,7 +84,7 @@
     border-radius: 50%;
     border: 8px solid #ffd700;
     background: radial-gradient(circle at center, #ffcc00, #b27300);
-    box-shadow: 0 0 60px #ffd700cc inset 0 0 70px #ffcc0080;
+    box-shadow: 0 0 60px #ffd700cc, inset 0 0 70px #ffcc0080;
     animation: pulse 3s ease-in-out infinite;
     display: flex;
     justify-content: center;
@@ -190,7 +184,7 @@
     animation: spin 10s linear infinite;
   }
 
-  /* SECTION STYLE */
+  /* SECTIONS */
   section {
     max-width: 900px;
     margin: 0 auto 80px;
@@ -262,6 +256,19 @@
   }
 
   /* Join Legend */
+  .join-legend {
+    max-width: 850px;
+    margin: 0 auto 60px;
+    text-align: center;
+    color: #ffd;
+    animation: fadeInUp 1.2s ease forwards;
+    opacity: 0;
+  }
+  .join-legend h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 40px;
+  }
   .join-legend p {
     font-size: 1.4rem;
     font-weight: 300;
@@ -330,7 +337,7 @@
 <header>
   <h1>CADO Token</h1>
   <div class="logo" aria-label="CADO Token Logo">
-    <img src="https://via.placeholder.com/140" alt="CADO Token Logo" />
+    <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
   <div class="legend-text">
     Nobody believed in my strength and dreams — everyone thought I would fail.<br />
@@ -357,7 +364,7 @@
 </section>
 
 <div class="logo-spin-container" aria-label="CADO Token rotating logo">
-  <img src="https://via.placeholder.com/160" alt="CADO Token Logo" class="logo-spin" />
+  <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" class="logo-spin" />
 </div>
 
 <section aria-labelledby="roadmap-title">
@@ -378,8 +385,8 @@
   </div>
 </section>
 
-<section class="join-legend" aria-labelledby="join-title" style="max-width: 850px; margin: 0 auto 60px; text-align: center; color: #ffd;">
-  <h2 id="join-title" style="font-family: 'Orbitron', sans-serif; font-size: 3.2rem; margin-bottom: 40px;">Join the Legend</h2>
+<section class="join-legend" aria-labelledby="join-title">
+  <h2 id="join-title">Join the Legend</h2>
   <p>
     Be part of the CADO revolution.<br />
     Connect with our vibrant community on Telegram and Twitter.<br />
