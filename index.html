@@ -544,21 +544,18 @@
   const ctx = canvas.getContext('2d');
   const DPR = window.devicePixelRatio || 1;
 
-  // Определяем размеры
-  let displayH, displayW;
+  // Настройки канваса
+  let canvasHeight = 300; // желаемая высота
+  let canvasWidth = 300;  // по умолчанию квадрат
+
   if (window.innerWidth >= 1024) {
-    displayH = 300;           // фиксированная высота
-    displayW = displayH * 2.1; // ширина = 2.1 * высота
-  } else {
-    const rect = canvas.getBoundingClientRect();
-    displayW = Math.max(1, Math.round(rect.width || 300));
-    displayH = Math.max(1, Math.round(rect.height || 300));
+    canvasWidth = 300 * 2.1; // ПК: ширина 2.1 от высоты
   }
 
-  canvas.width = Math.round(displayW * DPR);
-  canvas.height = Math.round(displayH * DPR);
-  canvas.style.width = displayW + 'px';
-  canvas.style.height = displayH + 'px';
+  canvas.width = Math.round(canvasWidth * DPR);
+  canvas.height = Math.round(canvasHeight * DPR);
+  canvas.style.width = canvasWidth + 'px';
+  canvas.style.height = canvasHeight + 'px';
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
   const imgEl = document.querySelector('.logo img');
@@ -568,31 +565,40 @@
   logo.crossOrigin = 'Anonymous';
   logo.onload = () => start(logo);
   logo.onerror = (e) => { console.error('Не удалось загрузить логотип:', logoSrc, e); };
+
   logo.src = logoSrc;
 
   function start(logoImg) {
+    // Вычисляем масштаб, чтобы сохранить пропорции
+    const scale = Math.min(canvasWidth / logoImg.width, canvasHeight / logoImg.height);
+    const imgW = logoImg.width * scale;
+    const imgH = logoImg.height * scale;
+    const offsetX = (canvasWidth - imgW) / 2;
+    const offsetY = (canvasHeight - imgH) / 2;
+
+    // Создаем частицы только по видимой области картинки
     const off = document.createElement('canvas');
-    off.width = displayW;
-    off.height = displayH;
+    off.width = imgW;
+    off.height = imgH;
     const offCtx = off.getContext('2d');
-    offCtx.drawImage(logoImg, 0, 0, displayW, displayH);
-    const imgData = offCtx.getImageData(0, 0, displayW, displayH).data;
+    offCtx.drawImage(logoImg, 0, 0, imgW, imgH);
+    const imgData = offCtx.getImageData(0, 0, imgW, imgH).data;
 
     const size = 8;
     const particles = [];
-    for (let y = 0; y < displayH; y += size) {
-      for (let x = 0; x < displayW; x += size) {
-        const idx = (y * displayW + x) * 4;
+    for (let y = 0; y < imgH; y += size) {
+      for (let x = 0; x < imgW; x += size) {
+        const idx = (y * imgW + x) * 4;
         const a = imgData[idx + 3];
         if (a > 16) {
           const r = imgData[idx];
           const g = imgData[idx + 1];
           const b = imgData[idx + 2];
           particles.push({
-            homeX: x,
-            homeY: y,
-            x: displayW/2 + (Math.random()-0.5)*8,
-            y: displayH/2 + (Math.random()-0.5)*8,
+            homeX: x + offsetX,
+            homeY: y + offsetY,
+            x: canvasWidth/2 + (Math.random()-0.5)*8,
+            y: canvasHeight/2 + (Math.random()-0.5)*8,
             vx: 0,
             vy: 0,
             size,
@@ -629,13 +635,13 @@
         ctx.beginPath();
         ctx.strokeStyle = `rgba(180,240,255,${0.15 + Math.random()*0.6})`;
         ctx.lineWidth = 1 + Math.random()*2;
-        let sx = Math.random() * displayW;
+        let sx = Math.random() * canvasWidth;
         let sy = 0;
         ctx.moveTo(sx, sy);
         const steps = 6;
         for (let k=0;k<steps;k++){
           sx += (Math.random()-0.5) * 80;
-          sy += displayH/steps;
+          sy += canvasHeight/steps;
           ctx.lineTo(sx, sy);
         }
         ctx.stroke();
@@ -652,26 +658,23 @@
     }
 
     function loop() {
-      ctx.clearRect(0, 0, displayW, displayH);
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
       if (state === 'idle') {
         ctx.save();
         const j = 1.2;
         ctx.translate((Math.random()-0.5)*j, (Math.random()-0.5)*j);
-        ctx.drawImage(logoImg, 0, 0, displayW, displayH);
+        ctx.drawImage(logoImg, offsetX, offsetY, imgW, imgH);
         ctx.restore();
-
         timer++;
         if (timer > 90) { timer = 0; state = 'electric'; }
       }
-
       else if (state === 'electric') {
-        ctx.drawImage(logoImg, 0, 0, displayW, displayH);
+        ctx.drawImage(logoImg, offsetX, offsetY, imgW, imgH);
         if (Math.random() > 0.25) drawLightning();
         timer++;
         if (timer > 75) { timer = 0; startExplosion(); state = 'explode'; }
       }
-
       else if (state === 'explode') {
         particles.forEach(p => {
           p.x += p.vx;
@@ -684,14 +687,12 @@
         timer++;
         if (timer > explosionFrames) { timer = 0; state = 'charged'; }
       }
-
       else if (state === 'charged') {
         drawParticles(true);
         if (Math.random() > 0.6) drawLightning();
         timer++;
         if (timer > electricFrames) { timer = 0; state = 'assemble'; }
       }
-
       else if (state === 'assemble') {
         const speedFactor = 0.03;
         let allClose = true;
@@ -704,9 +705,8 @@
         timer++;
         if (allClose || timer > assembleFrames) { timer = 0; state = 'final'; }
       }
-
       else if (state === 'final') {
-        ctx.drawImage(logoImg, 0, 0, displayW, displayH);
+        ctx.drawImage(logoImg, offsetX, offsetY, imgW, imgH);
         timer++;
         if (timer > 180) { timer = 0; state = 'idle'; }
       }
