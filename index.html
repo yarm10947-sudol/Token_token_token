@@ -537,59 +537,58 @@
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
-
 <canvas id="logoCanvas"></canvas>
+
 <script>
-(function(){
+(function() {
   const canvas = document.getElementById('logoCanvas');
   const ctx = canvas.getContext('2d');
   const DPR = window.devicePixelRatio || 1;
 
-  // Фиксированная высота 300px, ширина 620px для ПК
-  const canvasHeight = 300;
-  const canvasWidth = 620;
-  canvas.width = Math.round(canvasWidth * DPR);
-  canvas.height = Math.round(canvasHeight * DPR);
+  // Определяем размеры в зависимости от устройства
+  const isMobile = window.innerWidth < 1024;
+  const canvasWidth = isMobile ? window.innerWidth : 620;
+  const canvasHeight = isMobile ? window.innerHeight * 0.5 : 300;
+
+  canvas.width = canvasWidth * DPR;
+  canvas.height = canvasHeight * DPR;
   canvas.style.width = canvasWidth + 'px';
   canvas.style.height = canvasHeight + 'px';
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-  const logoSrc = 'file_00000000198861f581eb6192921a6f6c.png'; // путь к картинке
-
+  const logoSrc = 'file_00000000198861f581eb6192921a6f6c.png';
   const logo = new Image();
   logo.crossOrigin = 'Anonymous';
-  logo.onload = () => start(logo);
-  logo.onerror = (e) => { console.error('Не удалось загрузить логотип:', logoSrc, e); };
   logo.src = logoSrc;
 
-  function start(logoImg) {
-    const scale = canvasHeight / logoImg.height;
-    const imgW = logoImg.width * scale;
-    const imgH = logoImg.height * scale;
-    const offsetX = (canvasWidth - imgW) / 2; // центровка по ширине
-    const offsetY = 0; // картинка всегда сверху
+  logo.onload = () => {
+    // Пропорциональное масштабирование
+    const scale = canvasHeight / logo.height;
+    const imgW = logo.width * scale;
+    const imgH = canvasHeight;
+    const offsetX = (canvasWidth - imgW) / 2;
 
-    // Подготовка частиц
+    // Частицы
+    const size = 8;
+    const particles = [];
     const off = document.createElement('canvas');
     off.width = imgW;
     off.height = imgH;
     const offCtx = off.getContext('2d');
-    offCtx.drawImage(logoImg, 0, 0, imgW, imgH);
+    offCtx.drawImage(logo, 0, 0, imgW, imgH);
     const imgData = offCtx.getImageData(0, 0, imgW, imgH).data;
 
-    const size = 8;
-    const particles = [];
     for (let y = 0; y < imgH; y += size) {
       for (let x = 0; x < imgW; x += size) {
         const idx = (y * imgW + x) * 4;
         const a = imgData[idx + 3];
         if (a > 16) {
           const r = imgData[idx];
-          const g = imgData[idx + 1];
-          const b = imgData[idx + 2];
+          const g = imgData[idx+1];
+          const b = imgData[idx+2];
           particles.push({
             homeX: x + offsetX,
-            homeY: y + offsetY,
+            homeY: y,
             x: canvasWidth/2 + (Math.random()-0.5)*8,
             y: canvasHeight/2 + (Math.random()-0.5)*8,
             vx: 0,
@@ -603,105 +602,48 @@
 
     let state = 'idle';
     let timer = 0;
-    const explosionFrames = 200;
-    const electricFrames = 160;
-    const assembleFrames = 220;
 
-    function drawParticles(glow = false) {
+    function drawParticles() {
       particles.forEach(p => {
-        ctx.save();
-        ctx.shadowBlur = glow ? 12 : 0;
-        ctx.shadowColor = glow ? 'cyan' : 'transparent';
         ctx.fillStyle = p.color;
         ctx.fillRect(p.x, p.y, p.size, p.size);
-        ctx.restore();
-      });
-    }
-
-    function drawLightning() {
-      const lines = 2 + Math.floor(Math.random()*3);
-      for (let i=0;i<lines;i++){
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(180,240,255,${0.15 + Math.random()*0.6})`;
-        ctx.lineWidth = 1 + Math.random()*2;
-        let sx = Math.random() * canvasWidth;
-        let sy = 0;
-        ctx.moveTo(sx, sy);
-        const steps = 6;
-        for (let k=0;k<steps;k++){
-          sx += (Math.random()-0.5) * 80;
-          sy += canvasHeight/steps;
-          ctx.lineTo(sx, sy);
-        }
-        ctx.stroke();
-      }
-    }
-
-    function startExplosion() {
-      particles.forEach(p => {
-        const ang = (-Math.PI/2) + (Math.random() - 0.5) * Math.PI * 0.7;
-        const s = 0.6 + Math.random()*1.5;
-        p.vx = Math.cos(ang) * s * (1 + Math.random()*0.6);
-        p.vy = Math.sin(ang) * s * (1 + Math.random()*0.6);
       });
     }
 
     function loop() {
-      // Очистка канваса
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
       if (state === 'idle') {
-        ctx.drawImage(logoImg, offsetX, offsetY, imgW, imgH);
+        ctx.drawImage(logo, offsetX, 0, imgW, imgH);
         timer++;
-        if (timer > 90) { timer = 0; state = 'electric'; }
-      }
-      else if (state === 'electric') {
-        ctx.drawImage(logoImg, offsetX, offsetY, imgW, imgH);
-        if (Math.random() > 0.25) drawLightning();
-        timer++;
-        if (timer > 75) { timer = 0; startExplosion(); state = 'explode'; }
+        if (timer > 90) { timer = 0; state = 'explode'; }
       }
       else if (state === 'explode') {
         particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vy += 0.12;
-          p.vx *= 0.995;
-          p.vy *= 0.995;
+          p.x += (Math.random()-0.5)*5;
+          p.y += (Math.random()-0.5)*5;
         });
-        drawParticles(false);
+        drawParticles();
         timer++;
-        if (timer > explosionFrames) { timer = 0; state = 'charged'; }
-      }
-      else if (state === 'charged') {
-        drawParticles(true);
-        if (Math.random() > 0.6) drawLightning();
-        timer++;
-        if (timer > electricFrames) { timer = 0; state = 'assemble'; }
+        if (timer > 100) { timer = 0; state = 'assemble'; }
       }
       else if (state === 'assemble') {
-        const speedFactor = 0.03;
-        let allClose = true;
+        const speed = 0.05;
+        let done = true;
         particles.forEach(p => {
-          p.x += (p.homeX - p.x) * speedFactor;
-          p.y += (p.homeY - p.y) * speedFactor;
-          if (Math.abs(p.x - p.homeX) > 0.5 || Math.abs(p.y - p.homeY) > 0.5) allClose = false;
+          p.x += (p.homeX - p.x) * speed;
+          p.y += (p.homeY - p.y) * speed;
+          if (Math.abs(p.x - p.homeX) > 0.5 || Math.abs(p.y - p.homeY) > 0.5) done = false;
         });
-        drawParticles(false);
-        timer++;
-        if (allClose || timer > assembleFrames) { timer = 0; state = 'final'; }
-      }
-      else if (state === 'final') {
-        ctx.drawImage(logoImg, offsetX, offsetY, imgW, imgH);
-        timer++;
-        if (timer > 180) { timer = 0; state = 'idle'; }
+        drawParticles();
+        if (done) state = 'idle';
       }
 
       requestAnimationFrame(loop);
     }
 
     loop();
-  }
+  };
 })();
 </script>
 </body>
