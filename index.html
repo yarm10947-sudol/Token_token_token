@@ -665,7 +665,7 @@
         if(timer>explosionFrames){ timer=0; state='assemble'; }
       }
       else if(state==='assemble'){
-        const speedFactor = 0.05;
+        const speedFactor = 0.03;
         let allClose=true;
         particles.forEach(p=>{
           p.x += (p.homeX - p.x)*speedFactor;
