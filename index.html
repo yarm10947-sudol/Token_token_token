@@ -544,10 +544,9 @@
   const ctx = canvas.getContext('2d');
   const DPR = window.devicePixelRatio || 1;
 
-  // Задаем размеры канваса
-  const canvasHeight = 300;
-  const canvasWidth = window.innerWidth >= 1024 ? canvasHeight * 2.1 : canvasHeight;
-
+  // Ширина канваса 620px на компьютере
+  const canvasWidth = 620;
+  const canvasHeight = 300; // фиксированная высота
   canvas.width = Math.round(canvasWidth * DPR);
   canvas.height = Math.round(canvasHeight * DPR);
   canvas.style.width = canvasWidth + 'px';
@@ -564,14 +563,13 @@
   logo.src = logoSrc;
 
   function start(logoImg) {
-    // Масштабируем, сохраняя пропорции
-    const scale = Math.min(canvasWidth / logoImg.width, canvasHeight / logoImg.height);
+    // Мобильная версия: сохраняем оригинальные размеры, не растягиваем
+    const scale = Math.min(canvasHeight / logoImg.height, 1);
     const imgW = logoImg.width * scale;
     const imgH = logoImg.height * scale;
-    const offsetX = (canvasWidth - imgW) / 2;
-    const offsetY = (canvasHeight - imgH) / 2;
+    const offsetX = (canvasWidth - imgW) / 2; // по центру по горизонтали
+    const offsetY = (canvasHeight - imgH) / 2; // по центру по вертикали
 
-    // Оффскрин канвас для пикселей
     const off = document.createElement('canvas');
     off.width = imgW;
     off.height = imgH;
@@ -649,14 +647,12 @@
     }
 
     function loop() {
-      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+      // Красный фон
+      ctx.fillStyle = '#ff0000';
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
       if (state === 'idle') {
-        ctx.save();
-        const j = 1.2;
-        ctx.translate((Math.random()-0.5)*j, (Math.random()-0.5)*j);
         ctx.drawImage(logoImg, offsetX, offsetY, imgW, imgH);
-        ctx.restore();
         timer++;
         if (timer > 90) { timer = 0; state = 'electric'; }
       }
