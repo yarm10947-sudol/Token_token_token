@@ -545,12 +545,12 @@
 
   const DPR = window.devicePixelRatio || 1;
 
-  // Размеры для мобильной и компьютерной версии
-  let displayH = 300; // высота всегда 300px
-  let displayW = 300; // начальная ширина для мобильной
+  // Высота всегда 300px, ширина для ПК 2 раза больше
+  let displayH = 300;
+  let displayW = 300;
 
   if(window.innerWidth >= 1024){
-    displayW = displayH * 2; // ширина в 2 раза больше, высота 300px
+    displayW = displayH * 2; 
   }
 
   canvas.width = Math.round(displayW * DPR);
@@ -570,29 +570,35 @@
   logo.src = logoSrc;
 
   function start(logoImg) {
-    // Масштабируем частицы по ширине
-    const scaleX = displayW / displayH; // горизонтальное растяжение
+    // Вычисляем масштаб для логотипа, чтобы он полностью поместился
+    const logoAspect = logoImg.width / logoImg.height;
+    let logoDrawWidth = displayH * logoAspect;
+    let logoDrawHeight = displayH;
+    let offsetX = (displayW - logoDrawWidth) / 2;
 
     const off = document.createElement('canvas');
-    off.width = displayH;
-    off.height = displayH;
+    off.width = logoImg.width;
+    off.height = logoImg.height;
     const offCtx = off.getContext('2d');
-    offCtx.drawImage(logoImg, 0, 0, displayH, displayH);
-    const imgData = offCtx.getImageData(0, 0, displayH, displayH).data;
+    offCtx.drawImage(logoImg, 0, 0);
+    const imgData = offCtx.getImageData(0, 0, logoImg.width, logoImg.height).data;
 
     const size = 8;
     const particles = [];
-    for (let y = 0; y < displayH; y += size) {
-      for (let x = 0; x < displayH; x += size) {
-        const idx = (y * displayH + x) * 4;
+    for (let y = 0; y < logoImg.height; y += size) {
+      for (let x = 0; x < logoImg.width; x += size) {
+        const idx = (y * logoImg.width + x) * 4;
         const a = imgData[idx + 3];
         if (a > 16) {
           const r = imgData[idx];
           const g = imgData[idx + 1];
           const b = imgData[idx + 2];
+          // Масштабируем по ширине относительно центра
+          const scaledX = offsetX + (x / logoImg.width) * logoDrawWidth;
+          const scaledY = (y / logoImg.height) * logoDrawHeight;
           particles.push({
-            homeX: x * scaleX,
-            homeY: y,
+            homeX: scaledX,
+            homeY: scaledY,
             x: displayW/2 + (Math.random()-0.5)*8,
             y: displayH/2 + (Math.random()-0.5)*8,
             vx: 0,
@@ -658,7 +664,7 @@
 
       if (state === 'idle') {
         ctx.save();
-        ctx.drawImage(logoImg, 0, 0, displayH, displayH, 0, 0, displayW, displayH); // масштабируем по ширине
+        ctx.drawImage(logoImg, 0, 0, logoImg.width, logoImg.height, offsetX, 0, logoDrawWidth, logoDrawHeight);
         ctx.restore();
 
         timer++;
@@ -666,7 +672,7 @@
       }
 
       else if (state === 'electric') {
-        ctx.drawImage(logoImg, 0, 0, displayH, displayH, 0, 0, displayW, displayH);
+        ctx.drawImage(logoImg, 0, 0, logoImg.width, logoImg.height, offsetX, 0, logoDrawWidth, logoDrawHeight);
         if (Math.random() > 0.25) drawLightning();
         timer++;
         if (timer > 75) { timer = 0; startExplosion(); state = 'explode'; }
@@ -706,7 +712,8 @@
       }
 
       else if (state === 'final') {
-        ctx.drawImage(logoImg, 0, 0, displayH, displayH, 0, 0, displayW, displayH);
+        // Логотип в центре с пропорциями
+        ctx.drawImage(logoImg, 0, 0, logoImg.width, logoImg.height, offsetX, 0, logoDrawWidth, logoDrawHeight);
         timer++;
         if (timer > 180) { timer = 0; state = 'idle'; }
       }
