@@ -544,28 +544,24 @@
   const ctx = canvas.getContext('2d');
 
   const DPR = window.devicePixelRatio || 1;
+  const isMobile = window.innerWidth < 1024;
 
   // размеры
-  const mobileHeight = 300; // высота как в мобильной версии
-  let displayH = mobileHeight;
-  let displayW = mobileHeight * 2.1; // ширина в 2.1 раза больше
-  if(window.innerWidth < 1024){
-    displayW = 300; // мобильная ширина
-    displayH = 300; // мобильная высота
-  }
-
-  canvas.width = Math.round(displayW * DPR);
-  canvas.height = Math.round(displayH * DPR);
-  canvas.style.width = displayW + 'px';
-  canvas.style.height = displayH + 'px';
+  const baseH = 300;
+  const baseW = isMobile ? 300 : baseH * 2.1;
+  canvas.width = Math.round(baseW * DPR);
+  canvas.height = Math.round(baseH * DPR);
+  canvas.style.width = baseW + 'px';
+  canvas.style.height = baseH + 'px';
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-  const imgEl = document.querySelector('.logo img');
+  // источник картинки
   let logoSrc;
-  if (window.innerWidth >= 1024) {
-    logoSrc = '1000002091.png'; // ПК-версия
+  if (isMobile) {
+    const imgEl = document.querySelector('.logo img');
+    logoSrc = imgEl ? imgEl.src : 'fallback-mobile.png';
   } else {
-    logoSrc = imgEl ? imgEl.src : '1000002091.png'; // мобильная версия
+    logoSrc = '1000002091.png';
   }
 
   const logo = new Image();
@@ -575,31 +571,34 @@
   logo.src = logoSrc;
 
   function start(logoImg){
+    // отрисовка во временный canvas в полном качестве
     const off = document.createElement('canvas');
-    off.width = displayW;
-    off.height = displayH;
+    const imgW = baseW * DPR;
+    const imgH = baseH * DPR;
+    off.width = imgW;
+    off.height = imgH;
     const offCtx = off.getContext('2d');
-    offCtx.drawImage(logoImg, 0, 0, displayW, displayH);
-    const imgData = offCtx.getImageData(0, 0, displayW, displayH).data;
+    offCtx.drawImage(logoImg, 0, 0, imgW, imgH);
+    const imgData = offCtx.getImageData(0, 0, imgW, imgH).data;
 
-    const size = 8;
+    const size = 8 * DPR;
     const particles = [];
-    for(let y = 0; y < displayH; y += size){
-      for(let x = 0; x < displayW; x += size){
-        const idx = (y * displayW + x) * 4;
+    for(let y = 0; y < imgH; y += size){
+      for(let x = 0; x < imgW; x += size){
+        const idx = (y * imgW + x) * 4;
         const a = imgData[idx+3];
         if(a > 16){
           const r = imgData[idx];
           const g = imgData[idx+1];
           const b = imgData[idx+2];
           particles.push({
-            homeX: x,
-            homeY: y,
-            x: x,
-            y: y,
+            homeX: x / DPR,
+            homeY: y / DPR,
+            x: x / DPR,
+            y: y / DPR,
             vx: 0,
             vy: 0,
-            size,
+            size: size / DPR,
             color: `rgba(${r},${g},${b},${(a/255).toFixed(2)})`
           });
         }
@@ -633,13 +632,13 @@
         ctx.beginPath();
         ctx.strokeStyle = `rgba(180,240,255,${0.15+Math.random()*0.6})`;
         ctx.lineWidth = 1 + Math.random()*2;
-        let sx = Math.random()*displayW;
+        let sx = Math.random()*baseW;
         let sy = 0;
         ctx.moveTo(sx, sy);
         const steps = 6;
         for(let k=0;k<steps;k++){
           sx += (Math.random()-0.5)*80;
-          sy += displayH/steps;
+          sy += baseH/steps;
           ctx.lineTo(sx, sy);
         }
         ctx.stroke();
@@ -656,7 +655,7 @@
     }
 
     function loop(){
-      ctx.clearRect(0,0,displayW,displayH);
+      ctx.clearRect(0,0,baseW,baseH);
 
       if(state==='idle'){
         drawParticles();
