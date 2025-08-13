@@ -544,7 +544,6 @@
   const ctx = canvas.getContext('2d');
   const DPR = window.devicePixelRatio || 1;
 
-  // Компьютерный размер канваса
   const canvasWidth = 620;
   const canvasHeight = 300;
   canvas.width = Math.round(canvasWidth * DPR);
@@ -568,6 +567,20 @@
     const imgH = logoImg.height * scale;
     const offsetX = (canvasWidth - imgW) / 2;
     const offsetY = (canvasHeight - imgH) / 2;
+
+    // Получаем цвет из краевого пикселя картинки (верхний левый угол)
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = logoImg.width;
+    tempCanvas.height = logoImg.height;
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCtx.drawImage(logoImg, 0, 0);
+    const edgePixel = tempCtx.getImageData(0, 0, 1, 1).data;
+    const edgeColor = `rgb(${edgePixel[0]},${edgePixel[1]},${edgePixel[2]})`;
+
+    // Заполняем фон цветом с градиентом
+    const gradient = ctx.createLinearGradient(0,0,canvasWidth,canvasHeight);
+    gradient.addColorStop(0, edgeColor);
+    gradient.addColorStop(1, edgeColor);
 
     const off = document.createElement('canvas');
     off.width = imgW;
@@ -646,8 +659,8 @@
     }
 
     function loop() {
-      // Красный фон как у картинки
-      ctx.fillStyle = '#ff0000';
+      // Фон
+      ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
       if (state === 'idle') {
@@ -692,7 +705,6 @@
         if (allClose || timer > assembleFrames) { timer = 0; state = 'final'; }
       }
       else if (state === 'final') {
-        // После финальной фазы фон и картинка исчезают
         timer++;
         if (timer > 180) { timer = 0; state = 'idle'; }
       }
