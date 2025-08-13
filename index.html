@@ -569,7 +569,7 @@
     offCtx.drawImage(img,0,0,width,height);
     const imgData = offCtx.getImageData(0,0,width,height).data;
 
-    const size = 5;
+    const size = 4;
     const particles = [];
 
     for(let y=0;y<height;y+=size){
@@ -581,28 +581,32 @@
           particles.push({
             homeX:x,
             homeY:y,
-            x:x + (Math.random()-0.5)*20, // старт почти на месте
-            y:y + (Math.random()-0.5)*20,
-            vx:0,
-            vy:0,
+            x:x + (Math.random()-0.5)*10,
+            y:y + (Math.random()-0.5)*10,
+            vx:0, vy:0,
             size,
+            baseSize: size,
             alpha:0,
-            color:`rgba(${r},${g},${b},1)`
+            color:`rgba(${r},${g},${b},1)`,
+            rot: Math.random()*Math.PI*2,
+            rotSpeed: (Math.random()-0.5)*0.2
           });
         }
       }
     }
 
     let state='idle',timer=0;
-    const explosionFrames=150,electricFrames=100,assembleFrames=120;
+    const explosionFrames=200,electricFrames=150,assembleFrames=180;
 
-    function drawParticles(glow=false){
+    function drawParticles(){
       particles.forEach(p=>{
         ctx.save();
-        if(glow){ ctx.shadowBlur=12; ctx.shadowColor='cyan'; }
-        ctx.globalAlpha=p.alpha;
+        ctx.translate(p.x+size/2, p.y+size/2);
+        ctx.rotate(p.rot);
+        const flicker = 0.6 + Math.random()*0.4;
+        ctx.globalAlpha = p.alpha*flicker;
         ctx.fillStyle=p.color;
-        ctx.fillRect(p.x,p.y,p.size,p.size);
+        ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
         ctx.restore();
       });
     }
@@ -611,13 +615,14 @@
       const lines = 3 + Math.floor(Math.random()*3);
       for(let i=0;i<lines;i++){
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(180,240,255,${0.3 + Math.random()*0.5})`;
-        ctx.lineWidth = 1 + Math.random()*3;
-        let sx=Math.random()*width, sy=0;
+        const c = 0.2+Math.random()*0.6;
+        ctx.strokeStyle = `rgba(${180+Math.random()*75},${240+Math.random()*15},255,${c})`;
+        ctx.lineWidth = 2 + Math.random()*2;
+        let sx = Math.random()*width, sy=0;
         ctx.moveTo(sx,sy);
-        const steps=8;
+        const steps = 12;
         for(let k=0;k<steps;k++){
-          sx += (Math.random()-0.5)*100;
+          sx += (Math.random()-0.5) * 120;
           sy += height/steps;
           ctx.lineTo(sx,sy);
         }
@@ -627,23 +632,25 @@
 
     function startExplosion(){
       particles.forEach(p=>{
-        const ang=(-Math.PI/2)+(Math.random()-0.5)*Math.PI*0.8;
-        const s=1+Math.random()*2;
-        p.vx=Math.cos(ang)*s;
-        p.vy=Math.sin(ang)*s;
-        p.alpha=0;
+        const ang = (-Math.PI/2)+(Math.random()-0.5)*Math.PI;
+        const s = 2 + Math.random()*3;
+        p.vx = Math.cos(ang)*s;
+        p.vy = Math.sin(ang)*s;
+        p.alpha = 0;
       });
     }
 
     function loop(){
       ctx.clearRect(0,0,width,height);
 
+      particles.forEach(p=>p.rot += p.rotSpeed);
+
       if(state==='idle'){
-        ctx.drawImage(img,0,0,width,height); // картинка сразу полностью
+        ctx.drawImage(img,0,0,width,height);
         particles.forEach(p=>p.alpha=Math.min(1,p.alpha+0.05));
         drawParticles();
         timer++;
-        if(timer>50){ timer=0; state='electric'; }
+        if(timer>60){ timer=0; state='electric'; }
       }
       else if(state==='electric'){
         drawParticles();
@@ -653,33 +660,39 @@
       }
       else if(state==='explode'){
         particles.forEach(p=>{
-          p.x+=p.vx; p.y+=p.vy;
-          p.vx*=0.98; p.vy*=0.98;
-          p.vy+=0.15;
-          p.alpha=Math.min(1,p.alpha+0.05);
+          p.x+=p.vx;
+          p.y+=p.vy;
+          p.vx*=0.96;
+          p.vy*=0.96;
+          p.vy+=0.2;
+          p.alpha=Math.min(1,p.alpha+0.08);
+          p.size = p.baseSize*(0.8+Math.random()*0.5);
         });
-        drawParticles(true);
+        drawParticles();
+        drawLightning();
         timer++;
         if(timer>explosionFrames){ timer=0; state='assemble'; }
       }
       else if(state==='assemble'){
         let allClose=true;
-        const speed=0.08;
+        const speed = 0.12;
         particles.forEach(p=>{
           p.x += (p.homeX - p.x)*speed;
           p.y += (p.homeY - p.y)*speed;
           if(Math.abs(p.x-p.homeX)>0.5 || Math.abs(p.y-p.homeY)>0.5) allClose=false;
         });
-        drawParticles(true);
+        ctx.drawImage(img,0,0,width,height);
+        drawParticles();
         drawLightning();
         timer++;
         if(allClose || timer>assembleFrames){ timer=0; state='final'; }
       }
       else if(state==='final'){
-        ctx.drawImage(img,0,0,width,height); // картинка полностью
-        drawParticles(true); // частицы поверх для эффекта
+        ctx.drawImage(img,0,0,width,height);
+        drawParticles();
+        drawLightning();
         timer++;
-        if(timer>120){ timer=0; state='idle'; }
+        if(timer>150){ timer=0; state='idle'; }
       }
 
       requestAnimationFrame(loop);
@@ -688,6 +701,6 @@
     loop();
   }
 })();
-</script>
+            </script>
 </body>
 </html>
