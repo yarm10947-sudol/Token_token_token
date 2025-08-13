@@ -545,12 +545,13 @@
 
   const DPR = window.devicePixelRatio || 1;
 
-  // Высота всегда 300px, ширина для ПК 2 раза больше
+  // Высота всегда 300px
   let displayH = 300;
   let displayW = 300;
 
+  // Для компьютера увеличиваем ширину в 2 раза
   if(window.innerWidth >= 1024){
-    displayW = displayH * 2; 
+    displayW = displayH * 2; // ширина = 2 * высота
   }
 
   canvas.width = Math.round(displayW * DPR);
@@ -570,11 +571,11 @@
   logo.src = logoSrc;
 
   function start(logoImg) {
-    // Вычисляем масштаб для логотипа, чтобы он полностью поместился
+    // Масштабируем логотип по высоте, ширина пропорциональная
     const logoAspect = logoImg.width / logoImg.height;
-    let logoDrawWidth = displayH * logoAspect;
-    let logoDrawHeight = displayH;
-    let offsetX = (displayW - logoDrawWidth) / 2;
+    const logoDrawHeight = displayH;
+    const logoDrawWidth = logoDrawHeight * logoAspect;
+    const offsetX = (displayW - logoDrawWidth)/2; // центрируем
 
     const off = document.createElement('canvas');
     off.width = logoImg.width;
@@ -593,7 +594,7 @@
           const r = imgData[idx];
           const g = imgData[idx + 1];
           const b = imgData[idx + 2];
-          // Масштабируем по ширине относительно центра
+          // масштабируем к центру с учетом увеличенной ширины
           const scaledX = offsetX + (x / logoImg.width) * logoDrawWidth;
           const scaledY = (y / logoImg.height) * logoDrawHeight;
           particles.push({
@@ -663,21 +664,16 @@
       ctx.clearRect(0, 0, displayW, displayH);
 
       if (state === 'idle') {
-        ctx.save();
         ctx.drawImage(logoImg, 0, 0, logoImg.width, logoImg.height, offsetX, 0, logoDrawWidth, logoDrawHeight);
-        ctx.restore();
-
         timer++;
         if (timer > 90) { timer = 0; state = 'electric'; }
       }
-
       else if (state === 'electric') {
         ctx.drawImage(logoImg, 0, 0, logoImg.width, logoImg.height, offsetX, 0, logoDrawWidth, logoDrawHeight);
         if (Math.random() > 0.25) drawLightning();
         timer++;
         if (timer > 75) { timer = 0; startExplosion(); state = 'explode'; }
       }
-
       else if (state === 'explode') {
         particles.forEach(p => {
           p.x += p.vx;
@@ -690,14 +686,12 @@
         timer++;
         if (timer > explosionFrames) { timer = 0; state = 'charged'; }
       }
-
       else if (state === 'charged') {
         drawParticles(true);
         if (Math.random() > 0.6) drawLightning();
         timer++;
         if (timer > electricFrames) { timer = 0; state = 'assemble'; }
       }
-
       else if (state === 'assemble') {
         const speedFactor = 0.03;
         let allClose = true;
@@ -710,9 +704,7 @@
         timer++;
         if (allClose || timer > assembleFrames) { timer = 0; state = 'final'; }
       }
-
       else if (state === 'final') {
-        // Логотип в центре с пропорциями
         ctx.drawImage(logoImg, 0, 0, logoImg.width, logoImg.height, offsetX, 0, logoDrawWidth, logoDrawHeight);
         timer++;
         if (timer > 180) { timer = 0; state = 'idle'; }
@@ -725,5 +717,6 @@
   }
 })();
 </script>
+  
 </body>
 </html>
