@@ -11,8 +11,24 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
-}
+  @media (min-width: 1024px) {
+  .logoCanvas {
+    width: 600px; /* ширина canvas анимации */
+    height: 600px; /* высота canvas */
+  }
 
+  .logo {
+    width: 220px;  /* шире сам круглый логотип */
+    height: 220px;
+    margin-top: 120px; /* чтобы был ниже анимации */
+  }
+
+  .logo img {
+    width: 180px;  /* увеличиваем картинку внутри круга */
+    height: 180px;
+  }
+  }
+}
   /* Reset */
   *, *::before, *::after {
     box-sizing: border-box;
@@ -696,6 +712,9 @@
     loop();
   }
 })();
+  const rect = canvas.getBoundingClientRect();
+const displayW = window.innerWidth >= 1024 ? 600 : Math.max(1, Math.round(rect.width || 300));
+const displayH = window.innerWidth >= 1024 ? 600 : Math.max(1, Math.round(rect.height || 300));
 </script>
 </body>
 </html>
