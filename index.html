@@ -553,10 +553,9 @@
   logo.src = logoSrc;
 
   function start(logoImg) {
-    // Размеры
     const DPR = window.devicePixelRatio || 1;
-    let displayH = 300; // высота всегда 300px
-    let displayW = window.innerWidth >= 1024 ? displayH * 2.1 : displayH; // ПК шире
+    let displayH = 300;
+    let displayW = window.innerWidth >= 1024 ? displayH * 2.1 : displayH;
 
     canvas.width = Math.round(displayW * DPR);
     canvas.height = Math.round(displayH * DPR);
@@ -564,7 +563,6 @@
     canvas.style.height = displayH + 'px';
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-    // Создаём частицы из логотипа
     const off = document.createElement('canvas');
     off.width = logoImg.width;
     off.height = logoImg.height;
@@ -574,9 +572,10 @@
 
     const size = 8;
     const particles = [];
-    const scale = displayH / logoImg.height; // масштаб по высоте
-    const offsetX = (displayW - logoImg.width * scale) / 2; // центрирование
+    const scale = displayH / logoImg.height;
+    const offsetX = (displayW - logoImg.width * scale) / 2;
 
+    // частицы логотипа
     for (let y = 0; y < logoImg.height; y += size) {
       for (let x = 0; x < logoImg.width; x += size) {
         const idx = (y * logoImg.width + x) * 4;
@@ -599,6 +598,40 @@
       }
     }
 
+    // боковые частицы ПК-версии
+    const sideColor = '#ff0000'; // красный или точный цвет
+    const sideWidth = offsetX;
+    const sideParticles = [];
+    const sideStep = 8;
+    for (let y = 0; y < displayH; y += sideStep) {
+      for (let x = 0; x < sideWidth; x += sideStep) {
+        // левая сторона
+        sideParticles.push({
+          homeX: x,
+          homeY: y,
+          x: displayW/2 + (Math.random()-0.5)*8,
+          y: displayH/2 + (Math.random()-0.5)*8,
+          vx: 0,
+          vy: 0,
+          size: sideStep,
+          color: sideColor
+        });
+        // правая сторона
+        sideParticles.push({
+          homeX: displayW - x,
+          homeY: y,
+          x: displayW/2 + (Math.random()-0.5)*8,
+          y: displayH/2 + (Math.random()-0.5)*8,
+          vx: 0,
+          vy: 0,
+          size: sideStep,
+          color: sideColor
+        });
+      }
+    }
+
+    const allParticles = particles.concat(sideParticles);
+
     let state = 'idle';
     let timer = 0;
     const explosionFrames = 200;
@@ -606,14 +639,7 @@
     const assembleFrames = 220;
 
     function drawParticles(glow = false) {
-      // рисуем красные боковые области
-      if (displayW > displayH) {
-        ctx.fillStyle = '#ff0000'; // заменяешь на точный цвет из логотипа
-        ctx.fillRect(0, 0, offsetX, displayH);
-        ctx.fillRect(displayW - offsetX, 0, offsetX, displayH);
-      }
-
-      particles.forEach(p => {
+      allParticles.forEach(p => {
         ctx.save();
         if (glow) {
           ctx.shadowBlur = 12;
@@ -647,7 +673,7 @@
     }
 
     function startExplosion() {
-      particles.forEach(p => {
+      allParticles.forEach(p => {
         const ang = (-Math.PI/2) + (Math.random() - 0.5) * Math.PI * 0.7;
         const s = 0.6 + Math.random()*1.5;
         p.vx = Math.cos(ang) * s * (1 + Math.random()*0.6);
@@ -677,7 +703,7 @@
       }
 
       else if (state === 'explode') {
-        particles.forEach(p => {
+        allParticles.forEach(p => {
           p.x += p.vx;
           p.y += p.vy;
           p.vy += 0.12;
@@ -699,7 +725,7 @@
       else if (state === 'assemble') {
         const speedFactor = 0.03;
         let allClose = true;
-        particles.forEach(p => {
+        allParticles.forEach(p => {
           p.x += (p.homeX - p.x) * speedFactor;
           p.y += (p.homeY - p.y) * speedFactor;
           if (Math.abs(p.x - p.homeX) > 0.5 || Math.abs(p.y - p.homeY) > 0.5) allClose = false;
@@ -711,6 +737,7 @@
 
       else if (state === 'final') {
         ctx.drawImage(logoImg, offsetX, 0, logoImg.width * scale, displayH);
+        drawParticles(false);
         timer++;
         if (timer > 180) { timer = 0; state = 'idle'; }
       }
@@ -722,5 +749,6 @@
   }
 })();
 </script>
+  
 </body>
 </html>
