@@ -544,13 +544,9 @@
   const ctx = canvas.getContext('2d');
   const DPR = window.devicePixelRatio || 1;
 
-  // Настройки канваса
-  let canvasHeight = 300; // желаемая высота
-  let canvasWidth = 300;  // по умолчанию квадрат
-
-  if (window.innerWidth >= 1024) {
-    canvasWidth = 300 * 2.1; // ПК: ширина 2.1 от высоты
-  }
+  // Задаем размеры канваса
+  const canvasHeight = 300;
+  const canvasWidth = window.innerWidth >= 1024 ? canvasHeight * 2.1 : canvasHeight;
 
   canvas.width = Math.round(canvasWidth * DPR);
   canvas.height = Math.round(canvasHeight * DPR);
@@ -565,18 +561,17 @@
   logo.crossOrigin = 'Anonymous';
   logo.onload = () => start(logo);
   logo.onerror = (e) => { console.error('Не удалось загрузить логотип:', logoSrc, e); };
-
   logo.src = logoSrc;
 
   function start(logoImg) {
-    // Вычисляем масштаб, чтобы сохранить пропорции
+    // Масштабируем, сохраняя пропорции
     const scale = Math.min(canvasWidth / logoImg.width, canvasHeight / logoImg.height);
     const imgW = logoImg.width * scale;
     const imgH = logoImg.height * scale;
     const offsetX = (canvasWidth - imgW) / 2;
     const offsetY = (canvasHeight - imgH) / 2;
 
-    // Создаем частицы только по видимой области картинки
+    // Оффскрин канвас для пикселей
     const off = document.createElement('canvas');
     off.width = imgW;
     off.height = imgH;
@@ -617,12 +612,8 @@
     function drawParticles(glow = false) {
       particles.forEach(p => {
         ctx.save();
-        if (glow) {
-          ctx.shadowBlur = 12;
-          ctx.shadowColor = 'cyan';
-        } else {
-          ctx.shadowBlur = 0;
-        }
+        ctx.shadowBlur = glow ? 12 : 0;
+        ctx.shadowColor = glow ? 'cyan' : 'transparent';
         ctx.fillStyle = p.color;
         ctx.fillRect(p.x, p.y, p.size, p.size);
         ctx.restore();
