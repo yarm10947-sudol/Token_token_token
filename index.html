@@ -540,88 +540,85 @@
 <script>
 (function(){
   const canvas = document.getElementById('logoCanvas');
-  if (!canvas) { console.error('canvas #logoCanvas not found'); return; }
+  if(!canvas){ console.error('canvas #logoCanvas not found'); return; }
   const ctx = canvas.getContext('2d');
-
   const DPR = window.devicePixelRatio || 1;
 
-  const baseWidth = 300;
-  const baseHeight = 300;
+  const width = 300;
+  const height = 300;
 
-  canvas.width = baseWidth * DPR;
-  canvas.height = baseHeight * DPR;
-  canvas.style.width = baseWidth + 'px';
-  canvas.style.height = baseHeight + 'px';
+  canvas.width = width*DPR;
+  canvas.height = height*DPR;
+  canvas.style.width = width+'px';
+  canvas.style.height = height+'px';
   ctx.setTransform(DPR,0,0,DPR,0,0);
 
   const imgEl = document.querySelector('.logo img');
-  const logoSrc = imgEl ? imgEl.src : 'file_00000000198861f581eb6192921a6f6c.png';
+  const logoSrc = imgEl? imgEl.src:'file_00000000198861f581eb6192921a6f6c.png';
 
   const logo = new Image();
-  logo.crossOrigin = 'Anonymous';
+  logo.crossOrigin='Anonymous';
   logo.onload = () => start(logo);
   logo.src = logoSrc;
 
-  function start(logoImg){
-    const imgW = baseWidth;
-    const imgH = baseHeight;
-
+  function start(img){
     const off = document.createElement('canvas');
-    off.width = imgW;
-    off.height = imgH;
+    off.width = width;
+    off.height = height;
     const offCtx = off.getContext('2d');
-    offCtx.drawImage(logoImg,0,0,imgW,imgH);
-    const imgData = offCtx.getImageData(0,0,imgW,imgH).data;
+    offCtx.drawImage(img,0,0,width,height);
+    const imgData = offCtx.getImageData(0,0,width,height).data;
 
-    const size = 6;
+    const size = 5;
     const particles = [];
 
-    for(let y=0; y<imgH; y+=size){
-      for(let x=0; x<imgW; x+=size){
-        const idx = (y*imgW + x)*4;
+    for(let y=0;y<height;y+=size){
+      for(let x=0;x<width;x+=size){
+        const idx = (y*width + x)*4;
         const a = imgData[idx+3];
         if(a>16){
           const r=imgData[idx], g=imgData[idx+1], b=imgData[idx+2];
           particles.push({
-            homeX: x,
-            homeY: y,
-            x: imgW/2 + (Math.random()-0.5)*10,
-            y: imgH/2 + (Math.random()-0.5)*10,
-            vx: 0, vy: 0,
+            homeX:x,
+            homeY:y,
+            x:width/2 + (Math.random()-0.5)*20,
+            y:height/2 + (Math.random()-0.5)*20,
+            vx:0,
+            vy:0,
             size,
-            alpha: 0, // прозрачность для плавного появления
-            color: `rgba(${r},${g},${b},1)`
+            alpha:0,
+            color:`rgba(${r},${g},${b},1)`
           });
         }
       }
     }
 
-    let state='idle', timer=0;
-    const explosionFrames=200, electricFrames=160, assembleFrames=220;
+    let state='idle',timer=0;
+    const explosionFrames=180,electricFrames=100,assembleFrames=150;
 
     function drawParticles(glow=false){
       particles.forEach(p=>{
         ctx.save();
-        if(glow){ ctx.shadowBlur=12; ctx.shadowColor='cyan'; } else ctx.shadowBlur=0;
-        ctx.globalAlpha = p.alpha || 1;
+        if(glow){ ctx.shadowBlur=14; ctx.shadowColor='cyan'; }
+        ctx.globalAlpha = p.alpha;
         ctx.fillStyle=p.color;
         ctx.fillRect(p.x,p.y,p.size,p.size);
         ctx.restore();
       });
     }
 
-    function drawLightning(progress=1){
-      const lines = 2 + Math.floor(Math.random()*3);
+    function drawLightning(){
+      const lines = 3 + Math.floor(Math.random()*3);
       for(let i=0;i<lines;i++){
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(180,240,255,${0.15 + Math.random()*0.6*progress})`;
-        ctx.lineWidth = 1 + Math.random()*2;
-        let sx = Math.random()*imgW, sy=0;
+        ctx.strokeStyle = `rgba(180,240,255,${0.3 + Math.random()*0.5})`;
+        ctx.lineWidth = 1 + Math.random()*3;
+        let sx=Math.random()*width, sy=0;
         ctx.moveTo(sx,sy);
-        const steps=6;
+        const steps=8;
         for(let k=0;k<steps;k++){
-          sx += (Math.random()-0.5)*80;
-          sy += imgH/steps;
+          sx += (Math.random()-0.5)*100;
+          sy += height/steps;
           ctx.lineTo(sx,sy);
         }
         ctx.stroke();
@@ -630,60 +627,57 @@
 
     function startExplosion(){
       particles.forEach(p=>{
-        const ang = (-Math.PI/2) + (Math.random()-0.5)*Math.PI*0.7;
-        const s = 0.6 + Math.random()*1.5;
-        p.vx = Math.cos(ang)*s*(1+Math.random()*0.6);
-        p.vy = Math.sin(ang)*s*(1+Math.random()*0.6);
-        p.alpha = 1;
+        const ang=(-Math.PI/2)+(Math.random()-0.5)*Math.PI*0.8;
+        const s=1+Math.random()*2;
+        p.vx=Math.cos(ang)*s;
+        p.vy=Math.sin(ang)*s;
+        p.alpha=0;
       });
     }
 
     function loop(){
-      ctx.clearRect(0,0,imgW,imgH);
+      ctx.clearRect(0,0,width,height);
 
       if(state==='idle'){
+        particles.forEach(p=>p.alpha+=0.05);
         drawParticles();
         timer++;
-        if(timer>60){ timer=0; state='electric'; }
-      } 
+        if(timer>50){ timer=0; state='electric'; }
+      }
       else if(state==='electric'){
         drawParticles();
-        drawLightning(timer/electricFrames); // прогресс мерцания
+        drawLightning();
         timer++;
         if(timer>electricFrames){ timer=0; startExplosion(); state='explode'; }
       }
       else if(state==='explode'){
         particles.forEach(p=>{
-          p.x += p.vx; p.y += p.vy;
-          p.vy += 0.12; p.vx *=0.995; p.vy*=0.995;
-          p.alpha = Math.min(1, p.alpha + 0.02);
+          p.x+=p.vx; p.y+=p.vy;
+          p.vx*=0.98; p.vy*=0.98;
+          p.vy+=0.15;
+          p.alpha=Math.min(1,p.alpha+0.05);
         });
         drawParticles(true);
         timer++;
-        if(timer>explosionFrames){ timer=0; state='charged'; }
-      }
-      else if(state==='charged'){
-        drawParticles(true);
-        drawLightning(Math.random());
-        timer++;
-        if(timer>electricFrames){ timer=0; state='assemble'; }
+        if(timer>explosionFrames){ timer=0; state='assemble'; }
       }
       else if(state==='assemble'){
-        const speedFactor=0.05;
         let allClose=true;
+        const speed=0.06;
         particles.forEach(p=>{
-          p.x += (p.homeX - p.x)*speedFactor;
-          p.y += (p.homeY - p.y)*speedFactor;
+          p.x += (p.homeX - p.x)*speed;
+          p.y += (p.homeY - p.y)*speed;
           if(Math.abs(p.x-p.homeX)>0.5 || Math.abs(p.y-p.homeY)>0.5) allClose=false;
         });
-        drawParticles();
+        drawParticles(true);
+        drawLightning();
         timer++;
         if(allClose || timer>assembleFrames){ timer=0; state='final'; }
       }
       else if(state==='final'){
         drawParticles();
         timer++;
-        if(timer>180){ timer=0; state='idle'; }
+        if(timer>120){ timer=0; state='idle'; }
       }
 
       requestAnimationFrame(loop);
@@ -692,6 +686,6 @@
     loop();
   }
 })();
-    </script>
+</script>
 </body>
 </html>
