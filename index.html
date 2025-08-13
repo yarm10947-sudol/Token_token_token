@@ -537,23 +537,23 @@
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
+
 <script>
 (function(){
   const canvas = document.getElementById('logoCanvas');
-  if (!canvas) { console.error('canvas #logoCanvas not found'); return; }
   const ctx = canvas.getContext('2d');
   const DPR = window.devicePixelRatio || 1;
 
-  const canvasWidth = 620;
+  // Фиксированная высота 300px, ширина 620px для ПК
   const canvasHeight = 300;
+  const canvasWidth = 620;
   canvas.width = Math.round(canvasWidth * DPR);
   canvas.height = Math.round(canvasHeight * DPR);
   canvas.style.width = canvasWidth + 'px';
   canvas.style.height = canvasHeight + 'px';
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-  const imgEl = document.querySelector('.logo img');
-  const logoSrc = imgEl ? imgEl.src : 'file_00000000198861f581eb6192921a6f6c.png';
+  const logoSrc = 'file_00000000198861f581eb6192921a6f6c.png'; // путь к картинке
 
   const logo = new Image();
   logo.crossOrigin = 'Anonymous';
@@ -562,26 +562,13 @@
   logo.src = logoSrc;
 
   function start(logoImg) {
-    const scale = Math.min(canvasHeight / logoImg.height, 1);
+    const scale = canvasHeight / logoImg.height;
     const imgW = logoImg.width * scale;
     const imgH = logoImg.height * scale;
-    const offsetX = (canvasWidth - imgW) / 2;
-    const offsetY = (canvasHeight - imgH) / 2;
+    const offsetX = (canvasWidth - imgW) / 2; // центровка по ширине
+    const offsetY = 0; // картинка всегда сверху
 
-    // Получаем цвет из краевого пикселя картинки (верхний левый угол)
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = logoImg.width;
-    tempCanvas.height = logoImg.height;
-    const tempCtx = tempCanvas.getContext('2d');
-    tempCtx.drawImage(logoImg, 0, 0);
-    const edgePixel = tempCtx.getImageData(0, 0, 1, 1).data;
-    const edgeColor = `rgb(${edgePixel[0]},${edgePixel[1]},${edgePixel[2]})`;
-
-    // Заполняем фон цветом с градиентом
-    const gradient = ctx.createLinearGradient(0,0,canvasWidth,canvasHeight);
-    gradient.addColorStop(0, edgeColor);
-    gradient.addColorStop(1, edgeColor);
-
+    // Подготовка частиц
     const off = document.createElement('canvas');
     off.width = imgW;
     off.height = imgH;
@@ -659,9 +646,8 @@
     }
 
     function loop() {
-      // Фон
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+      // Очистка канваса
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
       if (state === 'idle') {
         ctx.drawImage(logoImg, offsetX, offsetY, imgW, imgH);
@@ -705,6 +691,7 @@
         if (allClose || timer > assembleFrames) { timer = 0; state = 'final'; }
       }
       else if (state === 'final') {
+        ctx.drawImage(logoImg, offsetX, offsetY, imgW, imgH);
         timer++;
         if (timer > 180) { timer = 0; state = 'idle'; }
       }
