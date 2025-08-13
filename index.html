@@ -558,12 +558,16 @@
   canvas.style.height = displayH + 'px';
   ctx.setTransform(DPR,0,0,DPR,0,0);
 
-  const logoSrc = '1000002091.png'; // картинка ПК версии
+  // Автоматический выбор картинки
+  const logoSrc = window.innerWidth >= 1024 
+    ? '1000002091.png'                     // ПК версия
+    : 'АДРЕС_МОБИЛЬНОЙ_КАРТИНКИ.png';     // мобильная версия
+
   const logo = new Image();
   logo.crossOrigin = 'Anonymous';
   logo.onload = ()=>start(logo);
   logo.onerror = (e)=>console.error('Не удалось загрузить логотип', e);
-  logo.src = 'file_00000000198861f581eb6192921a6f6c.png';
+  logo.src = logoSrc;
 
   function start(logoImg){
     const off = document.createElement('canvas');
