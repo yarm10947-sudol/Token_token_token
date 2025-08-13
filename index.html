@@ -544,35 +544,48 @@
   if (!canvas) { console.error('canvas #logoCanvas not found'); return; }
   const ctx = canvas.getContext('2d');
 
-  // Определяем размеры
-  let baseWidth = window.innerWidth >= 1024 ? 620 : 300; // ПК больше, моб меньше
-  let baseHeight = baseWidth; // квадрат
+  // размеры canvas
+  const isPC = window.innerWidth >= 1024;
+  const baseWidth = isPC ? 620 : 300;
+  const baseHeight = 300; // фиксированная высота
   canvas.width = Math.round(baseWidth * DPR);
   canvas.height = Math.round(baseHeight * DPR);
   canvas.style.width = baseWidth + 'px';
   canvas.style.height = baseHeight + 'px';
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-  // Выбираем картинку
-  let logoSrc;
-  if(window.innerWidth >= 1024){
-    logoSrc = '1000002091.png'; // ПК версия
-  } else {
-    const imgEl = document.querySelector('.logo img');
-    logoSrc = imgEl ? imgEl.src : 'file_00000000198861f581eb6192921a6f6c.png'; // Моб версия
-  }
+  // картинка
+  const logoSrc = isPC ? '1000002091.png' : (document.querySelector('.logo img')?.src || 'file_00000000198861f581eb6192921a6f6c.png');
 
   const logo = new Image();
   logo.crossOrigin = 'Anonymous';
   logo.onload = () => start(logo);
   logo.src = logoSrc;
 
-  function start(logoImg) {
+  function start(logoImg){
+    // сохраняем пропорции
+    const imgRatio = logoImg.width / logoImg.height;
+    const canvasRatio = baseWidth / baseHeight;
+    let drawW = baseWidth;
+    let drawH = baseHeight;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if(imgRatio > canvasRatio){
+      drawW = baseWidth;
+      drawH = baseWidth / imgRatio;
+      offsetY = (baseHeight - drawH) / 2;
+    } else {
+      drawH = baseHeight;
+      drawW = baseHeight * imgRatio;
+      offsetX = (baseWidth - drawW) / 2;
+    }
+
     const off = document.createElement('canvas');
     off.width = baseWidth;
     off.height = baseHeight;
     const offCtx = off.getContext('2d');
-    offCtx.drawImage(logoImg, 0, 0, baseWidth, baseHeight);
+    offCtx.drawImage(logoImg, offsetX, offsetY, drawW, drawH);
     const imgData = offCtx.getImageData(0, 0, baseWidth, baseHeight).data;
 
     const size = 8;
@@ -650,12 +663,12 @@
       ctx.clearRect(0, 0, baseWidth, baseHeight);
 
       if (state === 'idle') {
-        ctx.drawImage(logoImg, 0, 0, baseWidth, baseHeight);
+        drawParticles();
         timer++;
         if (timer > 90) { timer = 0; state = 'electric'; }
       }
       else if (state === 'electric') {
-        ctx.drawImage(logoImg, 0, 0, baseWidth, baseHeight);
+        drawParticles();
         if (Math.random() > 0.25) drawLightning();
         timer++;
         if (timer > 75) { timer = 0; startExplosion(); state = 'explode'; }
@@ -690,7 +703,7 @@
         if (allClose || timer > assembleFrames) { timer = 0; state = 'final'; }
       }
       else if (state === 'final') {
-        ctx.drawImage(logoImg, 0, 0, baseWidth, baseHeight);
+        drawParticles();
         timer++;
         if (timer > 180) { timer = 0; state = 'idle'; }
       }
