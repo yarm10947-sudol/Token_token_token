@@ -569,7 +569,7 @@
     offCtx.drawImage(img,0,0,width,height);
     const imgData = offCtx.getImageData(0,0,width,height).data;
 
-    const size = 4;
+    const size = 3; // детальные частицы
     const particles = [];
 
     for(let y=0;y<height;y+=size){
@@ -581,48 +581,49 @@
           particles.push({
             homeX:x,
             homeY:y,
-            x:x + (Math.random()-0.5)*10,
-            y:y + (Math.random()-0.5)*10,
+            x:width/2 + (Math.random()-0.5)*10,
+            y:height/2 + (Math.random()-0.5)*10,
             vx:0, vy:0,
             size,
-            baseSize: size,
+            baseSize:size,
             alpha:0,
             color:`rgba(${r},${g},${b},1)`,
+            origColor: {r,g,b},
             rot: Math.random()*Math.PI*2,
-            rotSpeed: (Math.random()-0.5)*0.2
+            rotSpeed: (Math.random()-0.5)*0.4,
+            flickerSpeed: Math.random()*0.05 + 0.02
           });
         }
       }
     }
 
     let state='idle',timer=0;
-    const explosionFrames=200,electricFrames=150,assembleFrames=180;
+    const explosionFrames=250,electricFrames=180,assembleFrames=220;
 
     function drawParticles(){
       particles.forEach(p=>{
         ctx.save();
-        ctx.translate(p.x+size/2, p.y+size/2);
+        ctx.translate(p.x + p.size/2, p.y + p.size/2);
         ctx.rotate(p.rot);
-        const flicker = 0.6 + Math.random()*0.4;
-        ctx.globalAlpha = p.alpha*flicker;
-        ctx.fillStyle=p.color;
-        ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+        ctx.globalAlpha = p.alpha*(0.7 + Math.random()*0.3);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
         ctx.restore();
       });
     }
 
     function drawLightning(){
-      const lines = 3 + Math.floor(Math.random()*3);
+      const lines = 3 + Math.floor(Math.random()*4);
       for(let i=0;i<lines;i++){
         ctx.beginPath();
-        const c = 0.2+Math.random()*0.6;
+        const c = 0.3+Math.random()*0.7;
         ctx.strokeStyle = `rgba(${180+Math.random()*75},${240+Math.random()*15},255,${c})`;
-        ctx.lineWidth = 2 + Math.random()*2;
+        ctx.lineWidth = 2 + Math.random()*3;
         let sx = Math.random()*width, sy=0;
         ctx.moveTo(sx,sy);
         const steps = 12;
         for(let k=0;k<steps;k++){
-          sx += (Math.random()-0.5) * 120;
+          sx += (Math.random()-0.5) * 140;
           sy += height/steps;
           ctx.lineTo(sx,sy);
         }
@@ -633,7 +634,7 @@
     function startExplosion(){
       particles.forEach(p=>{
         const ang = (-Math.PI/2)+(Math.random()-0.5)*Math.PI;
-        const s = 2 + Math.random()*3;
+        const s = 2 + Math.random()*4;
         p.vx = Math.cos(ang)*s;
         p.vy = Math.sin(ang)*s;
         p.alpha = 0;
@@ -643,14 +644,23 @@
     function loop(){
       ctx.clearRect(0,0,width,height);
 
+      let shake = 2.5;
+      let scale = 1 + Math.sin(Date.now()/60)*0.02;
+      const shakeX = (Math.random()-0.5)*shake;
+      const shakeY = (Math.random()-0.5)*shake;
+
       particles.forEach(p=>p.rot += p.rotSpeed);
 
       if(state==='idle'){
+        ctx.save();
+        ctx.translate(shakeX,shakeY);
+        ctx.scale(scale,scale);
         ctx.drawImage(img,0,0,width,height);
+        ctx.restore();
         particles.forEach(p=>p.alpha=Math.min(1,p.alpha+0.05));
         drawParticles();
         timer++;
-        if(timer>60){ timer=0; state='electric'; }
+        if(timer>70){ timer=0; state='electric'; }
       }
       else if(state==='electric'){
         drawParticles();
@@ -662,11 +672,19 @@
         particles.forEach(p=>{
           p.x+=p.vx;
           p.y+=p.vy;
-          p.vx*=0.96;
-          p.vy*=0.96;
-          p.vy+=0.2;
-          p.alpha=Math.min(1,p.alpha+0.08);
-          p.size = p.baseSize*(0.8+Math.random()*0.5);
+          p.vx*=0.95;
+          p.vy*=0.95;
+          p.vy+=0.25;
+          p.alpha=Math.min(1,p.alpha+0.1);
+
+          // Цветовая динамика: частицы меняют оттенки синего и пурпурного
+          const shift = Math.sin(timer/10 + Math.random())*50;
+          const r = Math.min(255, p.origColor.r+shift);
+          const g = Math.min(255, p.origColor.g+shift/2);
+          const b = Math.min(255, p.origColor.b+shift*1.2);
+          p.color = `rgba(${r},${g},${b},1)`;
+
+          p.size = p.baseSize*(0.8 + Math.random()*0.6);
         });
         drawParticles();
         drawLightning();
@@ -675,13 +693,22 @@
       }
       else if(state==='assemble'){
         let allClose=true;
-        const speed = 0.12;
+        const speed=0.15;
         particles.forEach(p=>{
-          p.x += (p.homeX - p.x)*speed;
-          p.y += (p.homeY - p.y)*speed;
+          p.x+=(p.homeX-p.x)*speed;
+          p.y+=(p.homeY-p.y)*speed;
+          // Возврат цвета к оригиналу
+          const dr = p.origColor.r - parseFloat(p.color.split('(')[1].split(',')[0]);
+          const dg = p.origColor.g - parseFloat(p.color.split(',')[1]);
+          const db = p.origColor.b - parseFloat(p.color.split(',')[2]);
+          p.color = `rgba(${parseFloat(p.color.split('(')[1].split(',')[0])+dr*0.1},${parseFloat(p.color.split(',')[1])+dg*0.1},${parseFloat(p.color.split(',')[2])+db*0.1},1)`;
           if(Math.abs(p.x-p.homeX)>0.5 || Math.abs(p.y-p.homeY)>0.5) allClose=false;
         });
+        ctx.save();
+        ctx.translate(shakeX,shakeY);
+        ctx.scale(scale,scale);
         ctx.drawImage(img,0,0,width,height);
+        ctx.restore();
         drawParticles();
         drawLightning();
         timer++;
@@ -692,7 +719,7 @@
         drawParticles();
         drawLightning();
         timer++;
-        if(timer>150){ timer=0; state='idle'; }
+        if(timer>200){ timer=0; state='idle'; }
       }
 
       requestAnimationFrame(loop);
@@ -701,6 +728,6 @@
     loop();
   }
 })();
-            </script>
+</script>
 </body>
 </html>
