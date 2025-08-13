@@ -542,7 +542,9 @@
   const canvas = document.getElementById('logoCanvas');
   if (!canvas) { console.error('canvas #logoCanvas not found'); return; }
   const ctx = canvas.getContext('2d');
-
+const rect = canvas.getBoundingClientRect();
+const displayW = window.innerWidth >= 1024 ? 600 : Math.max(1, Math.round(rect.width || 300));
+const displayH = window.innerWidth >= 1024 ? 600 : Math.max(1, Math.round(rect.height || 300));
   const rect = canvas.getBoundingClientRect();
   const displayW = Math.max(1, Math.round(rect.width || 300));
   const displayH = Math.max(1, Math.round(rect.height || 300));
@@ -712,9 +714,6 @@
     loop();
   }
 })();
-  const rect = canvas.getBoundingClientRect();
-const displayW = window.innerWidth >= 1024 ? 600 : Math.max(1, Math.round(rect.width || 300));
-const displayH = window.innerWidth >= 1024 ? 600 : Math.max(1, Math.round(rect.height || 300));
 </script>
 </body>
 </html>
