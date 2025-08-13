@@ -539,42 +539,45 @@
 </footer>
 <script>
 (function(){
-  const DPR = window.devicePixelRatio || 1;
   const canvas = document.getElementById('logoCanvas');
   if (!canvas) { console.error('canvas #logoCanvas not found'); return; }
   const ctx = canvas.getContext('2d');
 
-  // Определяем размеры так, чтобы всегда перекрывать надпись
-  let baseWidth = window.innerWidth >= 1024 ? 620 : 300; // ПК больше, моб меньше
-  let baseHeight = baseWidth; // квадрат
-
-  canvas.width = Math.round(baseWidth * DPR);
-  canvas.height = Math.round(baseHeight * DPR);
-  canvas.style.width = baseWidth + 'px';
-  canvas.style.height = baseHeight + 'px';
+  const rect = canvas.getBoundingClientRect();
+  const displayW = Math.max(1, Math.round(rect.width || 300));
+  const displayH = Math.max(1, Math.round(rect.height || 300));
+  const DPR = window.devicePixelRatio || 1;
+  canvas.width = Math.round(displayW * DPR);
+  canvas.height = Math.round(displayH * DPR);
+  canvas.style.width = displayW + 'px';
+  canvas.style.height = displayH + 'px';
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
   const imgEl = document.querySelector('.logo img');
   const logoSrc = imgEl ? imgEl.src : 'file_00000000198861f581eb6192921a6f6c.png';
 
+  
+
   const logo = new Image();
   logo.crossOrigin = 'Anonymous';
   logo.onload = () => start(logo);
+  logo.onerror = (e) => { console.error('Не удалось загрузить логотип:', logoSrc, e); };
+
   logo.src = logoSrc;
 
   function start(logoImg) {
     const off = document.createElement('canvas');
-    off.width = baseWidth;
-    off.height = baseHeight;
+    off.width = displayW;
+    off.height = displayH;
     const offCtx = off.getContext('2d');
-    offCtx.drawImage(logoImg, 0, 0, baseWidth, baseHeight);
-    const imgData = offCtx.getImageData(0, 0, baseWidth, baseHeight).data;
+    offCtx.drawImage(logoImg, 0, 0, displayW, displayH);
+    const imgData = offCtx.getImageData(0, 0, displayW, displayH).data;
 
     const size = 8;
     const particles = [];
-    for (let y = 0; y < baseHeight; y += size) {
-      for (let x = 0; x < baseWidth; x += size) {
-        const idx = (y * baseWidth + x) * 4;
+    for (let y = 0; y < displayH; y += size) {
+      for (let x = 0; x < displayW; x += size) {
+        const idx = (y * displayW + x) * 4;
         const a = imgData[idx + 3];
         if (a > 16) {
           const r = imgData[idx];
@@ -583,8 +586,8 @@
           particles.push({
             homeX: x,
             homeY: y,
-            x: baseWidth/2 + (Math.random()-0.5)*8,
-            y: baseHeight/2 + (Math.random()-0.5)*8,
+            x: displayW/2 + (Math.random()-0.5)*8,
+            y: displayH/2 + (Math.random()-0.5)*8,
             vx: 0,
             vy: 0,
             size,
@@ -596,7 +599,7 @@
 
     let state = 'idle';
     let timer = 0;
-    const explosionFrames = 200;
+    const explosionFrames = 200; // ещё дольше
     const electricFrames = 160;
     const assembleFrames = 220;
 
@@ -606,6 +609,8 @@
         if (glow) {
           ctx.shadowBlur = 12;
           ctx.shadowColor = 'cyan';
+        } else {
+          ctx.shadowBlur = 0;
         }
         ctx.fillStyle = p.color;
         ctx.fillRect(p.x, p.y, p.size, p.size);
@@ -619,13 +624,13 @@
         ctx.beginPath();
         ctx.strokeStyle = `rgba(180,240,255,${0.15 + Math.random()*0.6})`;
         ctx.lineWidth = 1 + Math.random()*2;
-        let sx = Math.random() * baseWidth;
+        let sx = Math.random() * displayW;
         let sy = 0;
         ctx.moveTo(sx, sy);
         const steps = 6;
         for (let k=0;k<steps;k++){
           sx += (Math.random()-0.5) * 80;
-          sy += baseHeight/steps;
+          sy += displayH/steps;
           ctx.lineTo(sx, sy);
         }
         ctx.stroke();
@@ -635,26 +640,33 @@
     function startExplosion() {
       particles.forEach(p => {
         const ang = (-Math.PI/2) + (Math.random() - 0.5) * Math.PI * 0.7;
-        const s = 0.6 + Math.random()*1.5;
-        p.vx = Math.cos(ang) * s;
-        p.vy = Math.sin(ang) * s;
+        const s = 0.6 + Math.random()*1.5; // скорость ещё меньше
+        p.vx = Math.cos(ang) * s * (1 + Math.random()*0.6);
+        p.vy = Math.sin(ang) * s * (1 + Math.random()*0.6);
       });
     }
 
     function loop() {
-      ctx.clearRect(0, 0, baseWidth, baseHeight);
+      ctx.clearRect(0, 0, displayW, displayH);
 
       if (state === 'idle') {
-        ctx.drawImage(logoImg, 0, 0, baseWidth, baseHeight);
+        ctx.save();
+        const j = 1.2;
+        ctx.translate((Math.random()-0.5)*j, (Math.random()-0.5)*j);
+        ctx.drawImage(logoImg, 0, 0, displayW, displayH);
+        ctx.restore();
+
         timer++;
-        if (timer > 90) { timer = 0; state = 'electric'; }
+        if (timer > 90) { timer = 0; state = 'electric'; } // дольше
       }
+
       else if (state === 'electric') {
-        ctx.drawImage(logoImg, 0, 0, baseWidth, baseHeight);
+        ctx.drawImage(logoImg, 0, 0, displayW, displayH);
         if (Math.random() > 0.25) drawLightning();
         timer++;
         if (timer > 75) { timer = 0; startExplosion(); state = 'explode'; }
       }
+
       else if (state === 'explode') {
         particles.forEach(p => {
           p.x += p.vx;
@@ -663,29 +675,33 @@
           p.vx *= 0.995;
           p.vy *= 0.995;
         });
-        drawParticles();
+        drawParticles(false);
         timer++;
         if (timer > explosionFrames) { timer = 0; state = 'charged'; }
       }
+
       else if (state === 'charged') {
         drawParticles(true);
         if (Math.random() > 0.6) drawLightning();
         timer++;
         if (timer > electricFrames) { timer = 0; state = 'assemble'; }
       }
+
       else if (state === 'assemble') {
-        const speedFactor = 0.03;
+        const speedFactor = 0.03; // ещё медленнее сборка
         let allClose = true;
         particles.forEach(p => {
           p.x += (p.homeX - p.x) * speedFactor;
           p.y += (p.homeY - p.y) * speedFactor;
           if (Math.abs(p.x - p.homeX) > 0.5 || Math.abs(p.y - p.homeY) > 0.5) allClose = false;
         });
-        drawParticles();
+        drawParticles(false);
+        timer++;
         if (allClose || timer > assembleFrames) { timer = 0; state = 'final'; }
       }
+
       else if (state === 'final') {
-        ctx.drawImage(logoImg, 0, 0, baseWidth, baseHeight);
+        ctx.drawImage(logoImg, 0, 0, displayW, displayH);
         timer++;
         if (timer > 180) { timer = 0; state = 'idle'; }
       }
@@ -696,6 +712,6 @@
     loop();
   }
 })();
-          </script>
+            </script>
 </body>
 </html>
