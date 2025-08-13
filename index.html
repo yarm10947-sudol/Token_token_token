@@ -544,9 +544,9 @@
   const ctx = canvas.getContext('2d');
   const DPR = window.devicePixelRatio || 1;
 
-  // Ширина канваса 620px на компьютере
+  // Компьютерный размер канваса
   const canvasWidth = 620;
-  const canvasHeight = 300; // фиксированная высота
+  const canvasHeight = 300;
   canvas.width = Math.round(canvasWidth * DPR);
   canvas.height = Math.round(canvasHeight * DPR);
   canvas.style.width = canvasWidth + 'px';
@@ -563,12 +563,11 @@
   logo.src = logoSrc;
 
   function start(logoImg) {
-    // Мобильная версия: сохраняем оригинальные размеры, не растягиваем
     const scale = Math.min(canvasHeight / logoImg.height, 1);
     const imgW = logoImg.width * scale;
     const imgH = logoImg.height * scale;
-    const offsetX = (canvasWidth - imgW) / 2; // по центру по горизонтали
-    const offsetY = (canvasHeight - imgH) / 2; // по центру по вертикали
+    const offsetX = (canvasWidth - imgW) / 2;
+    const offsetY = (canvasHeight - imgH) / 2;
 
     const off = document.createElement('canvas');
     off.width = imgW;
@@ -647,7 +646,7 @@
     }
 
     function loop() {
-      // Красный фон
+      // Красный фон как у картинки
       ctx.fillStyle = '#ff0000';
       ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
@@ -693,7 +692,7 @@
         if (allClose || timer > assembleFrames) { timer = 0; state = 'final'; }
       }
       else if (state === 'final') {
-        ctx.drawImage(logoImg, offsetX, offsetY, imgW, imgH);
+        // После финальной фазы фон и картинка исчезают
         timer++;
         if (timer > 180) { timer = 0; state = 'idle'; }
       }
