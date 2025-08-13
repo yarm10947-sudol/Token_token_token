@@ -545,7 +545,6 @@
 
   const DPR = window.devicePixelRatio || 1;
 
-  // Мобильный размер
   const baseWidth = 300;
   const baseHeight = 300;
 
@@ -553,7 +552,7 @@
   canvas.height = baseHeight * DPR;
   canvas.style.width = baseWidth + 'px';
   canvas.style.height = baseHeight + 'px';
-  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  ctx.setTransform(DPR,0,0,DPR,0,0);
 
   const imgEl = document.querySelector('.logo img');
   const logoSrc = imgEl ? imgEl.src : 'file_00000000198861f581eb6192921a6f6c.png';
@@ -564,7 +563,6 @@
   logo.src = logoSrc;
 
   function start(logoImg){
-    // Используем настоящий размер картинки для частиц
     const imgW = baseWidth;
     const imgH = baseHeight;
 
@@ -572,10 +570,10 @@
     off.width = imgW;
     off.height = imgH;
     const offCtx = off.getContext('2d');
-    offCtx.drawImage(logoImg, 0, 0, imgW, imgH);
-    const imgData = offCtx.getImageData(0, 0, imgW, imgH).data;
+    offCtx.drawImage(logoImg,0,0,imgW,imgH);
+    const imgData = offCtx.getImageData(0,0,imgW,imgH).data;
 
-    const size = 6; // уменьшаем размер частиц для четкости
+    const size = 6;
     const particles = [];
 
     for(let y=0; y<imgH; y+=size){
@@ -583,56 +581,48 @@
         const idx = (y*imgW + x)*4;
         const a = imgData[idx+3];
         if(a>16){
-          const r = imgData[idx];
-          const g = imgData[idx+1];
-          const b = imgData[idx+2];
+          const r=imgData[idx], g=imgData[idx+1], b=imgData[idx+2];
           particles.push({
             homeX: x,
             homeY: y,
             x: imgW/2 + (Math.random()-0.5)*10,
             y: imgH/2 + (Math.random()-0.5)*10,
-            vx: 0,
-            vy: 0,
+            vx: 0, vy: 0,
             size,
-            color: `rgba(${r},${g},${b},${(a/255).toFixed(2)})`
+            alpha: 0, // прозрачность для плавного появления
+            color: `rgba(${r},${g},${b},1)`
           });
         }
       }
     }
 
-    let state = 'idle';
-    let timer = 0;
-    const explosionFrames = 200;
-    const electricFrames = 160;
-    const assembleFrames = 220;
+    let state='idle', timer=0;
+    const explosionFrames=200, electricFrames=160, assembleFrames=220;
 
     function drawParticles(glow=false){
       particles.forEach(p=>{
         ctx.save();
-        if(glow){
-          ctx.shadowBlur = 12;
-          ctx.shadowColor = 'cyan';
-        } else ctx.shadowBlur = 0;
-        ctx.fillStyle = p.color;
-        ctx.fillRect(p.x, p.y, p.size, p.size);
+        if(glow){ ctx.shadowBlur=12; ctx.shadowColor='cyan'; } else ctx.shadowBlur=0;
+        ctx.globalAlpha = p.alpha || 1;
+        ctx.fillStyle=p.color;
+        ctx.fillRect(p.x,p.y,p.size,p.size);
         ctx.restore();
       });
     }
 
-    function drawLightning(){
+    function drawLightning(progress=1){
       const lines = 2 + Math.floor(Math.random()*3);
       for(let i=0;i<lines;i++){
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(180,240,255,${0.15 + Math.random()*0.6})`;
+        ctx.strokeStyle = `rgba(180,240,255,${0.15 + Math.random()*0.6*progress})`;
         ctx.lineWidth = 1 + Math.random()*2;
-        let sx = Math.random()*imgW;
-        let sy = 0;
-        ctx.moveTo(sx, sy);
-        const steps = 6;
+        let sx = Math.random()*imgW, sy=0;
+        ctx.moveTo(sx,sy);
+        const steps=6;
         for(let k=0;k<steps;k++){
           sx += (Math.random()-0.5)*80;
           sy += imgH/steps;
-          ctx.lineTo(sx, sy);
+          ctx.lineTo(sx,sy);
         }
         ctx.stroke();
       }
@@ -644,6 +634,7 @@
         const s = 0.6 + Math.random()*1.5;
         p.vx = Math.cos(ang)*s*(1+Math.random()*0.6);
         p.vy = Math.sin(ang)*s*(1+Math.random()*0.6);
+        p.alpha = 1;
       });
     }
 
@@ -651,32 +642,34 @@
       ctx.clearRect(0,0,imgW,imgH);
 
       if(state==='idle'){
-        ctx.drawImage(logoImg,0,0,imgW,imgH);
-        timer++;
-        if(timer>90){ timer=0; state='electric'; }
-      } else if(state==='electric'){
-        ctx.drawImage(logoImg,0,0,imgW,imgH);
-        if(Math.random()>0.25) drawLightning();
-        timer++;
-        if(timer>75){ timer=0; startExplosion(); state='explode'; }
-      } else if(state==='explode'){
-        particles.forEach(p=>{
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vy += 0.12;
-          p.vx *= 0.995;
-          p.vy *= 0.995;
-        });
         drawParticles();
         timer++;
-        if(timer>explosionFrames){ timer=0; state='charged'; }
-      } else if(state==='charged'){
+        if(timer>60){ timer=0; state='electric'; }
+      } 
+      else if(state==='electric'){
+        drawParticles();
+        drawLightning(timer/electricFrames); // прогресс мерцания
+        timer++;
+        if(timer>electricFrames){ timer=0; startExplosion(); state='explode'; }
+      }
+      else if(state==='explode'){
+        particles.forEach(p=>{
+          p.x += p.vx; p.y += p.vy;
+          p.vy += 0.12; p.vx *=0.995; p.vy*=0.995;
+          p.alpha = Math.min(1, p.alpha + 0.02);
+        });
         drawParticles(true);
-        if(Math.random()>0.6) drawLightning();
+        timer++;
+        if(timer>explosionFrames){ timer=0; state='charged'; }
+      }
+      else if(state==='charged'){
+        drawParticles(true);
+        drawLightning(Math.random());
         timer++;
         if(timer>electricFrames){ timer=0; state='assemble'; }
-      } else if(state==='assemble'){
-        const speedFactor = 0.04; // чуть быстрее сборка
+      }
+      else if(state==='assemble'){
+        const speedFactor=0.05;
         let allClose=true;
         particles.forEach(p=>{
           p.x += (p.homeX - p.x)*speedFactor;
@@ -686,8 +679,9 @@
         drawParticles();
         timer++;
         if(allClose || timer>assembleFrames){ timer=0; state='final'; }
-      } else if(state==='final'){
-        ctx.drawImage(logoImg,0,0,imgW,imgH);
+      }
+      else if(state==='final'){
+        drawParticles();
         timer++;
         if(timer>180){ timer=0; state='idle'; }
       }
@@ -698,6 +692,6 @@
     loop();
   }
 })();
-</script>
+    </script>
 </body>
 </html>
