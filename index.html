@@ -545,12 +545,12 @@
 
   const DPR = window.devicePixelRatio || 1;
 
-  // Размер канваса
-  const baseWidth = 300; // как в мобильной версии
+  // Мобильный размер
+  const baseWidth = 300;
   const baseHeight = 300;
 
-  canvas.width = Math.round(baseWidth * DPR);
-  canvas.height = Math.round(baseHeight * DPR);
+  canvas.width = baseWidth * DPR;
+  canvas.height = baseHeight * DPR;
   canvas.style.width = baseWidth + 'px';
   canvas.style.height = baseHeight + 'px';
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
@@ -563,19 +563,24 @@
   logo.onload = () => start(logo);
   logo.src = logoSrc;
 
-  function start(logoImg) {
-    const off = document.createElement('canvas');
-    off.width = baseWidth;
-    off.height = baseHeight;
-    const offCtx = off.getContext('2d');
-    offCtx.drawImage(logoImg, 0, 0, baseWidth, baseHeight);
-    const imgData = offCtx.getImageData(0, 0, baseWidth, baseHeight).data;
+  function start(logoImg){
+    // Используем настоящий размер картинки для частиц
+    const imgW = baseWidth;
+    const imgH = baseHeight;
 
-    const size = 8;
+    const off = document.createElement('canvas');
+    off.width = imgW;
+    off.height = imgH;
+    const offCtx = off.getContext('2d');
+    offCtx.drawImage(logoImg, 0, 0, imgW, imgH);
+    const imgData = offCtx.getImageData(0, 0, imgW, imgH).data;
+
+    const size = 6; // уменьшаем размер частиц для четкости
     const particles = [];
-    for(let y=0; y<baseHeight; y+=size){
-      for(let x=0; x<baseWidth; x+=size){
-        const idx = (y*baseWidth + x)*4;
+
+    for(let y=0; y<imgH; y+=size){
+      for(let x=0; x<imgW; x+=size){
+        const idx = (y*imgW + x)*4;
         const a = imgData[idx+3];
         if(a>16){
           const r = imgData[idx];
@@ -584,8 +589,8 @@
           particles.push({
             homeX: x,
             homeY: y,
-            x: baseWidth/2 + (Math.random()-0.5)*8,
-            y: baseHeight/2 + (Math.random()-0.5)*8,
+            x: imgW/2 + (Math.random()-0.5)*10,
+            y: imgH/2 + (Math.random()-0.5)*10,
             vx: 0,
             vy: 0,
             size,
@@ -607,7 +612,7 @@
         if(glow){
           ctx.shadowBlur = 12;
           ctx.shadowColor = 'cyan';
-        }
+        } else ctx.shadowBlur = 0;
         ctx.fillStyle = p.color;
         ctx.fillRect(p.x, p.y, p.size, p.size);
         ctx.restore();
@@ -618,15 +623,15 @@
       const lines = 2 + Math.floor(Math.random()*3);
       for(let i=0;i<lines;i++){
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(180,240,255,${0.15+Math.random()*0.6})`;
+        ctx.strokeStyle = `rgba(180,240,255,${0.15 + Math.random()*0.6})`;
         ctx.lineWidth = 1 + Math.random()*2;
-        let sx = Math.random()*baseWidth;
+        let sx = Math.random()*imgW;
         let sy = 0;
         ctx.moveTo(sx, sy);
         const steps = 6;
         for(let k=0;k<steps;k++){
           sx += (Math.random()-0.5)*80;
-          sy += baseHeight/steps;
+          sy += imgH/steps;
           ctx.lineTo(sx, sy);
         }
         ctx.stroke();
@@ -643,14 +648,14 @@
     }
 
     function loop(){
-      ctx.clearRect(0,0,baseWidth,baseHeight);
+      ctx.clearRect(0,0,imgW,imgH);
 
       if(state==='idle'){
-        ctx.drawImage(logoImg,0,0,baseWidth,baseHeight);
+        ctx.drawImage(logoImg,0,0,imgW,imgH);
         timer++;
         if(timer>90){ timer=0; state='electric'; }
       } else if(state==='electric'){
-        ctx.drawImage(logoImg,0,0,baseWidth,baseHeight);
+        ctx.drawImage(logoImg,0,0,imgW,imgH);
         if(Math.random()>0.25) drawLightning();
         timer++;
         if(timer>75){ timer=0; startExplosion(); state='explode'; }
@@ -671,7 +676,7 @@
         timer++;
         if(timer>electricFrames){ timer=0; state='assemble'; }
       } else if(state==='assemble'){
-        const speedFactor = 0.03;
+        const speedFactor = 0.04; // чуть быстрее сборка
         let allClose=true;
         particles.forEach(p=>{
           p.x += (p.homeX - p.x)*speedFactor;
@@ -682,7 +687,7 @@
         timer++;
         if(allClose || timer>assembleFrames){ timer=0; state='final'; }
       } else if(state==='final'){
-        ctx.drawImage(logoImg,0,0,baseWidth,baseHeight);
+        ctx.drawImage(logoImg,0,0,imgW,imgH);
         timer++;
         if(timer>180){ timer=0; state='idle'; }
       }
