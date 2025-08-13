@@ -543,8 +543,20 @@
   if (!canvas) { console.error('canvas #logoCanvas not found'); return; }
   const ctx = canvas.getContext('2d');
 const rect = canvas.getBoundingClientRect();
-const displayW = window.innerWidth >= 1024 ? 600 : Math.max(1, Math.round(rect.width || 300));
-const displayH = window.innerWidth >= 1024 ? 600 : Math.max(1, Math.round(rect.height || 300));
+let displayW = Math.max(1, Math.round(rect.width || 300));
+let displayH = Math.max(1, Math.round(rect.height || 300));
+
+// Если экран большой, делаем шире
+if (window.innerWidth >= 1024) {
+  displayW *= 1.5; // увеличиваем ширину на 50%
+  displayH *= 1.5; // высоту тоже
+}
+
+canvas.width = Math.round(displayW * DPR);
+canvas.height = Math.round(displayH * DPR);
+canvas.style.width = displayW + 'px';
+canvas.style.height = displayH + 'px';
+ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   const rect = canvas.getBoundingClientRect();
   const displayW = Math.max(1, Math.round(rect.width || 300));
   const displayH = Math.max(1, Math.round(rect.height || 300));
