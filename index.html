@@ -561,7 +561,12 @@
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
   const imgEl = document.querySelector('.logo img');
-  const logoSrc = imgEl ? imgEl.src :'1000002091.png';
+  let logoSrc;
+  if (window.innerWidth >= 1024) {
+    logoSrc = '1000002091.png'; // ПК-версия
+  } else {
+    logoSrc = imgEl ? imgEl.src : '1000002091.png'; // мобильная версия
+  }
 
   const logo = new Image();
   logo.crossOrigin = 'Anonymous';
@@ -590,8 +595,8 @@
           particles.push({
             homeX: x,
             homeY: y,
-            x: x, // сразу на месте
-            y: y, // сразу на месте
+            x: x,
+            y: y,
             vx: 0,
             vy: 0,
             size,
@@ -654,7 +659,7 @@
       ctx.clearRect(0,0,displayW,displayH);
 
       if(state==='idle'){
-        drawParticles(); // сразу видны
+        drawParticles();
         timer++;
         if(timer>90){ timer=0; state='electric'; }
       } else if(state==='electric'){
