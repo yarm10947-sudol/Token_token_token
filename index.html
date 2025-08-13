@@ -581,8 +581,8 @@
           particles.push({
             homeX:x,
             homeY:y,
-            x:width/2 + (Math.random()-0.5)*20,
-            y:height/2 + (Math.random()-0.5)*20,
+            x:x + (Math.random()-0.5)*20, // старт почти на месте
+            y:y + (Math.random()-0.5)*20,
             vx:0,
             vy:0,
             size,
@@ -594,13 +594,13 @@
     }
 
     let state='idle',timer=0;
-    const explosionFrames=180,electricFrames=100,assembleFrames=150;
+    const explosionFrames=150,electricFrames=100,assembleFrames=120;
 
     function drawParticles(glow=false){
       particles.forEach(p=>{
         ctx.save();
-        if(glow){ ctx.shadowBlur=14; ctx.shadowColor='cyan'; }
-        ctx.globalAlpha = p.alpha;
+        if(glow){ ctx.shadowBlur=12; ctx.shadowColor='cyan'; }
+        ctx.globalAlpha=p.alpha;
         ctx.fillStyle=p.color;
         ctx.fillRect(p.x,p.y,p.size,p.size);
         ctx.restore();
@@ -639,7 +639,8 @@
       ctx.clearRect(0,0,width,height);
 
       if(state==='idle'){
-        particles.forEach(p=>p.alpha+=0.05);
+        ctx.drawImage(img,0,0,width,height); // картинка сразу полностью
+        particles.forEach(p=>p.alpha=Math.min(1,p.alpha+0.05));
         drawParticles();
         timer++;
         if(timer>50){ timer=0; state='electric'; }
@@ -663,7 +664,7 @@
       }
       else if(state==='assemble'){
         let allClose=true;
-        const speed=0.06;
+        const speed=0.08;
         particles.forEach(p=>{
           p.x += (p.homeX - p.x)*speed;
           p.y += (p.homeY - p.y)*speed;
@@ -675,7 +676,8 @@
         if(allClose || timer>assembleFrames){ timer=0; state='final'; }
       }
       else if(state==='final'){
-        drawParticles();
+        ctx.drawImage(img,0,0,width,height); // картинка полностью
+        drawParticles(true); // частицы поверх для эффекта
         timer++;
         if(timer>120){ timer=0; state='idle'; }
       }
