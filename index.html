@@ -652,7 +652,7 @@
     function startExplosion(){
       particles.forEach(p=>{
         const ang = Math.random()*Math.PI*2;
-        const s = 2 + Math.random()*2;
+        const s = 2 + Math.random()*2*2;
         p.vx = Math.cos(ang)*s;
         p.vy = Math.sin(ang)*s;
       });
