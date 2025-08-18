@@ -471,29 +471,27 @@
     margin: 0 auto;
   }
 
-  /* Плеер под логотипом */
   #musicPlayer {
-    margin: 10px auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-  }
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  z-index: 1000;
+}
 
-  #playPause {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: none;
-    background: #222;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-  }
+#logoCanvas {
+  display: block;
+  margin: 0 auto;
+  border-radius: 50%; /* Круглый логотип */
+  box-shadow: 0 0 30px rgba(0,255,255,0.3);
+}
 
-  #trackSelect, #volumeControl {
-    cursor: pointer;
-  }
+#musicPlayer button, #musicPlayer select {
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 16px;
+}
 </style>
 </head>
 <body>
@@ -503,23 +501,18 @@
   <div class="logo" aria-label="CADO Token Logo">
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
-  <!-- 🎵 Музыкальный плеер -->
-<div id="musicPlayer">
-  <button id="prev">⏮️</button>
-  <button id="playPause">▶️</button>
-  <button id="next">⏭️</button>
+  <!-- Круглый логотип -->
+<canvas id="logoCanvas" width="620" height="300"></canvas>
 
+<!-- Музыкальный плеер -->
+<div id="musicPlayer">
+  <button id="playPause">▶️</button>
   <select id="trackSelect">
     <option value="music1.mp3">Трек 1</option>
     <option value="music2.mp3">Трек 2</option>
-    <option value="music3.mp3">Трек 3</option>
   </select>
-
-  <!-- Ползунок перемотки -->
-  <input type="range" id="seekBar" value="0" min="0" step="1">
-
-  <!-- Громкость -->
-  <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
+  <button id="rewind">⏮️</button>
+  <button id="forward">⏭️</button>
 </div>
 
 <audio id="audioPlayer"></audio>
@@ -765,67 +758,86 @@
     loop();
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-  const audio = document.getElementById("audioPlayer");
-  const playPauseBtn = document.getElementById("playPause");
-  const prevBtn = document.getElementById("prev");
-  const nextBtn = document.getElementById("next");
-  const trackSelect = document.getElementById("trackSelect");
-  const volumeControl = document.getElementById("volumeControl");
-  const seekBar = document.getElementById("seekBar");
 
-  let tracks = Array.from(trackSelect.options).map(o => o.value);
-  let currentTrackIndex = 0;
+  const audio = document.getElementById('audioPlayer');
+const playBtn = document.getElementById('playPause');
+const trackSelect = document.getElementById('trackSelect');
+const canvas = document.getElementById('logoCanvas');
+const ctx = canvas.getContext('2d');
 
-  function loadTrack(index) {
-    currentTrackIndex = index;
-    audio.src = tracks[index];
-    audio.load();
+// Инициализация трека
+audio.src = trackSelect.value;
+
+// Play/Pause
+playBtn.addEventListener('click', () => {
+  if(audio.paused){
     audio.play();
-    playPauseBtn.textContent = "⏸️";
+    canvas.classList.add('playing');
+  } else {
+    audio.pause();
+    canvas.classList.remove('playing');
+  }
+});
+
+// Смена трека
+trackSelect.addEventListener('change', () => {
+  audio.src = trackSelect.value;
+  audio.play();
+  canvas.classList.add('playing');
+});
+
+// Настройка Web Audio API для анализа звука
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const source = audioCtx.createMediaElementSource(audio);
+const analyser = audioCtx.createAnalyser();
+source.connect(analyser);
+analyser.connect(audioCtx.destination);
+analyser.fftSize = 512;
+
+const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+function premiumAnimateLogo() {
+  requestAnimationFrame(premiumAnimateLogo);
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  let glow = 0;
+  if(!audio.paused){
+    analyser.getByteFrequencyData(dataArray);
+    const avg = dataArray.reduce((a,b) => a+b, 0)/dataArray.length;
+    glow = Math.min(1, avg/200);
   }
 
-  playPauseBtn.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.play();
-      playPauseBtn.textContent = "⏸️";
-    } else {
-      audio.pause();
-      playPauseBtn.textContent = "▶️";
-    }
-  });
+  // Пульсация и дрожание логотипа
+  const shake = (Math.random()-0.5)*2*glow*5;
+  const scale = 1 + glow*0.15;
+  ctx.save();
+  ctx.translate(canvas.width/2 + shake, canvas.height/2 + shake);
+  ctx.scale(scale, scale);
+  ctx.translate(-canvas.width/2, -canvas.height/2);
 
-  prevBtn.addEventListener("click", () => {
-    loadTrack((currentTrackIndex - 1 + tracks.length) % tracks.length);
-  });
+  // Рисуем основной логотип (canvas с предыдущей анимацией)
+  ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
 
-  nextBtn.addEventListener("click", () => {
-    loadTrack((currentTrackIndex + 1) % tracks.length);
-  });
+  ctx.restore();
 
-  trackSelect.addEventListener("change", () => {
-    loadTrack(trackSelect.selectedIndex);
-  });
+  // Добавляем разноцветные вспышки
+  const flashCount = Math.floor(glow*8);
+  for(let i=0;i<flashCount;i++){
+    const x = Math.random()*canvas.width;
+    const y = Math.random()*canvas.height;
+    const radius = 3 + Math.random()*6*glow;
+    const r = 200 + Math.random()*55;
+    const g = 50 + Math.random()*205;
+    const b = 200 + Math.random()*55;
+    ctx.beginPath();
+    ctx.arc(x,y,radius,0,Math.PI*2);
+    ctx.fillStyle = `rgba(${r},${g},${b},${0.15+glow*0.3})`;
+    ctx.fill();
+  }
+}
 
-  volumeControl.addEventListener("input", () => {
-    audio.volume = volumeControl.value;
-  });
-
-  audio.addEventListener("timeupdate", () => {
-    seekBar.max = Math.floor(audio.duration) || 0;
-    seekBar.value = Math.floor(audio.currentTime);
-  });
-
-  seekBar.addEventListener("input", () => {
-    audio.currentTime = seekBar.value;
-  });
-
-  audio.addEventListener("ended", () => {
-    nextBtn.click();
-  });
-
-  loadTrack(0);
-});
+premiumAnimateLogo();
 </script>
 </body>
 </html>
