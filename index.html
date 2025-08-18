@@ -11,53 +11,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
-  @media (min-width: 1024px) {
-  .logoCanvas {
-    width: 600px; /* ширина canvas анимации */
-    height: 600px; /* высота canvas */
-  }
-
-  .logo {
-    width: 220px;  /* шире сам круглый логотип */
-    height: 220px;
-    margin-top: 120px; /* чтобы был ниже анимации */
-  }
-
-  .logo img {
-    width: 180px;  /* увеличиваем картинку внутри круга */
-    height: 180px;
-  }
-  }
-}
   /* Reset */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  body, html {
-    margin: 0; padding: 0;
-    font-family: 'Roboto', sans-serif;
-    scroll-behavior: smooth;
-    background: linear-gradient(135deg, #ff0000, #ffd700, #ff9900, #000000);
-    color: #fff;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body, html { margin: 0; padding: 0; font-family: 'Roboto', sans-serif; scroll-behavior: smooth; background: linear-gradient(135deg, #ff0000, #ffd700, #ff9900, #000000); color: #fff; min-height: 100vh; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
 
-  /* Overlay for readability */
-  body::before {
-    content: "";
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(30,10,10,1);
-    z-index: -1;
-    transform: translateZ(0);
-  }
+  body::before { content: ""; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(30,10,10,1); z-index: -1; transform: translateZ(0); }
 
-  /* Parallax header background */
   header {
     min-height: 100vh;
     display: flex;
@@ -75,51 +35,16 @@
     background-image: linear-gradient(135deg, #ff0000dd, #ffd700cc, #ff9900dd, #000000cc);
   }
 
-  .logo {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    border: 8px solid #ffd700;
-    box-shadow:
-      0 0 60px #ffd700cc,
-      inset 0 0 70px #ffcc0080;
-    margin-top: 80px;
-    position: relative;
-  z-index: 20; 
-    background: radial-gradient(circle at center, #ffcc00, #b27300);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    transition: transform 0.4s ease;
-  }
-  .logo img {
-    width: 140px;
-    height: 140px;
-    object-fit: contain;
-    border-radius: 50%;
-    border: 5px solid #fff4b8;
-    box-shadow: 0 0 30px #fff4b8;
-  }
-  .logo:hover {
-    transform: scale(1.2);
-    box-shadow:
-      0 0 80px #ffd700ff,
-      inset 0 0 90px #ffcc00ff;
-  }
-  header h1 {
+  h1 {
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
     font-size: 5rem;
     letter-spacing: 5px;
-    text-shadow:
-      0 0 15px #ffcc00,
-      0 0 40px #ff9900;
+    text-shadow: 0 0 15px #ffcc00, 0 0 40px #ff9900;
     margin-bottom: 0;
     user-select: none;
   }
 
-  /* Легенда */
   .legend-text {
     background: rgba(19,9,0,0.9);
     border-radius: 25px;
@@ -130,12 +55,9 @@
     font-size: 1.6rem;
     line-height: 1.7;
     user-select: none;
-
-    /* Анимация пульсации вверх-вниз */
     animation: pulseMove 3s ease-in-out infinite;
   }
 
-  /* SOCIAL BUTTONS */
   .social-buttons {
     display: flex;
     gap: 50px;
@@ -143,6 +65,7 @@
     margin-bottom: 20px;
     user-select: none;
   }
+
   .social-buttons a {
     display: flex;
     justify-content: center;
@@ -159,6 +82,7 @@
     cursor: pointer;
     position: relative;
   }
+
   .social-buttons a:hover {
     background-color: #ffb800;
     color: #3a2200;
@@ -166,7 +90,7 @@
     transform: scale(1.3);
     border-color: #fff;
   }
-  /* Белый круг при клике */
+
   .social-buttons a:active::after {
     content: "";
     position: absolute;
@@ -181,18 +105,12 @@
     pointer-events: none;
     z-index: 1;
   }
+
   @keyframes clickPulse {
-    0% {
-      transform: translate(-50%, -50%) scale(0.5);
-      opacity: 0.5;
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(1.5);
-      opacity: 0;
-    }
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.5; }
+    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
   }
 
-  /* BUTTON BUY NOW */
   .btn-buy {
     background: linear-gradient(45deg, #ffcc00, #ff9900);
     border: none;
@@ -201,324 +119,99 @@
     font-weight: 700;
     color: #3a2200;
     border-radius: 50px;
-    box-shadow:
-      0 0 40px #ffcc00,
-      inset 0 0 20px #ffb800;
+    box-shadow: 0 0 40px #ffcc00, inset 0 0 20px #ffb800;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     user-select: none;
   }
+
   .btn-buy:hover {
     animation: pulseGlow 1.5s infinite alternate ease-in-out;
   }
+
   @keyframes pulseGlow {
-    0% {
-      box-shadow:
-        0 0 40px #ffcc00,
-        inset 0 0 20px #ffb800;
-    }
-    100% {
-      box-shadow:
-        0 0 70px #ffdd33,
-        inset 0 0 40px #ffcc00;
-      transform: scale(1.15);
-    }
+    0% { box-shadow: 0 0 40px #ffcc00, inset 0 0 20px #ffb800; }
+    100% { box-shadow: 0 0 70px #ffdd33, inset 0 0 40px #ffcc00; transform: scale(1.15); }
   }
 
-  /* SECTION TITLES */
-  h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3.2rem;
-    margin-bottom: 50px;
-    color: #ffdb4d;
-    text-align: center;
-    text-shadow: 0 0 30px #ffdb4dcc;
-    user-select: none;
-  }
+  h2 { font-family: 'Orbitron', sans-serif; font-size: 3.2rem; margin-bottom: 50px; color: #ffdb4d; text-align: center; text-shadow: 0 0 30px #ffdb4dcc; user-select: none; }
 
-  /* SECTIONS */
-  section {
-    background: rgba(19,9,0,0.9);
-    border-radius: 25px;
-    padding: 80px 40px;
-    margin-bottom: 100px;
-    box-shadow: inset 0 0 120px #7f5500cc;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #fff7b8;
-    font-size: 1.5rem;
-    line-height: 1.8;
-    user-select: none;
+  section { background: rgba(19,9,0,0.9); border-radius: 25px; padding: 80px 40px; margin-bottom: 100px; box-shadow: inset 0 0 120px #7f5500cc; max-width: 900px; margin-left: auto; margin-right: auto; color: #fff7b8; font-size: 1.5rem; line-height: 1.8; user-select: none; animation: pulseMove 3s ease-in-out infinite; }
 
-    animation: pulseMove 3s ease-in-out infinite;
-  }
+  .tokenomics { text-align: center; }
+  .tokenomics strong { color: #ffd700; font-weight: 700; }
 
-  /* TOKENOMICS */
-  .tokenomics {
-    text-align: center;
-  }
-  .tokenomics strong {
-    color: #ffd700;
-    font-weight: 700;
-  }
+  .logo-spin-container { display: flex; justify-content: center; margin: 40px 0; }
+  .logo-spin { width: 160px; height: 160px; border-radius: 50%; border: 6px solid #ffd700; box-shadow: 0 0 40px #ffd700cc, inset 0 0 50px #ffcc0080; animation: spin 10s linear infinite; background: radial-gradient(circle at center, #ffcc00, #b27300); object-fit: contain; user-select: none; }
 
-  /* Вращающееся лого */
-  .logo-spin-container {
-    display: flex;
-    justify-content: center;
-    margin: 40px 0;
-  }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-  .logo-spin {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    border: 6px solid #ffd700;
-    box-shadow:
-      0 0 40px #ffd700cc,
-      inset 0 0 50px #ffcc0080;
-    animation: spin 10s linear infinite;
-    background: radial-gradient(circle at center, #ffcc00, #b27300);
-    object-fit: contain;
-    user-select: none;
-  }
+  .join-legend { max-width: 850px; margin: 0 auto; text-align: center; color: #ffd; }
+  .join-legend h2 { margin-bottom: 40px; }
+  .join-legend p { font-size: 1.4rem; font-weight: 300; line-height: 1.7; margin-bottom: 50px; color: #fff4b8; animation: pulseMove 3s ease-in-out infinite; }
 
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  footer { text-align: center; padding: 20px 10px; background: #1e0a0a; color: #ffd700; font-weight: 700; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; box-shadow: inset 0 5px 20px #ffcc00aa; user-select: none; }
 
-  /* ROADMAP */
-  .timeline {
-    position: relative;
-    max-width: 900px;
-    margin: 0 auto;
-    padding-left: 20px;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 20px;
-    top: 0;
-    bottom: 0;
-    width: 6px;
-    background: linear-gradient(to bottom, #ffd700, #ff9900);
-    border-radius: 3px;
-    box-shadow: 0 0 15px #ffcc0080;
-  }
-  .timeline-item {
-    position: relative;
-    padding-left: 70px;
-    margin-bottom: 45px;
-    color: #3b2a00;
-    font-weight: 700;
-    font-size: 1.3rem;
-    cursor: default;
-    user-select: none;
-    transition: transform 0.3s ease;
-    background: linear-gradient(135deg, #ffdb4dcc, #ffcc00aa);
-    border-radius: 15px;
-    box-shadow: 0 0 30px #ffdb4d88;
-    padding: 18px 25px 18px 70px;
-  }
-  .timeline-item:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 50px #ffcc00cc;
-  }
-  .timeline-item::before {
-    content: "★";
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 28px;
-    color: #ffd700;
-    text-shadow: 0 0 15px #ffd700cc;
-    user-select: none;
-  }
+  #scrollTopBtn { position: fixed; bottom: 40px; right: 40px; width: 55px; height: 55px; background: linear-gradient(45deg, #ffcc00, #ff9900); border-radius: 50%; box-shadow: 0 0 40px #ffcc00, inset 0 0 20px #ffb800; color: #3a2200; font-size: 28px; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 1000; user-select: none; }
+  #scrollTopBtn.visible { opacity: 1; pointer-events: auto; }
+  #scrollTopBtn:hover { animation: pulseGlow 1.5s infinite alternate ease-in-out; }
 
-  /* JOIN THE LEGEND */
-  .join-legend {
-    max-width: 850px;
-    margin: 0 auto;
-    text-align: center;
-    color: #ffd;
-  }
-  .join-legend h2 {
-    margin-bottom: 40px;
-  }
-  .join-legend p {
-    font-size: 1.4rem;
-    font-weight: 300;
-    line-height: 1.7;
-    margin-bottom: 50px;
-    color: #fff4b8;
-
-    animation: pulseMove 3s ease-in-out infinite;
-  }
-
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 20px 10px;
-    background: #1e0a0a;
-    color: #ffd700;
-    font-weight: 700;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.1rem;
-    box-shadow: inset 0 5px 20px #ffcc00aa;
-    user-select: none;
-  }
-
-  /* SCROLL TO TOP BUTTON */
-  #scrollTopBtn {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    width: 55px;
-    height: 55px;
-    background: linear-gradient(45deg, #ffcc00, #ff9900);
-    border-radius: 50%;
-    box-shadow:
-      0 0 40px #ffcc00,
-      inset 0 0 20px #ffb800;
-    color: #3a2200;
-    font-size: 28px;
-    cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    z-index: 1000;
-    user-select: none;
-  }
-  #scrollTopBtn.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  #scrollTopBtn:hover {
-    animation: pulseGlow 1.5s infinite alternate ease-in-out;
-  }
-
-  /* Responsive */
   @media (max-width: 900px) {
-    header h1 {
-      font-size: 3.8rem;
-    }
-    .legend-text {
-      font-size: 1.3rem;
-      max-width: 90vw;
-      padding: 30px 20px;
-    }
-    header p {
-      margin: 0;
-    }
-    .logo {
-      width: 140px;
-      height: 140px;
-      margin-top: 20px;
-    }
-    .logo img {
-      width: 110px;
-      height: 110px;
-    }
-    .social-buttons a {
-      width: 60px;
-      height: 60px;
-      font-size: 28px;
-    }
-    .btn-buy {
-      padding: 14px 40px;
-      font-size: 1.3rem;
-    }
-    section {
-      padding: 60px 20px;
-      margin-bottom: 60px;
-    }
-    .timeline-item {
-      font-size: 1.1rem;
-      padding-left: 60px;
-      padding-right: 15px;
-    }
+    header h1 { font-size: 3.8rem; }
+    .legend-text { font-size: 1.3rem; max-width: 90%; padding: 25px 20px; }
+    section { padding: 50px 20px; font-size: 1.2rem; }
+    .logo-spin { width: 120px; height: 120px; }
+    .social-buttons a { width: 60px; height: 60px; font-size: 28px; }
+    .btn-buy { padding: 14px 40px; font-size: 1.3rem; }
   }
 
-  /* Анимация пульсации вверх-вниз */
   @keyframes pulseMove {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(5px);
-    }
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
   }
-
-  
-  #logoCanvas {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 300px;
-  z-index: 10;
-  pointer-events: none;
-  animation: explode 3s ease-in-out forwards;  
-  }
-
-  #circleLogoCanvas {
-  display: block;
-  margin: 20px auto;
-  border-radius: 50%;
-  z-index: 30;
-}
-#musicPlayer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin: 10px auto 40px auto;
-  z-index: 30;
-}
 </style>
 </head>
 <body>
+
 <header>
   <h1>CADO Token</h1>
+
   <canvas id="logoCanvas" width="400" height="400"></canvas>
+
   <div class="logo" aria-label="CADO Token Logo">
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
-  
-<!-- Маленький круглый логотип -->
-<canvas id="circleLogoCanvas" width="100" height="100"></canvas>
 
-<!-- Музыкальный плеер под логотипом -->
-<div id="musicPlayer">
-  <button id="playPause">▶️</button>
-  <select id="trackSelect">
-    <option value="music1.mp3">Трек 1</option>
-    <option value="music2.mp3">Трек 2</option>
-  </select>
-  <button id="rewind">⏮️</button>
-  <button id="forward">⏭️</button>
-</div>
+  <!-- Маленький круглый логотип -->
+  <canvas id="circleLogoCanvas" width="100" height="100"></canvas>
 
-<audio id="audioPlayer"></audio>
+  <!-- Музыкальный плеер под логотипом -->
+  <div id="musicPlayer">
+    <button id="playPause">▶️</button>
+    <select id="trackSelect">
+      <option value="music1.mp3">Трек 1</option>
+      <option value="music2.mp3">Трек 2</option>
+    </select>
+    <button id="rewind">⏮️</button>
+    <button id="forward">⏭️</button>
+  </div>
+
+  <audio id="audioPlayer"></audio>
+
   <div class="legend-text" id="legendText">
     Nobody believed in my strength and dreams — everyone thought I would fail.<br />
     But I never gave up.<br />
     I created CADO to prove that even when the world is against you, greatness is possible.<br />
     This token is my challenge to the world and an invitation to victory for everyone.
   </div>
+
   <div class="social-buttons" role="navigation" aria-label="Social media links">
     <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane"></i></a>
     <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
     <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
   </div>
+
   <button class="btn-buy" aria-label="Buy CADO Token now" id="buyBtn">BUY NOW</button>
 </header>
 
@@ -563,270 +256,100 @@
     Stay updated and never miss an opportunity.<br />
     Together, we’ll redefine the future of crypto.
   </p>
-    <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
+  <a href="#" class="btn-buy" aria-label="Join CADO Token community">JOIN NOW</a>
 </section>
 
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
+
 <script>
-(function(){
-  const canvas = document.getElementById('logoCanvas');
-  if(!canvas){ console.error('canvas #logoCanvas not found'); return; }
-  const ctx = canvas.getContext('2d');
-  const DPR = window.devicePixelRatio || 1;
+  // ================= Музыка =================
+  const audio = document.getElementById('audioPlayer');
+  const playPauseBtn = document.getElementById('playPause');
+  const trackSelect = document.getElementById('trackSelect');
+  const rewindBtn = document.getElementById('rewind');
+  const forwardBtn = document.getElementById('forward');
 
-  // размеры canvas
-  let displayW = 300;
-  let displayH = 300;
-  if(window.innerWidth >= 1024){
-    displayW = 620; // ПК
-    displayH = 300;
+  let tracks = Array.from(trackSelect.options).map(o=>o.value);
+  let currentTrack = 0;
+
+  function loadTrack(index){
+    audio.src = tracks[index];
+    audio.play();
+    playPauseBtn.textContent = '⏸️';
+    trackSelect.selectedIndex = index;
   }
 
-  canvas.width = Math.round(displayW * DPR);
-  canvas.height = Math.round(displayH * DPR);
-  canvas.style.width = displayW + 'px';
-  canvas.style.height = displayH + 'px';
-  ctx.setTransform(DPR,0,0,DPR,0,0);
-
-  // Автоматический выбор картинки
-  const logoSrc = window.innerWidth >= 1024 
-    ? '1000002091.png'                     // ПК версия
-    : 'file_00000000198861f581eb6192921a6f6c.png';     // мобильная версия
-
-  const logo = new Image();
-  logo.crossOrigin = 'Anonymous';
-  logo.onload = ()=>start(logo);
-  logo.onerror = (e)=>console.error('Не удалось загрузить логотип', e);
-  logo.src = logoSrc;
-
-  function start(logoImg){
-    const off = document.createElement('canvas');
-    off.width = displayW;
-    off.height = displayH;
-    const offCtx = off.getContext('2d');
-    offCtx.drawImage(logoImg,0,0,displayW,displayH);
-    const imgData = offCtx.getImageData(0,0,displayW,displayH).data;
-
-    const size = 6;
-    const particles = [];
-    for(let y=0;y<displayH;y+=size){
-      for(let x=0;x<displayW;x+=size){
-        const idx = (y*displayW + x)*4;
-        const a = imgData[idx+3];
-        if(a>16){
-          const r = imgData[idx], g = imgData[idx+1], b = imgData[idx+2];
-          particles.push({
-            homeX:x,
-            homeY:y,
-            x:displayW/2 + (Math.random()-0.5)*8,
-            y:displayH/2 + (Math.random()-0.5)*8,
-            vx:0, vy:0,
-            size,
-            color:`rgba(${r},${g},${b},${(a/255).toFixed(2)})`
-          });
-        }
-      }
-    }
-
-    let state = 'idle', timer=0;
-    const explosionFrames = 200;
-    const electricFrames = 160;
-    const assembleFrames = 220;
-
-    function drawParticles(glow=false){
-      particles.forEach(p=>{
-        ctx.save();
-        if(glow){ ctx.shadowBlur=12; ctx.shadowColor='cyan'; }
-        ctx.fillStyle=p.color;
-        ctx.fillRect(p.x,p.y,p.size,p.size);
-        ctx.restore();
-      });
-    }
-
-    function drawLightning(){
-      const lines = 2 + Math.floor(Math.random()*3);
-      for(let i=0;i<lines;i++){
-        ctx.beginPath();
-        ctx.strokeStyle=`rgba(180,240,255,${0.15 + Math.random()*0.6})`;
-        ctx.lineWidth = 1 + Math.random()*2;
-        let sx = Math.random()*displayW, sy=0;
-        ctx.moveTo(sx,sy);
-        const steps=6;
-        for(let k=0;k<steps;k++){
-          sx += (Math.random()-0.5)*80;
-          sy += displayH/steps;
-          ctx.lineTo(sx,sy);
-        }
-        ctx.stroke();
-      }
-    }
-
-    function drawRedElectric(){
-      const lines = 2 + Math.floor(Math.random()*3);
-      for(let i=0;i<lines;i++){
-        ctx.beginPath();
-        ctx.strokeStyle=`rgba(255,50,50,${0.2 + Math.random()*0.5})`;
-        ctx.lineWidth = 1 + Math.random()*2;
-        let sx = Math.random()*displayW, sy=0;
-        ctx.moveTo(sx,sy);
-        const steps=6;
-        for(let k=0;k<steps;k++){
-          sx += (Math.random()-0.5)*80;
-          sy += displayH/steps;
-          ctx.lineTo(sx,sy);
-        }
-        ctx.stroke();
-      }
-    }
-
-    function startExplosion(){
-      particles.forEach(p=>{
-        const ang = Math.random()*Math.PI*2;
-        const s = 2 + Math.random()*2*2;
-        p.vx = Math.cos(ang)*s;
-        p.vy = Math.sin(ang)*s;
-      });
-    }
-
-    function loop(){
-      ctx.clearRect(0,0,displayW,displayH);
-
-      if(state==='idle'){
-        ctx.save();
-        const shake=2;
-        ctx.translate((Math.random()-0.5)*shake,(Math.random()-0.5)*shake);
-        ctx.drawImage(logoImg,0,0,displayW,displayH);
-        ctx.restore();
-        timer++;
-        if(timer>90){ timer=0; state='electric'; }
-      }
-      else if(state==='electric'){
-        ctx.drawImage(logoImg,0,0,displayW,displayH);
-        if(Math.random()>0.25) drawLightning();
-        timer++;
-        if(timer>75){ timer=0; startExplosion(); state='explode'; }
-      }
-      else if(state==='explode'){
-        particles.forEach(p=>{
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vy += 0.12;
-          p.vx *= 0.995;
-          p.vy *= 0.995;
-        });
-        drawParticles();
-        timer++;
-        if(timer>explosionFrames){ timer=0; state='redElectric'; }
-      }
-      else if(state==='redElectric'){
-        drawRedElectric();
-        timer++;
-        if(timer>30){ timer=0; state='assemble'; }
-      }
-      else if(state==='assemble'){
-        const speedFactor=0.03;
-        let allClose=true;
-        particles.forEach(p=>{
-          p.x += (p.homeX - p.x)*speedFactor;
-          p.y += (p.homeY - p.y)*speedFactor;
-          if(Math.abs(p.x - p.homeX)>0.5 || Math.abs(p.y - p.homeY)>0.5) allClose=false;
-        });
-        drawParticles();
-        timer++;
-        if(allClose || timer>assembleFrames){ timer=0; state='final'; }
-      }
-      else if(state==='final'){
-        ctx.drawImage(logoImg,0,0,displayW,displayH);
-        timer++;
-        if(timer>180){ timer=0; state='idle'; }
-      }
-
-      requestAnimationFrame(loop);
-    }
-
-    loop();
+  playPauseBtn.onclick = ()=>{
+    if(audio.paused){ audio.play(); playPauseBtn.textContent='⏸️'; }
+    else{ audio.pause(); playPauseBtn.textContent='▶️'; }
   }
 
-
-  // ====== Настройка аудио ======
-const audio = document.getElementById('audioPlayer');
-const playPauseBtn = document.getElementById('playPause');
-const trackSelect = document.getElementById('trackSelect');
-const rewindBtn = document.getElementById('rewind');
-const forwardBtn = document.getElementById('forward');
-
-let trackIndex = 0;
-const tracks = Array.from(trackSelect.options).map(o => o.value);
-audio.src = tracks[trackIndex];
-
-playPauseBtn.addEventListener('click', () => {
-  if(audio.paused){ audio.play(); playPauseBtn.textContent='⏸️'; }
-  else{ audio.pause(); playPauseBtn.textContent='▶️'; }
-});
-
-trackSelect.addEventListener('change', () => {
-  trackIndex = trackSelect.selectedIndex;
-  audio.src = tracks[trackIndex];
-  audio.play();
-  playPauseBtn.textContent='⏸️';
-});
-
-rewindBtn.addEventListener('click', () => {
-  audio.currentTime = Math.max(0, audio.currentTime - 10);
-});
-forwardBtn.addEventListener('click', () => {
-  audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
-});
-
-// ====== Анимация маленького логотипа ======
-const circleCanvas = document.getElementById('circleLogoCanvas');
-const ctx2 = circleCanvas.getContext('2d');
-const circleLogo = new Image();
-circleLogo.src = 'file_00000000198861f581eb6192921a6f6c.png';
-
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const analyser = audioCtx.createAnalyser();
-const source = audioCtx.createMediaElementSource(audio);
-source.connect(analyser);
-analyser.connect(audioCtx.destination);
-analyser.fftSize = 256;
-const bufferLength = analyser.frequencyBinCount;
-const dataArray = new Uint8Array(bufferLength);
-
-function animateCircleLogo(){
-  requestAnimationFrame(animateCircleLogo);
-  ctx2.clearRect(0,0,circleCanvas.width,circleCanvas.height);
-
-  let glow = 0.5;
-  if(!audio.paused){
-    analyser.getByteFrequencyData(dataArray);
-    const avg = dataArray.reduce((a,b)=>a+b,0)/dataArray.length;
-    glow = Math.min(1, avg/200);
+  trackSelect.onchange = ()=>{
+    currentTrack = trackSelect.selectedIndex;
+    loadTrack(currentTrack);
   }
 
-  const shake = (Math.random()-0.5)*4*glow;
-  const scale = 1 + glow*0.15;
-  ctx2.save();
-  ctx2.translate(circleCanvas.width/2 + shake, circleCanvas.height/2 + shake);
-  ctx2.scale(scale, scale);
-  ctx2.translate(-circleCanvas.width/2, -circleCanvas.height/2);
-  ctx2.drawImage(circleLogo,0,0,circleCanvas.width,circleCanvas.height);
-  ctx2.restore();
+  rewindBtn.onclick = ()=>{
+    currentTrack = (currentTrack-1+tracks.length)%tracks.length;
+    loadTrack(currentTrack);
+  }
 
-  const gradient = ctx2.createRadialGradient(circleCanvas.width/2, circleCanvas.height/2, circleCanvas.width/4, circleCanvas.width/2, circleCanvas.height/2, circleCanvas.width/2);
-  gradient.addColorStop(0, `rgba(255,255,0,${0.3*glow})`);
-  gradient.addColorStop(0.5, `rgba(255,255,0,${0.1*glow})`);
-  gradient.addColorStop(1, 'rgba(255,255,0,0)');
-  ctx2.fillStyle = gradient;
-  ctx2.beginPath();
-  ctx2.arc(circleCanvas.width/2, circleCanvas.height/2, circleCanvas.width/2,0,Math.PI*2);
-  ctx2.fill();
-}
+  forwardBtn.onclick = ()=>{
+    currentTrack = (currentTrack+1)%tracks.length;
+    loadTrack(currentTrack);
+  }
 
-animateCircleLogo();
-  
+  // ============ Маленькое лого с пульсом ===========
+  const circleCanvas = document.getElementById('circleLogoCanvas');
+  const ctx2 = circleCanvas.getContext('2d');
+  const circleLogo = new Image();
+  circleLogo.src = 'file_00000000198861f581eb6192921a6f6c.png';
+
+  // Web Audio API для пульса
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const analyser = audioCtx.createAnalyser();
+  const source = audioCtx.createMediaElementSource(audio);
+  source.connect(analyser);
+  analyser.connect(audioCtx.destination);
+  analyser.fftSize = 64;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+
+  function animateCircleLogo(){
+    requestAnimationFrame(animateCircleLogo);
+    ctx2.clearRect(0,0,circleCanvas.width,circleCanvas.height);
+
+    let glow = 0.5;
+    if(!audio.paused){
+      analyser.getByteFrequencyData(dataArray);
+      const avg = dataArray.reduce((a,b)=>a+b,0)/dataArray.length;
+      glow = Math.min(1, avg/200);
+    }
+
+    const shake = (Math.random()-0.5)*4*glow;
+    const scale = 1 + glow*0.15;
+    ctx2.save();
+    ctx2.translate(circleCanvas.width/2 + shake, circleCanvas.height/2 + shake);
+    ctx2.scale(scale, scale);
+    ctx2.translate(-circleCanvas.width/2, -circleCanvas.height/2);
+
+    ctx2.drawImage(circleLogo,0,0,circleCanvas.width,circleCanvas.height);
+    ctx2.restore();
+
+    const gradient = ctx2.createRadialGradient(circleCanvas.width/2, circleCanvas.height/2, circleCanvas.width/4, circleCanvas.width/2, circleCanvas.height/2, circleCanvas.width/2);
+    gradient.addColorStop(0, `rgba(0,255,255,${0.3*glow})`);
+    gradient.addColorStop(0.5, `rgba(0,255,255,${0.1*glow})`);
+    gradient.addColorStop(1, 'rgba(0,255,255,0)');
+    ctx2.fillStyle = gradient;
+    ctx2.beginPath();
+    ctx2.arc(circleCanvas.width/2, circleCanvas.height/2, circleCanvas.width/2,0,Math.PI*2);
+    ctx2.fill();
+  }
+
+  animateCircleLogo();
 </script>
 </body>
 </html>
+                  
