@@ -468,22 +468,21 @@
   pointer-events: none;
   animation: explode 3s ease-in-out forwards;  
   }
-  #musicPlayer {
-  margin-top: 15px;
+
+  #circleLogoCanvas {
+  display: block;
+  margin: 20px auto;
+  border-radius: 50%;
+  z-index: 30;
+}
+#musicPlayer {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
-  justify-content: center;
-  z-index: 1000;
+  margin: 10px auto 40px auto;
+  z-index: 30;
 }
-
-#
-  #LogoCanvas {
-  display: block;
-  margin: 15px auto; /* под легендой или плеером */
-  border-radius: 50%;
-  box-shadow: 0 0 30px rgba(0,255,255,0.3);
-  }
 </style>
 </head>
 <body>
@@ -495,7 +494,8 @@
   </div>
   
 <!-- Маленький круглый логотип -->
-<canvas id="LogoCanvas" width="100" height="100"></canvas>
+<canvas id="circleLogoCanvas" width="100" height="100"></canvas>
+
 <!-- Музыкальный плеер под логотипом -->
 <div id="musicPlayer">
   <button id="playPause">▶️</button>
@@ -508,7 +508,6 @@
 </div>
 
 <audio id="audioPlayer"></audio>
-
   <div class="legend-text" id="legendText">
     Nobody believed in my strength and dreams — everyone thought I would fail.<br />
     But I never gave up.<br />
@@ -751,40 +750,75 @@
   }
 
 
-  const circleCanvas = document.getElementById('circleLogoCanvas');
-const ctx2 = circleCanvas.getContext('2d');
+  // ====== Настройка аудио ======
+const audio = document.getElementById('audioPlayer');
+const playPauseBtn = document.getElementById('playPause');
+const trackSelect = document.getElementById('trackSelect');
+const rewindBtn = document.getElementById('rewind');
+const forwardBtn = document.getElementById('forward');
 
+let trackIndex = 0;
+const tracks = Array.from(trackSelect.options).map(o => o.value);
+audio.src = tracks[trackIndex];
+
+playPauseBtn.addEventListener('click', () => {
+  if(audio.paused){ audio.play(); playPauseBtn.textContent='⏸️'; }
+  else{ audio.pause(); playPauseBtn.textContent='▶️'; }
+});
+
+trackSelect.addEventListener('change', () => {
+  trackIndex = trackSelect.selectedIndex;
+  audio.src = tracks[trackIndex];
+  audio.play();
+  playPauseBtn.textContent='⏸️';
+});
+
+rewindBtn.addEventListener('click', () => {
+  audio.currentTime = Math.max(0, audio.currentTime - 10);
+});
+forwardBtn.addEventListener('click', () => {
+  audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+});
+
+// ====== Анимация маленького логотипа ======
+const circleCanvas = document.getElementById('circleLogoCanvas');
+const ctx2 = circleCanvas.getContext('2d');
 const circleLogo = new Image();
-circleLogo.src = '1000002091.png'; // сюда адрес маленького логотипа
+circleLogo.src = 'file_00000000198861f581eb6192921a6f6c.png';
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const analyser = audioCtx.createAnalyser();
+const source = audioCtx.createMediaElementSource(audio);
+source.connect(analyser);
+analyser.connect(audioCtx.destination);
+analyser.fftSize = 256;
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
 
 function animateCircleLogo(){
   requestAnimationFrame(animateCircleLogo);
   ctx2.clearRect(0,0,circleCanvas.width,circleCanvas.height);
 
-  // Пульс под музыку (если есть плеер)
-  let glow = 0.5; // базовый пульс
+  let glow = 0.5;
   if(!audio.paused){
     analyser.getByteFrequencyData(dataArray);
     const avg = dataArray.reduce((a,b)=>a+b,0)/dataArray.length;
     glow = Math.min(1, avg/200);
   }
 
-  // Дрожание и масштаб
   const shake = (Math.random()-0.5)*4*glow;
   const scale = 1 + glow*0.15;
   ctx2.save();
   ctx2.translate(circleCanvas.width/2 + shake, circleCanvas.height/2 + shake);
   ctx2.scale(scale, scale);
   ctx2.translate(-circleCanvas.width/2, -circleCanvas.height/2);
-
   ctx2.drawImage(circleLogo,0,0,circleCanvas.width,circleCanvas.height);
   ctx2.restore();
 
-  // Светящийся ореол
   const gradient = ctx2.createRadialGradient(circleCanvas.width/2, circleCanvas.height/2, circleCanvas.width/4, circleCanvas.width/2, circleCanvas.height/2, circleCanvas.width/2);
-  gradient.addColorStop(0, `rgba(0,255,255,${0.3*glow})`);
-  gradient.addColorStop(0.5, `rgba(0,255,255,${0.1*glow})`);
-  gradient.addColorStop(1, 'rgba(0,255,255,0)');
+  gradient.addColorStop(0, `rgba(255,255,0,${0.3*glow})`);
+  gradient.addColorStop(0.5, `rgba(255,255,0,${0.1*glow})`);
+  gradient.addColorStop(1, 'rgba(255,255,0,0)');
   ctx2.fillStyle = gradient;
   ctx2.beginPath();
   ctx2.arc(circleCanvas.width/2, circleCanvas.height/2, circleCanvas.width/2,0,Math.PI*2);
@@ -792,6 +826,7 @@ function animateCircleLogo(){
 }
 
 animateCircleLogo();
+  
 </script>
 </body>
 </html>
