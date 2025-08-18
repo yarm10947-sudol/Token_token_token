@@ -503,16 +503,22 @@
   <div class="logo" aria-label="CADO Token Logo">
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
-  <!-- Логотип -->
-<canvas id="logoCanvas"></canvas>
-
-<!-- 🎵 Музыкальный плеер -->
+  <!-- 🎵 Музыкальный плеер -->
 <div id="musicPlayer">
+  <button id="prev">⏮️</button>
   <button id="playPause">▶️</button>
+  <button id="next">⏭️</button>
+
   <select id="trackSelect">
     <option value="music1.mp3">Трек 1</option>
     <option value="music2.mp3">Трек 2</option>
+    <option value="music3.mp3">Трек 3</option>
   </select>
+
+  <!-- Ползунок перемотки -->
+  <input type="range" id="seekBar" value="0" min="0" step="1">
+
+  <!-- Громкость -->
   <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
 </div>
 
@@ -758,34 +764,68 @@
 
     loop();
   }
-})();
-  const audio = document.getElementById('audioPlayer');
-  const playPauseBtn = document.getElementById('playPause');
-  const trackSelect = document.getElementById('trackSelect');
-  const volumeControl = document.getElementById('volumeControl');
 
-  // стартовый трек
-  audio.src = trackSelect.value;
+  document.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("audioPlayer");
+  const playPauseBtn = document.getElementById("playPause");
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+  const trackSelect = document.getElementById("trackSelect");
+  const volumeControl = document.getElementById("volumeControl");
+  const seekBar = document.getElementById("seekBar");
 
-  playPauseBtn.addEventListener('click', ()=>{
-    if(audio.paused){
+  let tracks = Array.from(trackSelect.options).map(o => o.value);
+  let currentTrackIndex = 0;
+
+  function loadTrack(index) {
+    currentTrackIndex = index;
+    audio.src = tracks[index];
+    audio.load();
+    audio.play();
+    playPauseBtn.textContent = "⏸️";
+  }
+
+  playPauseBtn.addEventListener("click", () => {
+    if (audio.paused) {
       audio.play();
-      playPauseBtn.textContent = '⏸'; // меняем иконку
+      playPauseBtn.textContent = "⏸️";
     } else {
       audio.pause();
-      playPauseBtn.textContent = '▶️';
+      playPauseBtn.textContent = "▶️";
     }
   });
 
-  trackSelect.addEventListener('change', ()=>{
-    audio.src = trackSelect.value;
-    audio.play();
-    playPauseBtn.textContent = '⏸';
+  prevBtn.addEventListener("click", () => {
+    loadTrack((currentTrackIndex - 1 + tracks.length) % tracks.length);
   });
 
-  volumeControl.addEventListener('input', ()=>{
+  nextBtn.addEventListener("click", () => {
+    loadTrack((currentTrackIndex + 1) % tracks.length);
+  });
+
+  trackSelect.addEventListener("change", () => {
+    loadTrack(trackSelect.selectedIndex);
+  });
+
+  volumeControl.addEventListener("input", () => {
     audio.volume = volumeControl.value;
   });
+
+  audio.addEventListener("timeupdate", () => {
+    seekBar.max = Math.floor(audio.duration) || 0;
+    seekBar.value = Math.floor(audio.currentTime);
+  });
+
+  seekBar.addEventListener("input", () => {
+    audio.currentTime = seekBar.value;
+  });
+
+  audio.addEventListener("ended", () => {
+    nextBtn.click();
+  });
+
+  loadTrack(0);
+});
 </script>
 </body>
 </html>
