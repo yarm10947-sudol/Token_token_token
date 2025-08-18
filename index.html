@@ -505,6 +505,72 @@
   font-weight: 700;
   font-size: 1rem;
 }
+
+  
+/* === Logo Glow & Flash Animation === */
+.logo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 8px solid #ffd700;
+  box-shadow: 0 0 60px #ffd700cc, inset 0 0 70px #ffcc0080;
+  background: radial-gradient(circle at center, #ffcc00, #b27300);
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  animation: logoPulse 3s ease-in-out infinite;
+}
+
+.logo img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 5px solid #fff4b8;
+  box-shadow: 0 0 30px #fff4b8;
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+}
+
+/* Пульсация яркости */
+@keyframes logoPulse {
+  0%, 100% { box-shadow: 0 0 60px #ffd700cc, inset 0 0 70px #ffcc0080; }
+  50% { box-shadow: 0 0 90px #fff700ff, inset 0 0 100px #ffff00ff; }
+}
+
+/* Вспышки случайно сверху */
+.logo::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+  opacity: 0;
+  pointer-events: none;
+  animation: flash 5s infinite;
+}
+
+@keyframes flash {
+  0%, 90%, 100% { opacity: 0; }
+  92% { opacity: 0.5; }
+  95% { opacity: 0.2; }
+}
+
+/* Мерцание картинки */
+.logo img {
+  animation: imgFlicker 2s infinite;
+}
+
+@keyframes imgFlicker {
+  0%, 100% { filter: brightness(1); }
+  10% { filter: brightness(1.2); }
+  30% { filter: brightness(0.9); }
+  50% { filter: brightness(1.3); }
+  70% { filter: brightness(1); }
+  90% { filter: brightness(1.1); }
+}
+
 </style>
 </head>
 <body>
