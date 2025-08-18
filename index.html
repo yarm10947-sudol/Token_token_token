@@ -470,24 +470,40 @@
   .music-player {
   margin: 40px 0;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
+
 .music-player button {
   background: linear-gradient(45deg, #ffcc00, #ff9900);
   border: none;
-  padding: 15px 25px;
+  padding: 12px 18px;
   border-radius: 50px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #3a2200;
   cursor: pointer;
-  box-shadow: 0 0 40px #ffcc00, inset 0 0 20px #ffb800;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 30px #ffcc00, inset 0 0 15px #ffb800;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .music-player button:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 60px #ffdd33, inset 0 0 30px #ffcc00;
+  box-shadow: 0 0 50px #ffdd33, inset 0 0 25px #ffcc00;
+}
+
+#trackProgress {
+  width: 200px;
+  height: 6px;
+  border-radius: 3px;
+  background: #ffcc0080;
+  cursor: pointer;
+}
+#trackName {
+  color: #fff7b8;
+  font-weight: 700;
+  font-size: 1rem;
 }
 </style>
 </head>
@@ -501,13 +517,11 @@
   </div>
   <!-- Место для музыки: между логотипом и легендой -->
 <div class="music-player">
-  <audio id="cadoAudio" loop>
-    <source src="your-music-file.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-  <button id="playPauseBtn" aria-label="Play/Pause Music">
-    <i class="fas fa-play"></i>
-  </button>
+  <button id="prevTrack" aria-label="Previous Track"><i class="fas fa-backward"></i></button>
+  <button id="playPauseBtn" aria-label="Play/Pause"><i class="fas fa-play"></i></button>
+  <button id="nextTrack" aria-label="Next Track"><i class="fas fa-forward"></i></button>
+  <input type="range" id="trackProgress" min="0" max="100" value="0">
+  <span id="trackName">Track 1</span>
 </div>
   <div class="legend-text" id="legendText">
     Nobody believed in my strength and dreams — everyone thought I would fail.<br />
@@ -750,9 +764,33 @@
     loop();
   }
 })();
-  const audio = document.getElementById('cadoAudio');
+  
+const tracks = [
+  {name: "Track 1", src: "track1.mp3"},
+  {name: "Track 2", src: "track2.mp3"},
+  {name: "Track 3", src: "track3.mp3"}
+];
+
+let currentTrack = 0;
+
+const audio = new Audio(tracks[currentTrack].src);
+audio.loop = false;
+
 const playBtn = document.getElementById('playPauseBtn');
-playBtn.addEventListener('click', () => {
+const nextBtn = document.getElementById('nextTrack');
+const prevBtn = document.getElementById('prevTrack');
+const progress = document.getElementById('trackProgress');
+const trackName = document.getElementById('trackName');
+
+function loadTrack(index){
+  audio.src = tracks[index].src;
+  trackName.textContent = tracks[index].name;
+  audio.load();
+  audio.play();
+  playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+}
+
+playBtn.addEventListener('click', ()=>{
   if(audio.paused){
     audio.play();
     playBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -761,6 +799,25 @@ playBtn.addEventListener('click', () => {
     playBtn.innerHTML = '<i class="fas fa-play"></i>';
   }
 });
+
+nextBtn.addEventListener('click', ()=>{
+  currentTrack = (currentTrack + 1) % tracks.length;
+  loadTrack(currentTrack);
+});
+
+prevBtn.addEventListener('click', ()=>{
+  currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+  loadTrack(currentTrack);
+});
+
+audio.addEventListener('timeupdate', ()=>{
+  progress.value = (audio.currentTime / audio.duration) * 100 || 0;
+});
+
+progress.addEventListener('input', ()=>{
+  audio.currentTime = (progress.value / 100) * audio.duration;
+});
+
 </script>
 </body>
 </html>
