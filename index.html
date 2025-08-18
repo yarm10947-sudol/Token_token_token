@@ -455,6 +455,8 @@
       transform: translateY(5px);
     }
   }
+
+  
   #logoCanvas {
   position: absolute;
   top: 0;
@@ -466,13 +468,8 @@
   pointer-events: none;
   animation: explode 3s ease-in-out forwards;  
   }
-  #logoCanvas {
-    display: block;
-    margin: 0 auto;
-  }
-
   #musicPlayer {
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -483,14 +480,8 @@
 #logoCanvas {
   display: block;
   margin: 0 auto;
-  border-radius: 50%; /* Круглый логотип */
-  box-shadow: 0 0 30px rgba(0,255,255,0.3);
-}
-
-#musicPlayer button, #musicPlayer select {
-  cursor: pointer;
-  padding: 5px 10px;
-  font-size: 16px;
+  border-radius: 50%;
+  box-shadow: 0 0 50px rgba(0,255,255,0.3);
 }
 </style>
 </head>
@@ -502,9 +493,9 @@
     <img src="file_00000000198861f581eb6192921a6f6c.png" alt="CADO Token Logo" />
   </div>
   <!-- Круглый логотип -->
-<canvas id="logoCanvas" width="620" height="300"></canvas>
+<canvas id="logoCanvas" width="300" height="300"></canvas>
 
-<!-- Музыкальный плеер -->
+<!-- Музыкальный плеер под логотипом -->
 <div id="musicPlayer">
   <button id="playPause">▶️</button>
   <select id="trackSelect">
@@ -762,82 +753,94 @@
   const audio = document.getElementById('audioPlayer');
 const playBtn = document.getElementById('playPause');
 const trackSelect = document.getElementById('trackSelect');
+const rewindBtn = document.getElementById('rewind');
+const forwardBtn = document.getElementById('forward');
+
 const canvas = document.getElementById('logoCanvas');
 const ctx = canvas.getContext('2d');
 
-// Инициализация трека
+const logoImg = new Image();
+logoImg.src = '1000002091.png'; // сюда адрес твоего логотипа
+
 audio.src = trackSelect.value;
 
-// Play/Pause
+// Кнопки
 playBtn.addEventListener('click', () => {
   if(audio.paused){
     audio.play();
-    canvas.classList.add('playing');
   } else {
     audio.pause();
-    canvas.classList.remove('playing');
   }
 });
-
-// Смена трека
 trackSelect.addEventListener('change', () => {
   audio.src = trackSelect.value;
   audio.play();
-  canvas.classList.add('playing');
 });
+rewindBtn.addEventListener('click', ()=>{ audio.currentTime -=5; });
+forwardBtn.addEventListener('click', ()=>{ audio.currentTime +=5; });
 
-// Настройка Web Audio API для анализа звука
+// Web Audio API
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const source = audioCtx.createMediaElementSource(audio);
 const analyser = audioCtx.createAnalyser();
 source.connect(analyser);
 analyser.connect(audioCtx.destination);
 analyser.fftSize = 512;
-
 const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-function premiumAnimateLogo() {
-  requestAnimationFrame(premiumAnimateLogo);
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+// Анимация
+function animateLogo(){
+  requestAnimationFrame(animateLogo);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
   let glow = 0;
   if(!audio.paused){
     analyser.getByteFrequencyData(dataArray);
-    const avg = dataArray.reduce((a,b) => a+b, 0)/dataArray.length;
+    const avg = dataArray.reduce((a,b)=>a+b,0)/dataArray.length;
     glow = Math.min(1, avg/200);
   }
 
-  // Пульсация и дрожание логотипа
-  const shake = (Math.random()-0.5)*2*glow*5;
-  const scale = 1 + glow*0.15;
+  // Пульс и дрожание
+  const shake = (Math.random()-0.5)*10*glow;
+  const scale = 1 + glow*0.2;
   ctx.save();
   ctx.translate(canvas.width/2 + shake, canvas.height/2 + shake);
   ctx.scale(scale, scale);
   ctx.translate(-canvas.width/2, -canvas.height/2);
 
-  // Рисуем основной логотип (canvas с предыдущей анимацией)
-  ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-
+  // Рисуем логотип
+  ctx.drawImage(logoImg,0,0,canvas.width,canvas.height);
   ctx.restore();
 
-  // Добавляем разноцветные вспышки
-  const flashCount = Math.floor(glow*8);
-  for(let i=0;i<flashCount;i++){
-    const x = Math.random()*canvas.width;
-    const y = Math.random()*canvas.height;
-    const radius = 3 + Math.random()*6*glow;
-    const r = 200 + Math.random()*55;
-    const g = 50 + Math.random()*205;
-    const b = 200 + Math.random()*55;
+  // Светящийся ореол
+  if(glow > 0){
+    const gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, canvas.width/4, canvas.width/2, canvas.height/2, canvas.width/2);
+    gradient.addColorStop(0, `rgba(0,255,255,${0.3*glow})`);
+    gradient.addColorStop(0.5, `rgba(0,255,255,${0.1*glow})`);
+    gradient.addColorStop(1, 'rgba(0,255,255,0)');
+    ctx.fillStyle = gradient;
     ctx.beginPath();
-    ctx.arc(x,y,radius,0,Math.PI*2);
-    ctx.fillStyle = `rgba(${r},${g},${b},${0.15+glow*0.3})`;
+    ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2,0,Math.PI*2);
     ctx.fill();
+  }
+
+  // Вспышки вокруг логотипа
+  if(glow > 0.3){
+    for(let i=0;i<3;i++){
+      const angle = Math.random()*Math.PI*2;
+      const radius = canvas.width/2 + Math.random()*20;
+      const x = canvas.width/2 + Math.cos(angle)*radius;
+      const y = canvas.height/2 + Math.sin(angle)*radius;
+      const size = 2 + Math.random()*3*glow;
+      ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.5})`;
+      ctx.beginPath();
+      ctx.arc(x,y,size,0,Math.PI*2);
+      ctx.fill();
+    }
   }
 }
 
-premiumAnimateLogo();
+animateLogo();
 </script>
 </body>
 </html>
