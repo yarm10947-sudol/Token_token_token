@@ -466,10 +466,51 @@
   pointer-events: none;
   animation: explode 3s ease-in-out forwards;  
   }
+  #logoCanvas {
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Плеер под логотипом */
+  #musicPlayer {
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #playPause {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: #222;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  #trackSelect, #volumeControl {
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
+<!-- Логотип -->
+<canvas id="logoCanvas"></canvas>
 
+<!-- 🎵 Музыкальный плеер под логотипом -->
+<div id="musicPlayer">
+  <button id="playPause">▶️</button>
+  <select id="trackSelect">
+    <option value="music1.mp3">Трек 1</option>
+    <option value="music2.mp3">Трек 2</option>
+  </select>
+  <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
+</div>
+
+<audio id="audioPlayer"></audio>
 <header>
   <h1>CADO Token</h1>
   <canvas id="logoCanvas" width="400" height="400"></canvas>
@@ -717,6 +758,33 @@
     loop();
   }
 })();
+  const audio = document.getElementById('audioPlayer');
+  const playPauseBtn = document.getElementById('playPause');
+  const trackSelect = document.getElementById('trackSelect');
+  const volumeControl = document.getElementById('volumeControl');
+
+  // стартовый трек
+  audio.src = trackSelect.value;
+
+  playPauseBtn.addEventListener('click', ()=>{
+    if(audio.paused){
+      audio.play();
+      playPauseBtn.textContent = '⏸'; // меняем иконку
+    } else {
+      audio.pause();
+      playPauseBtn.textContent = '▶️';
+    }
+  });
+
+  trackSelect.addEventListener('change', ()=>{
+    audio.src = trackSelect.value;
+    audio.play();
+    playPauseBtn.textContent = '⏸';
+  });
+
+  volumeControl.addEventListener('input', ()=>{
+    audio.volume = volumeControl.value;
+  });
 </script>
 </body>
 </html>
