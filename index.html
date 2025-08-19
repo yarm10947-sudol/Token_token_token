@@ -581,7 +581,7 @@
 </footer>
 
   <script>
-/* ========= Верхняя анимация (explosion + частицы) ========= */
+/* ========= Верхняя анимация (explosion + частицы) — сохранена ========= */
 (function(){
   const canvas = document.getElementById('logoCanvas');
   if(!canvas){ return; }
@@ -591,7 +591,7 @@
   let displayW = 300;
   let displayH = 300;
   if(window.innerWidth >= 1024){
-    displayW = 620; 
+    displayW = 620;
     displayH = 300;
   }
 
@@ -727,7 +727,7 @@
   }
 })();
 
-/* ========= Плеер + лист треков ========= */
+/* ========= Плеер + лист треков + реакция логотипа на бас ========= */
 (function(){
   const tracks = [
     {name: "Track 1", src: "CADO-_10_.mp3"},
@@ -746,6 +746,7 @@
   const progress  = document.getElementById('trackProgress');
   const trackName = document.getElementById('trackName');
   const trackList = document.getElementById('trackList');
+  const logoEl    = document.querySelector('.logo');
 
   tracks.forEach((t,i)=>{
     const opt = document.createElement('option');
@@ -761,17 +762,21 @@
     trackName.textContent = tracks[index].name;
     trackList.value = String(index);
     audio.load();
-    audio.play();
-    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    audio.play().then(()=> setPlayIcon(true)).catch(()=> setPlayIcon(false));
   }
 
-  playBtn.addEventListener('click', ()=>{
+  function setPlayIcon(isPlaying){
+    playBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+  }
+
+  playBtn.addEventListener('click', async ()=>{
+    await ensureAudioContext();
     if(audio.paused){
       audio.play();
-      playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      setPlayIcon(true);
     } else {
       audio.pause();
-      playBtn.innerHTML = '<i class="fas fa-play"></i>';
+      setPlayIcon(false);
     }
   });
   nextBtn.addEventListener('click', ()=>{
@@ -791,95 +796,62 @@
   progress.addEventListener('input', ()=>{
     audio.currentTime = (progress.value / 100) * (audio.duration||0);
   });
-})();
 
-/* ========= Независимая анимация искр и мерцания логотипа ========= */
-(function(){
-  const logoEl = document.querySelector('.logo');
-  const sparksCanvas = document.getElementById('sparksCanvas');
-  if(!sparksCanvas) return;
-  const sctx = sparksCanvas.getContext('2d');
+  // ==== Beat detection (бас) + анимация логотипа ====
+  let AudioCtx = null, sourceNode = null, analyser = null, freqData = null;
+  let beatHold = 0, beatDecay = 0.98, beatThreshold = 1.25, energyAvg = 0, energyPeak = 0;
+  const holdFrames = 12;
 
-  function resizeSparks(){
-    const header = document.querySelector('header');
-    const rect = header.getBoundingClientRect();
-    sparksCanvas.width = Math.floor(rect.width * (window.devicePixelRatio||1));
-    sparksCanvas.height = Math.floor(rect.height * (window.devicePixelRatio||1));
-    sparksCanvas.style.width = rect.width + 'px';
-    sparksCanvas.style.height = rect.height + 'px';
-    sctx.setTransform((window.devicePixelRatio||1),0,0,(window.devicePixelRatio||1),0,0);
-  }
-  resizeSparks();
-  window.addEventListener('resize', resizeSparks);
+  async function ensureAudioContext(){
+    if(AudioCtx) return;
+    AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    sourceNode = AudioCtx.createMediaElementSource(audio);
+    analyser = AudioCtx.createAnalyser();
+    analyser.fftSize = 2048;
+    analyser.smoothingTimeConstant = 0.85;
+    freqData = new Uint8Array(analyser.frequencyBinCount);
 
-  const sparks = [];
-  function spawnSparksRandom(){
-    const rect = logoEl.getBoundingClientRect();
-    const x = rect.left + rect.width/2;
-    const y = rect.top + rect.height/2;
-    for(let i=0;i<8;i++){
-      const angle = Math.random()*Math.PI*2;
-      const speed = 1 + Math.random()*3;
-      sparks.push({
-        x, y,
-        vx: Math.cos(angle)*speed,
-        vy: Math.sin(angle)*speed,
-        life: 40 + Math.random()*30,
-        age:0,
-        size: 2 + Math.random()*2,
-        hue: 45 + Math.random()*20
-      });
+    sourceNode.connect(analyser);
+    analyser.connect(AudioCtx.destination);
+
+    if(AudioCtx.state === 'suspended'){
+      try { await AudioCtx.resume(); } catch(e){}
     }
-  }
-
-  function drawSparks(){
-    sctx.clearRect(0,0,sparksCanvas.width, sparksCanvas.height);
-    for(let i=sparks.length-1;i>=0;i--){
-      const p = sparks[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vx *= 0.98;
-      p.vy *= 0.98;
-      p.age++;
-      const alpha = Math.max(0, 1 - p.age/p.life);
-      if(alpha <= 0){ sparks.splice(i,1); continue; }
-      sctx.save();
-      sctx.globalCompositeOperation = 'lighter';
-      sctx.shadowBlur = 12;
-      sctx.shadowColor = 'rgba(255,220,80,0.9)';
-      sctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${alpha})`;
-      sctx.beginPath();
-      sctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-      sctx.fill();
-      sctx.restore();
-    }
-  }
-
-  let lastSparkTime = 0;
-  function visualLoop(){
-    const now = performance.now();
-    if(now - lastSparkTime > 120){ // каждые 120ms новые искры
-      spawnSparksRandom();
-      lastSparkTime = now;
-    }
-
-    // Логотип случайно мерцает
-    if(Math.random()<0.01){
-      logoEl.style.transition = 'transform 0.1s ease, filter 0.1s ease, box-shadow 0.1s ease';
-      logoEl.style.transform = 'scale('+(1+Math.random()*0.08)+')';
-      logoEl.style.filter = 'brightness('+(1+Math.random()*0.12)+')';
-      logoEl.style.boxShadow = '0 0 80px #fff700, inset 0 0 90px #ffff00';
-      setTimeout(()=>{
-        logoEl.style.transform = '';
-        logoEl.style.filter = '';
-        logoEl.style.boxShadow = '';
-      },120);
-    }
-
-    drawSparks();
     requestAnimationFrame(visualLoop);
   }
-  visualLoop();
+
+  function visualLoop(){
+    if(analyser && freqData){
+      analyser.getByteFrequencyData(freqData);
+      const nyquist = (AudioCtx && AudioCtx.sampleRate) ? AudioCtx.sampleRate/2 : 22050;
+      const bassMaxHz = 140;
+      const bins = Math.max(1, Math.floor((bassMaxHz/nyquist) * freqData.length));
+      let bassEnergy = 0;
+      for(let i=0;i<bins;i++){ bassEnergy += freqData[i]; }
+      bassEnergy /= bins;
+
+      energyAvg = energyAvg*0.9 + bassEnergy*0.1;
+      energyPeak = Math.max(energyPeak*beatDecay, bassEnergy);
+
+      const isBeat = (bassEnergy > Math.max(energyAvg*beatThreshold, 30)) && beatHold===0;
+
+      if(isBeat){
+        beatHold = holdFrames;
+        logoEl.style.transition = 'transform 0.08s ease, filter 0.08s ease, box-shadow 0.08s ease';
+        logoEl.style.transform = 'scale(1.12)';
+        logoEl.style.filter = 'brightness(1.15)';
+        logoEl.style.boxShadow = '0 0 110px #fff700, inset 0 0 120px #ffff00';
+      } else {
+        if(beatHold>0) beatHold--;
+        if(beatHold===0){
+          logoEl.style.transform = '';
+          logoEl.style.filter = '';
+          logoEl.style.boxShadow = '';
+        }
+      }
+    }
+    requestAnimationFrame(visualLoop);
+  }
 })();
   </script>
 </body>
