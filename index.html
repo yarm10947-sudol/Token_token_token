@@ -620,36 +620,40 @@
   <p style="font-size:1.2rem; font-weight:bold; margin-bottom:15px;">
     If you already have a wallet connected in Pump.fun, simply click the Buy Now button below!
   </p>
-
-  <!-- Кнопка Buy Now сразу под фразой -->
-  <div style="margin-bottom:30px;">
+  <div style="margin-bottom:40px;">
     <a href="https://pump.fun/ВАШ_АДРЕС" target="_blank" class="btn-buy">🚀 Buy Now</a>
   </div>
 
-  <!-- Копируемый контракт -->
-  <p style="margin-top:15px; font-size:1.2rem; font-weight:bold;">📜 Contract Address:</p>
-  <div style="display:inline-block; text-align:center; padding:12px 20px; border-radius:50px; background:linear-gradient(45deg, #ffcc00, #ff9900); box-shadow:0 0 40px #ffcc00, inset 0 0 20px #ffb800; cursor:pointer; user-select:none; max-width:100%; word-wrap: break-word;" 
-       onclick="this.querySelector('span').select(); document.execCommand('copy'); alert('Contract copied!');">
-    <input type="text" value="ВАШ_АДРЕС_ТОКЕНА" readonly style="border:none; background:transparent; font-size:1rem; font-weight:bold; text-align:center; width:100%;">
-  </div>
+  <!-- Для тех, у кого нет кошелька -->
+  <div style="text-align:left; display:flex; flex-direction:column; align-items:center; gap:20px; max-width:600px; margin:0 auto;">
 
-  <!-- Инструкция для остальных -->
-  <div style="text-align:left; display:inline-block; max-width:500px; margin-top:30px;">
-    <h3>Quick Method:</h3>
-    <ol>
-      <li>Download <b>Phantom Wallet</b> (or Solflare/Backpack).</li>
-      <li>Send some SOL to your wallet.</li>
-      <li>Go to <a href="https://pump.fun" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Pump.fun</a> (or later <a href="https://jup.ag" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Jupiter</a>).</li>
-      <li>Paste contract address above and swap SOL → RBR.</li>
-    </ol>
+    <!-- Копируемый контракт -->
+    <div style="padding:15px 25px; border-radius:50px; background:linear-gradient(45deg, #ffcc00, #ff9900); box-shadow:0 0 40px #ffcc00, inset 0 0 20px #ffb800; cursor:pointer; word-wrap: break-word; text-align:center; width:100%;" 
+         onclick="this.querySelector('input').select(); document.execCommand('copy'); alert('Contract copied!');">
+      <input type="text" value="ВАШ_АДРЕС_ТОКЕНА" readonly style="border:none; background:transparent; font-size:1rem; font-weight:bold; text-align:center; width:100%;">
+    </div>
 
-    <h3>Manual Method:</h3>
-    <ol>
-      <li>Go to <a href="https://pump.fun" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Pump.fun</a> (or later <a href="https://jup.ag" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Jupiter</a>).</li>
-      <li>Connect your wallet.</li>
-      <li>Paste contract address above.</li>
-      <li>Swap SOL → RBR and confirm.</li>
-    </ol>
+    <!-- Quick Method -->
+    <div style="background:#fff3cc; padding:20px; border-radius:20px; box-shadow:0 0 20px rgba(0,0,0,0.1); width:100%;">
+      <h3 style="margin-top:0;">Quick Method</h3>
+      <ol style="padding-left:20px;">
+        <li>Download <b>Phantom Wallet</b> (or Solflare/Backpack).</li>
+        <li>Send some SOL to your wallet.</li>
+        <li>Go to <a href="https://pump.fun" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Pump.fun</a> or later <a href="https://jup.ag" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Jupiter</a>.</li>
+        <li>Paste contract address above and swap SOL → RBR.</li>
+      </ol>
+    </div>
+
+    <!-- Manual Method -->
+    <div style="background:#fff3cc; padding:20px; border-radius:20px; box-shadow:0 0 20px rgba(0,0,0,0.1); width:100%;">
+      <h3 style="margin-top:0;">Manual Method</h3>
+      <ol style="padding-left:20px;">
+        <li>Go to <a href="https://pump.fun" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Pump.fun</a> or later <a href="https://jup.ag" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Jupiter</a>.</li>
+        <li>Connect your wallet.</li>
+        <li>Paste contract address above.</li>
+        <li>Swap SOL → RBR and confirm.</li>
+      </ol>
+    </div>
   </div>
 </section>
   
