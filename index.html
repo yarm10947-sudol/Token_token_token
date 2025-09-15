@@ -616,10 +616,10 @@
 <section id="how-to-buy" style="text-align:center; padding:40px 20px;">
   <h2>How to Buy RBR</h2>
 
-  <!-- Контракт -->
+  <!-- Контракт (копируемый) -->
   <p style="margin-top:15px; font-size:1.2rem;">
     📜 Contract Address:<br>
-    <b>ВАШ_АДРЕС_ТОКЕНА</b>
+    <input type="text" value="ВАШ_АДРЕС_ТОКЕНА" readonly style="width:300px; text-align:center; font-weight:bold; font-size:1rem; cursor:pointer;" onclick="this.select(); document.execCommand('copy'); alert('Contract copied!');">
   </p>
 
   <!-- Инструкция -->
@@ -629,14 +629,15 @@
       <li>Download <b>Phantom Wallet</b> (or Solflare/Backpack).</li>
       <li>Send some SOL to your wallet.</li>
       <li>Go to <a href="https://pump.fun" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Pump.fun</a> (or later <a href="https://jup.ag" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Jupiter</a>).</li>
-      <li>Paste contract address: <b>ВАШ_АДРЕС_ТОКЕНА</b> and swap SOL → RBR.</li>
+      <li>Paste contract address above and swap SOL → RBR.</li>
+      <li><b>If you already have a wallet connected in Pump.fun, simply click the Buy Now button below!</b></li>
     </ol>
 
     <h3>Manual Method:</h3>
     <ol>
       <li>Go to <a href="https://pump.fun" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Pump.fun</a> (or later <a href="https://jup.ag" target="_blank" style="color:#ff9900; font-weight:bold; text-decoration:underline;">Jupiter</a>).</li>
       <li>Connect your wallet.</li>
-      <li>Paste contract address: <b>ВАШ_АДРЕС_ТОКЕНА</b></li>
+      <li>Paste contract address above.</li>
       <li>Swap SOL → RBR and confirm.</li>
     </ol>
   </div>
