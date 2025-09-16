@@ -716,6 +716,24 @@
   canvas.style.width = displayW + 'px';
   canvas.style.height = displayH + 'px';
   ctx.setTransform(DPR,0,0,DPR,0,0);
+  // в начале функции start(logoImg) после canvas настроек
+legendText.style.position = 'absolute';
+legendText.style.width = displayW + 'px';
+legendText.style.left = '50%';
+legendText.style.transform = 'translateX(-50%)';
+legendText.style.top = canvas.offsetTop + 'px'; // по вертикали над канвасом
+legendText.style.textAlign = 'center';
+legendText.style.wordWrap = 'break-word';
+legendText.style.opacity = 0;
+legendText.style.transition = 'opacity 0.4s ease';
+
+// и добавляем обработчик ресайза, чтобы текст оставался по центру
+window.addEventListener('resize', ()=>{
+  legendText.style.width = displayW + 'px';
+  legendText.style.left = '50%';
+  legendText.style.transform = 'translateX(-50%)';
+  legendText.style.top = canvas.offsetTop + 'px';
+});
 
   legendText.style.opacity = 0; // скрываем текст в начале
   legendText.style.transition = 'opacity 0.4s ease';
