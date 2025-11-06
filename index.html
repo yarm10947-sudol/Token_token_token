@@ -496,7 +496,8 @@
 
   
 
-  #launch-2026 {
+  
+#launch-2026 {
   position: relative;
   height: 100vh;
   background: radial-gradient(#000, #02010a, #090022);
@@ -530,7 +531,7 @@
   to { background-position: 0 1000px; }
 }
 
-/* Надпись */
+/* Надпись сверху */
 .launch-title {
   position: absolute;
   top: 15%;
@@ -586,31 +587,46 @@
 }
 
 /* Кот и собака */
-.animal {
+#animals {
   position: absolute;
-  width: 120px;
   bottom: 5%;
-  opacity: 0;
+  width: 100%;
+  height: 150px;
+  text-align: center;
 }
 
-.cat { left: -20%; animation: moveCat 8s forwards ease-in-out; }
-.dog { right: -20%; animation: moveDog 8s forwards ease-in-out; }
+.animal {
+  position: absolute;
+  font-size: 3rem;
+  bottom: 0;
+  opacity: 1;
+}
+
+.cat { left: -20%; animation: moveCat 5s forwards ease-in-out; }
+.dog { right: -20%; animation: moveDog 5s forwards ease-in-out; }
+
+.cado {
+  position: absolute;
+  bottom: -50px; /* под котом и собакой */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 4rem;
+  font-weight: bold;
+  color: cyan;
+  text-shadow: 0 0 10px white, 0 0 20px cyan;
+}
+
+.hidden { display: none; }
 
 @keyframes moveCat {
-  0% { left: -20%; opacity: 0; }
-  30% { opacity: 1; }
-  100% { left: 30%; opacity: 1; }
+  0% { left: -20%; }
+  100% { left: 40%; }
 }
 
 @keyframes moveDog {
-  0% { right: -20%; opacity: 0; }
-  30% { opacity: 1; }
-  100% { right: 30%; opacity: 1; }
+  0% { right: -20%; }
+  100% { right: 40%; }
 }
-
-/* Скрываем животных до взлёта */
-.hidden { display: none; }
-
 
 
 
@@ -809,9 +825,10 @@
   </div>
 
   <!-- Кот и собака -->
-  <div id="animals" class="hidden">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Cat_icon.svg" alt="Cat" class="animal cat">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Dog_icon.svg" alt="Dog" class="animal dog">
+  <div id="animals">
+    <div class="animal cat">🐱</div>
+    <div class="animal dog">🐶</div>
+    <div class="cado hidden">CADO</div>
   </div>
 </section>
 
@@ -1183,13 +1200,12 @@
 
 
 window.addEventListener('load', () => {
-  // Появление кота и собаки после взлёта ракеты (через 5 сек)
+  // Появление надписи CADO после движения кота и собаки
   setTimeout(() => {
-    const animals = document.getElementById('animals');
-    animals.classList.remove('hidden');
-  }, 5000);
+    const cado = document.querySelector('.cado');
+    cado.classList.remove('hidden');
+  }, 5000); // совпадает с длительностью анимации
 });
-
   
 </script>
 
