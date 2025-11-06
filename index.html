@@ -581,6 +581,29 @@
 .hidden {
   display: none;
 }
+  .rocket-container {
+  position: relative;
+  width: 100%;
+  height: 300px; /* Высоту можно менять */
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.rocket {
+  width: 100px; /* размер ракеты */
+  animation: rocketLaunch 5s forwards ease-out;
+}
+
+@keyframes rocketLaunch {
+  0% { transform: translateY(0) rotate(0deg); }
+  20% { transform: translateY(-20px) rotate(-2deg); }
+  40% { transform: translateY(-60px) rotate(2deg); }
+  60% { transform: translateY(-120px) rotate(-2deg); }
+  80% { transform: translateY(-200px) rotate(2deg); }
+  100% { transform: translateY(-400px) rotate(0deg); }
+}
 </style>
 </head>
 <body>
