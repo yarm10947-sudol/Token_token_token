@@ -493,6 +493,94 @@
     box-shadow: 0 0 20px #ffcc0080 inset;
     font-weight: 700;
   }
+
+  #launch-2026 {
+  position: relative;
+  height: 100vh;
+  background: radial-gradient(#000, #02010a, #090022);
+  overflow: hidden;
+  color: white;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.stars, .falling-stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.falling-stars {
+  animation: fallingStars 4s infinite linear;
+}
+
+@keyframes fallingStars {
+  from { background-position: 0px 0px; }
+  to { background-position: 0px 1000px; }
+}
+
+.rocket {
+  position: absolute;
+  bottom: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: rocketLaunch 5s forwards ease-out;
+}
+
+@keyframes rocketLaunch {
+  0% { bottom: -10%; }
+  100% { bottom: 120%; }
+}
+
+.launch-title {
+  position: absolute;
+  top: 20%;
+  width: 100%;
+  font-size: 3rem;
+  text-shadow: 0 0 10px white, 0 0 20px cyan;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px white, 0 0 20px cyan; }
+  to { text-shadow: 0 0 20px white, 0 0 40px cyan; }
+}
+
+.animal {
+  position: absolute;
+  width: 120px;
+  bottom: 8%;
+  opacity: 0;
+}
+
+.cat {
+  left: -20%;
+  animation: moveCat 8s forwards ease-in-out;
+}
+
+.dog {
+  right: -20%;
+  animation: moveDog 8s forwards ease-in-out;
+}
+
+@keyframes moveCat {
+  0% { left: -20%; opacity: 0; }
+  30% { opacity: 1; }
+  100% { left: 30%; opacity: 1; }
+}
+
+@keyframes moveDog {
+  0% { right: -20%; opacity: 0; }
+  30% { opacity: 1; }
+  100% { right: 30%; opacity: 1; }
+}
+
+.hidden {
+  display: none;
+}
 </style>
 </head>
 <body>
@@ -674,7 +762,23 @@
 </section>
   
 
+<section id="launch-2026">
+  <div class="stars"></div>
+  <div class="falling-stars"></div>
+  
+  <div class="rocket">
+    <img src="YOUR_ROCKET_IMAGE_URL" alt="Rocket Launch" id="rocket-img">
+  </div>
+  
+  <h1 class="launch-title">🚀 Launching in 2026</h1>
 
+  <div id="animals" class="hidden">
+    <img src="CAT_SILHOUETTE_URL" alt="Cat" class="animal cat">
+    <img src="DOG_SILHOUETTE_URL" alt="Dog" class="animal dog">
+  </div>
+</section>
+
+  
 
 <section class="slogan">
   <p class="remember">Remember</p>
@@ -1039,6 +1143,14 @@
     requestAnimationFrame(visualLoop);
   }
 })();
+
+
+  window.addEventListener('load', () => {
+  setTimeout(() => {
+    const animals = document.getElementById('animals');
+    animals.classList.remove('hidden');
+  }, 5000); // появление кота и собаки после взлета ракеты (через 5 сек)
+});
 
 </script>
 
