@@ -494,6 +494,8 @@
     font-weight: 700;
   }
 
+  
+
   #launch-2026 {
   position: relative;
   height: 100vh;
@@ -504,43 +506,37 @@
   font-family: 'Orbitron', sans-serif;
 }
 
+/* Звёздный фон */
 .stars, .falling-stars {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
-  opacity: 0.7;
   pointer-events: none;
 }
 
+.stars {
+  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  opacity: 0.7;
+}
+
 .falling-stars {
+  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
   animation: fallingStars 4s infinite linear;
+  opacity: 0.5;
 }
 
 @keyframes fallingStars {
-  from { background-position: 0px 0px; }
-  to { background-position: 0px 1000px; }
+  from { background-position: 0 0; }
+  to { background-position: 0 1000px; }
 }
 
-.rocket {
-  position: absolute;
-  bottom: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: rocketLaunch 5s forwards ease-out;
-}
-
-@keyframes rocketLaunch {
-  0% { bottom: -10%; }
-  100% { bottom: 120%; }
-}
-
+/* Надпись */
 .launch-title {
   position: absolute;
-  top: 20%;
+  top: 15%;
   width: 100%;
-  font-size: 3rem;
-  text-shadow: 0 0 10px white, 0 0 20px cyan;
+  font-size: 4rem;
+  text-shadow: 0 0 15px white, 0 0 30px cyan;
   animation: glow 2s infinite alternate;
 }
 
@@ -549,22 +545,56 @@
   to { text-shadow: 0 0 20px white, 0 0 40px cyan; }
 }
 
+/* Ракета */
+.rocket {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  animation: rocketLaunch 5s forwards ease-out;
+}
+
+/* Огонь под ракетой */
+.rocket::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 50px;
+  background: radial-gradient(ellipse at center, orange 0%, yellow 50%, transparent 80%);
+  filter: blur(4px);
+  opacity: 0.8;
+  animation: flame 0.3s infinite alternate;
+}
+
+@keyframes flame {
+  0% { height: 45px; opacity: 0.7; }
+  100% { height: 60px; opacity: 1; }
+}
+
+/* Взлёт ракеты */
+@keyframes rocketLaunch {
+  0% { bottom: 5%; transform: translateX(-50%) rotate(0deg); }
+  20% { transform: translateX(-50%) rotate(-2deg); }
+  40% { transform: translateX(-50%) rotate(2deg); }
+  60% { bottom: 50%; transform: translateX(-50%) rotate(-1deg); }
+  80% { bottom: 90%; transform: translateX(-50%) rotate(1deg); }
+  100% { bottom: 120%; transform: translateX(-50%) rotate(0deg); }
+}
+
+/* Кот и собака */
 .animal {
   position: absolute;
   width: 120px;
-  bottom: 8%;
+  bottom: 5%;
   opacity: 0;
 }
 
-.cat {
-  left: -20%;
-  animation: moveCat 8s forwards ease-in-out;
-}
-
-.dog {
-  right: -20%;
-  animation: moveDog 8s forwards ease-in-out;
-}
+.cat { left: -20%; animation: moveCat 8s forwards ease-in-out; }
+.dog { right: -20%; animation: moveDog 8s forwards ease-in-out; }
 
 @keyframes moveCat {
   0% { left: -20%; opacity: 0; }
@@ -578,32 +608,12 @@
   100% { right: 30%; opacity: 1; }
 }
 
-.hidden {
-  display: none;
-}
-  .rocket-container {
-  position: relative;
-  width: 100%;
-  height: 300px; /* Высоту можно менять */
-  overflow: visible;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
+/* Скрываем животных до взлёта */
+.hidden { display: none; }
 
-.rocket {
-  width: 100px; /* размер ракеты */
-  animation: rocketLaunch 5s forwards ease-out;
-}
 
-@keyframes rocketLaunch {
-  0% { transform: translateY(0) rotate(0deg); }
-  20% { transform: translateY(-20px) rotate(-2deg); }
-  40% { transform: translateY(-60px) rotate(2deg); }
-  60% { transform: translateY(-120px) rotate(-2deg); }
-  80% { transform: translateY(-200px) rotate(2deg); }
-  100% { transform: translateY(-400px) rotate(0deg); }
-}
+
+
 </style>
 </head>
 <body>
@@ -786,18 +796,22 @@
   
 
 <section id="launch-2026">
+  <!-- Звёздный фон -->
   <div class="stars"></div>
   <div class="falling-stars"></div>
-  
-  <div class="rocket">
-    <img src="YOUR_ROCKET_IMAGE_URL" alt="Rocket Launch" id="rocket-img">
-  </div>
-  
-  <h1 class="launch-title"> Launching in 2026</h1>
 
+  <!-- Надпись сверху -->
+  <h1 class="launch-title">🚀 Launching in 2026</h1>
+
+  <!-- Ракета -->
+  <div class="rocket">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Rocket_icon.svg" alt="Rocket Launch" id="rocket-img">
+  </div>
+
+  <!-- Кот и собака -->
   <div id="animals" class="hidden">
-    <img src="CAT_SILHOUETTE_URL" alt="Cat" class="animal cat">
-    <img src="DOG_SILHOUETTE_URL" alt="Dog" class="animal dog">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Cat_icon.svg" alt="Cat" class="animal cat">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Dog_icon.svg" alt="Dog" class="animal dog">
   </div>
 </section>
 
@@ -1168,13 +1182,15 @@
 })();
 
 
-  window.addEventListener('load', () => {
+window.addEventListener('load', () => {
+  // Появление кота и собаки после взлёта ракеты (через 5 сек)
   setTimeout(() => {
     const animals = document.getElementById('animals');
     animals.classList.remove('hidden');
-  }, 5000); // появление кота и собаки после взлета ракеты (через 5 сек)
+  }, 5000);
 });
 
+  
 </script>
 
 </body>
