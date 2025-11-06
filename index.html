@@ -496,15 +496,16 @@
 
   
 
-  /* Основной контейнер */
+/* Основной контейнер */
 #launch-2026 {
   position: relative;
   height: 100vh;
+  width: 100%;
   background: radial-gradient(#000, #02010a, #090022);
   overflow: hidden;
+  font-family: 'Orbitron', sans-serif;
   color: white;
   text-align: center;
-  font-family: 'Orbitron', sans-serif;
 }
 
 /* Звёзды */
@@ -522,7 +523,7 @@
 
 .falling-stars { 
   background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat; 
-  animation: fallingStars 4s infinite linear; 
+  animation: fallingStars 4s linear infinite; 
   opacity: 0.5; 
 }
 
@@ -531,17 +532,33 @@
 /* Надпись сверху */
 .launch-title {
   position: absolute;
-  top: 10%;
+  top: 5%;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 2.3rem; /* немного уменьшили */
+  font-size: 2.2rem;
   max-width: 90%;
-  text-shadow: 0 0 15px white, 0 0 30px cyan;
   line-height: 1.2;
   white-space: normal;
+  text-shadow: 0 0 15px white, 0 0 30px cyan;
 }
 
-/* Центральная мини-солнечная система */
+/* Центральный свет */
+.center-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(0,255,255,0.2), transparent 70%);
+  border-radius: 50%;
+  filter: blur(30px);
+  z-index: 1;
+  animation: pulse 3s infinite alternate;
+}
+@keyframes pulse { 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6;} 100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.9;} }
+
+/* Планеты */
 .planets {
   position: absolute;
   top: 50%;
@@ -557,33 +574,13 @@
   opacity: 0.8;
 }
 
-/* Планеты разные по цвету и размерам */
-.planet1 {
-  width: 50px;
-  height: 50px;
-  background: radial-gradient(circle, #ff6600, #cc3300);
-  transform-origin: 120px 0px;
-  animation: orbit1 20s linear infinite;
-}
-.planet2 {
-  width: 30px;
-  height: 30px;
-  background: radial-gradient(circle, #33ccff, #0066cc);
-  transform-origin: 180px 0px;
-  animation: orbit2 25s linear infinite;
-}
-.planet3 {
-  width: 70px;
-  height: 70px;
-  background: radial-gradient(circle, #ccff33, #669900);
-  transform-origin: 250px 0px;
-  animation: orbit3 30s linear infinite;
-}
+.planet1 { width:50px; height:50px; background: radial-gradient(circle,#ff6600,#cc3300); transform-origin:120px 0; animation: orbit1 20s linear infinite; }
+.planet2 { width:35px; height:35px; background: radial-gradient(circle,#33ccff,#0066cc); transform-origin:180px 0; animation: orbit2 25s linear infinite; }
+.planet3 { width:70px; height:70px; background: radial-gradient(circle,#ccff33,#669900); transform-origin:250px 0; animation: orbit3 30s linear infinite; }
 
-/* Орбиты */
-@keyframes orbit1 { 0% { transform: rotate(0deg) translateX(120px) rotate(0deg);} 100% { transform: rotate(360deg) translateX(120px) rotate(-360deg);} }
-@keyframes orbit2 { 0% { transform: rotate(0deg) translateX(180px) rotate(0deg);} 100% { transform: rotate(360deg) translateX(180px) rotate(-360deg);} }
-@keyframes orbit3 { 0% { transform: rotate(0deg) translateX(250px) rotate(0deg);} 100% { transform: rotate(360deg) translateX(250px) rotate(-360deg);} }
+@keyframes orbit1 { 0% {transform:rotate(0deg) translateX(120px) rotate(0deg);} 100% {transform:rotate(360deg) translateX(120px) rotate(-360deg);} }
+@keyframes orbit2 { 0% {transform:rotate(0deg) translateX(180px) rotate(0deg);} 100% {transform:rotate(360deg) translateX(180px) rotate(-360deg);} }
+@keyframes orbit3 { 0% {transform:rotate(0deg) translateX(250px) rotate(0deg);} 100% {transform:rotate(360deg) translateX(250px) rotate(-360deg);} }
 
 /* Ракета */
 .rocket {
@@ -591,37 +588,46 @@
   bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
+  z-index: 3;
   width: 100px;
 }
 .rocket img { width: 100%; height: auto; }
 
-/* Огонь под ракетой */
 .rocket::after {
-  content: '';
+  content:'';
   position: absolute;
-  bottom: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 20px; height: 50px;
+  bottom:-30px;
+  left:50%;
+  transform:translateX(-50%);
+  width:20px;
+  height:50px;
   background: radial-gradient(ellipse at center, orange 0%, yellow 50%, transparent 80%);
   filter: blur(4px);
-  opacity: 0.8;
+  opacity:0.8;
   animation: flame 0.3s infinite alternate;
 }
-@keyframes flame { 0% { height: 45px; opacity: 0.7; } 100% { height: 60px; opacity: 1; } }
+@keyframes flame { 0% { height:45px; opacity:0.7; } 100% { height:60px; opacity:1; } }
 
 /* Кот и собака */
-#animals { position: absolute; bottom: 5%; width: 100%; text-align: center; height: 120px; }
-.animal { display: inline-block; font-size: 3rem; margin: 0 20px; vertical-align: bottom; position: relative; bottom: 0; }
-.cat { transform: translateX(-100px); transition: transform 5s ease-in-out; }
-.dog { transform: translateX(100px); transition: transform 5s ease-in-out; }
+#animals {
+  position:absolute;
+  bottom:5%;
+  width:100%;
+  text-align:center;
+  z-index:4;
+  height:120px;
+}
+.animal { display:inline-block; font-size:3rem; margin:0 20px; position:relative; bottom:0; }
+.cat { transform:translateX(-100px); transition: transform 5s ease-in-out; }
+.dog { transform:translateX(100px); transition: transform 5s ease-in-out; }
 
 /* CADO */
-.cado { position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%); font-size: 2.5rem; font-weight: bold; color: cyan; text-shadow: 0 0 10px white,0 0 20px cyan; opacity: 0; animation: cadoGlow 1s infinite alternate; }
-@keyframes cadoGlow { 0% { opacity: 0.7; } 100% { opacity: 1; } }
-.hidden { display: none; }
-  
+.cado { position:absolute; bottom:-60px; left:50%; transform:translateX(-50%); font-size:2.5rem; font-weight:bold; color:cyan; text-shadow:0 0 10px white,0 0 20px cyan; opacity:0; animation:cadoGlow 1s infinite alternate; z-index:5; }
+@keyframes cadoGlow {0%{opacity:0.7;}100%{opacity:1;} }
+.hidden{display:none;}
+
+
+
 </style>
 </head>
 <body>
@@ -809,11 +815,10 @@
   <div class="falling-stars"></div>
 
   <!-- Надпись сверху -->
-  <h1 class="launch-title">
-    🚀 Launching<br>in 2026
-  </h1>
+  <h1 class="launch-title">🚀 Launching<br>in 2026</h1>
 
   <!-- Центральная мини-солнечная система -->
+  <div class="center-glow"></div>
   <div class="planets">
     <div class="planet planet1"></div>
     <div class="planet planet2"></div>
@@ -822,7 +827,7 @@
 
   <!-- Ракета -->
   <div class="rocket">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Rocket_icon.svg" alt="Rocket Launch" id="rocket-img">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Rocket_icon.svg" alt="Rocket Launch">
   </div>
 
   <!-- Кот и собака -->
@@ -1213,19 +1218,19 @@ function launchSequence() {
   dog.style.transform = 'translateX(100px)';
   cado.classList.add('hidden');
 
-  // Запуск анимаций через небольшой таймаут
-  setTimeout(() => {
-    rocket.style.bottom = '120%';
-    rocket.style.transform = 'translateX(-50%) rotate(0deg)';
-    cat.style.transform = 'translateX(0)';
-    dog.style.transform = 'translateX(0)';
-  }, 100);
+  // Запуск анимаций
+  setTimeout(()=>{
+    rocket.style.bottom='120%';
+    rocket.style.transform='translateX(-50%) rotate(0deg)';
+    cat.style.transform='translateX(0)';
+    dog.style.transform='translateX(0)';
+  },100);
 
-  // Появление CADO через 5 секунд
-  setTimeout(() => { cado.classList.remove('hidden'); }, 5100);
+  // Появление CADO через 5 сек
+  setTimeout(()=>{cado.classList.remove('hidden');},5100);
 
-  // Повтор через 10 секунд
-  setTimeout(launchSequence, 10000);
+  // Повтор цикла через 10 сек
+  setTimeout(launchSequence,10000);
 }
 
 window.addEventListener('load', launchSequence);
