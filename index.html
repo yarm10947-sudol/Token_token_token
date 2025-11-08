@@ -502,62 +502,7 @@
 
   
 </style>
-  <style>
-.catdog-scene {
-  position: relative;
-  width: 100%;
-  height: 350px;
-  margin-top: 100px;
-  overflow: hidden;
-}
-
-.catdog-scene img {
-  position: absolute;
-  bottom: 80px;
-  width: 180px;
-  height: auto;
-  transition: transform 1s ease;
-}
-
-.cat {
-  left: -200px;
-  animation: catMove 6s ease-in-out infinite;
-}
-
-.dog {
-  right: -200px;
-  animation: dogMove 6s ease-in-out infinite;
-}
-
-.cado-text {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Orbitron', sans-serif;
-  font-size: 4rem;
-  color: #ffd700;
-  text-shadow: 0 0 30px #ffcc00, 0 0 50px #ff9900;
-  opacity: 0;
-  animation: textAppear 6s ease-in-out infinite;
-}
-
-@keyframes catMove {
-  0%, 100% { transform: translateX(0); }
-  40%, 60% { transform: translateX(350px); }
-}
-
-@keyframes dogMove {
-  0%, 100% { transform: translateX(0); }
-  40%, 60% { transform: translateX(-350px); }
-}
-
-@keyframes textAppear {
-  0%, 30% { opacity: 0; }
-  45%, 75% { opacity: 1; }
-  100% { opacity: 0; }
-}
-  </style>
+  
 </head>
 <body>
 
@@ -600,11 +545,7 @@
   <button class="btn-buy" aria-label="Buy CADO Token now" id="buyBtn">JOIN NOW</button>
 
 
-  <!-- CADO CAT-DOG SCENE -->
-<div class="catdog-scene">
-  <img src="40b1e017-cd54-4f7b-8f20-5faaf22c659b.jpeg" class="cat" alt="Cat">
-  <img src="a8a8adb7-1fcd-4584-be0a-566a0f681b67.jpeg" class="dog" alt="Dog">
-  <div class="cado-text">CADO</div>
+  
 </div>
 </header>
 
