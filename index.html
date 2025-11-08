@@ -540,6 +540,34 @@
   <button class="btn-buy" aria-label="Buy CADO Token now" id="buyBtn">JOIN NOW</button>
 </header>
 
+  
+
+
+  <section id="launch-2026">
+  <div class="stars"></div>
+  <div class="falling-stars"></div>
+  <h1 class="launch-title"> Launching<br>in 2026</h1>
+
+  <video class="center-video" autoplay muted loop>
+    <source src="VID_20251108_040131.mp4" type="video/mp4">
+  </video>
+
+  <div class="rocket">
+    <img src="7172284.png" alt="Rocket Launch">
+    <div class="flame"></div>
+  </div>
+
+  <div id="animals">
+    <img src="40b1e017-cd54-4f7b-8f20-5faaf22c659b.jpeg" alt="Cat" class="animal cat">
+    <img src="a8a8adb7-1fcd-4584-be0a-566a0f681b67.jpeg" alt="Dog" class="animal dog">
+  </div>
+
+  <div class="cado hidden">CADO</div>
+  </section>
+  
+
+  
+
 <section class="tokenomics" aria-labelledby="tokenomics-title" id="tokenomicsSection">
   <h2 id="tokenomics-title">Tokenomics</h2>
   <p>
@@ -1048,6 +1076,40 @@
 
 
 
+
+  function launchSequence() {
+  const rocket = document.querySelector('.rocket');
+  const cat = document.querySelector('.cat');
+  const dog = document.querySelector('.dog');
+  const cado = document.querySelector('.cado');
+
+  rocket.style.bottom = '5%';
+  cat.style.transform = 'translateX(-200px)';
+  dog.style.transform = 'translateX(200px)';
+  cado.style.opacity = 0;
+  cado.classList.add('hidden');
+
+  setTimeout(() => {
+    rocket.style.bottom = '120%';
+    cat.style.transform = 'translateX(-20px)';
+    dog.style.transform = 'translateX(20px)';
+  }, 100);
+
+  setTimeout(() => {
+    cado.classList.remove('hidden');
+    cado.style.opacity = 1;
+  }, 3000);
+
+  setTimeout(() => {
+    cat.style.transform = 'translateX(-200px)';
+    dog.style.transform = 'translateX(200px)';
+    cado.style.opacity = 0;
+  }, 5500);
+
+  setTimeout(launchSequence, 8000);
+}
+
+window.addEventListener('load', launchSequence);
   
 </script>
 
