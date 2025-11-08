@@ -498,134 +498,9 @@
 
 
 
-  body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Orbitron', sans-serif;
-  background: radial-gradient(#000, #02010a, #090022);
-  color: white;
-}
+  
 
-/* Звёзды */
-.stars, .falling-stars {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  top: 0;
-  left: 0;
-}
-.stars {
-  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
-  opacity: 0.7;
-}
-.falling-stars {
-  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
-  animation: fallingStars 6s linear infinite;
-  opacity: 0.5;
-}
-@keyframes fallingStars {
-  from { background-position: 0 0; }
-  to { background-position: 0 1000px; }
-}
-
-/* Надпись сверху */
-.launch-title {
-  position: absolute;
-  top: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  max-width: 90%;
-  line-height: 1.2;
-  text-shadow: 0 0 15px white, 0 0 30px cyan;
-  z-index: 5;
-  text-align: center;
-}
-
-/* Видео в центре */
-.center-video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 320px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 0 25px rgba(0,255,255,0.5);
-  z-index: 2;
-  animation: pulseVideo 4s infinite alternate;
-}
-@keyframes pulseVideo {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-}
-
-/* Ракета */
-.rocket {
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  width: 100px;
-  transition: bottom 5s ease-out;
-}
-.rocket img { width: 100%; height: auto; }
-.flame {
-  position: absolute;
-  bottom:-25px;
-  left:50%;
-  transform:translateX(-50%);
-  width:20px;
-  height:60px;
-  background: radial-gradient(ellipse at center, orange 0%, yellow 50%, transparent 80%);
-  filter: blur(4px);
-  opacity:0.8;
-  animation: flame 0.3s infinite alternate;
-}
-@keyframes flame {
-  0% { height:45px; opacity:0.7; }
-  100% { height:60px; opacity:1; }
-}
-
-/* Кот и собака */
-#animals {
-  position: absolute;
-  bottom: 15%; /* чуть выше CADO */
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 20px; /* расстояние между ними */
-  z-index: 4;
-}
-
-.animal {
-  width: 100px;
-  height: auto;
-  transition: transform 2.5s ease-in-out;
-  position: relative;
-}
-
-/* CADO под картинками */
-.cado {
-  position: absolute;
-  bottom: 5%; /* под картинками */
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: cyan;
-  text-shadow: 0 0 10px white, 0 0 20px cyan;
-  opacity: 0;
-  z-index: 5;
-  transition: opacity 1s ease;
-}
-.hidden { display: none; }
+  
 </style>
 </head>
 <body>
@@ -672,27 +547,7 @@
   
 
 
-  <section id="launch-2026">
-  <div class="stars"></div>
-  <div class="falling-stars"></div>
-  <h1 class="launch-title"> Launching<br>in 2026</h1>
-
-  <video class="center-video" autoplay muted loop>
-    <source src="VID_20251108_040131.mp4" type="video/mp4">
-  </video>
-
-  <div class="rocket">
-    <img src="7172284.png" alt="Rocket Launch">
-    <div class="flame"></div>
-  </div>
-
-  <div id="animals">
-    <img src="40b1e017-cd54-4f7b-8f20-5faaf22c659b.jpeg" alt="Cat" class="animal cat">
-    <img src="a8a8adb7-1fcd-4584-be0a-566a0f681b67.jpeg" alt="Dog" class="animal dog">
-  </div>
-
-  <div class="cado hidden">CADO</div>
-  </section>
+  
   
 
   
@@ -1206,39 +1061,6 @@
 
 
 
-  function launchSequence() {
-  const rocket = document.querySelector('.rocket');
-  const cat = document.querySelector('.cat');
-  const dog = document.querySelector('.dog');
-  const cado = document.querySelector('.cado');
-
-  rocket.style.bottom = '5%';
-  cat.style.transform = 'translateX(-200px)';
-  dog.style.transform = 'translateX(200px)';
-  cado.style.opacity = 0;
-  cado.classList.add('hidden');
-
-  setTimeout(() => {
-    rocket.style.bottom = '120%';
-    cat.style.transform = 'translateX(-20px)';
-    dog.style.transform = 'translateX(20px)';
-  }, 100);
-
-  setTimeout(() => {
-    cado.classList.remove('hidden');
-    cado.style.opacity = 1;
-  }, 3000);
-
-  setTimeout(() => {
-    cat.style.transform = 'translateX(-200px)';
-    dog.style.transform = 'translateX(200px)';
-    cado.style.opacity = 0;
-  }, 5500);
-
-  setTimeout(launchSequence, 8000);
-}
-
-window.addEventListener('load', launchSequence);
   
 </script>
 
