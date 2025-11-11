@@ -1215,45 +1215,49 @@
   
 
   <script>
-function launchSequence() {
+   function launchSequence() {
   const rocket = document.querySelector('.rocket');
   const cat = document.querySelector('.cat');
   const dog = document.querySelector('.dog');
   const cado = document.querySelector('.cado');
 
-  // начальные позиции у краёв
+  // --- начальные позиции ---
   rocket.style.bottom = '5%';
   cat.style.transform = 'translateX(0)';       // кот слева у края
   dog.style.transform = 'translateX(-100%)';   // собака справа у края
-  cado.style.opacity = 0;
-  cado.classList.add('hidden');
-  cado.classList.remove('show');               // убрать эффект лавы
 
-  // взлёт ракеты и движение животных к центру
+  // скрыть надпись CADO перед анимацией лавы
+  cado.classList.add('hidden');
+  cado.classList.remove('show');
+
+  // --- взлёт ракеты и движение животных к центру ---
   setTimeout(() => {
     rocket.style.bottom = '120%';
     cat.style.transform = 'translateX(45vw)';    // кот идёт к центру
     dog.style.transform = 'translateX(-60vw)';   // собака идёт к центру
   }, 100);
 
-  // появление надписи CADO с эффектом лавы
+  // --- появление надписи CADO с эффектом лавы ---
   setTimeout(() => {
-    cado.classList.remove('hidden');
-    cado.classList.add('show');                  // включаем эффект лавы
+    cado.classList.remove('hidden');  // показываем надпись
+    cado.classList.add('show');       // включаем эффект лавы
   }, 3000);
 
-  // возвращение животных к краям и скрытие CADO
+  // --- возвращение животных к краям и скрытие CADO ---
   setTimeout(() => {
     cat.style.transform = 'translateX(0)';
     dog.style.transform = 'translateX(0)';
-    cado.classList.remove('show');               // выключаем эффект лавы
-    cado.classList.add('hidden');
+    cado.classList.remove('show');    // выключаем эффект лавы
+    cado.classList.add('hidden');     // скрываем надпись
   }, 5500);
 
+  // повтор анимации
   setTimeout(launchSequence, 8000);
 }
 
 window.addEventListener('load', launchSequence);
   </script>
+
+    
 </body>
 </html>
