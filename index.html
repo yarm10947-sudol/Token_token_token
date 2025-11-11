@@ -497,7 +497,6 @@
   
 
 
-
 /* Основной блок */
 #launch-2026 {
   position: relative;
@@ -591,7 +590,7 @@
 .animal { position:absolute; bottom:0; width:120px; transition: transform 2.5s ease-in-out; }
 .cat { right:100%; } .dog { left:100%; }
 
-/* ===== Лава ===== */
+/* ===== Лава (реалистичное течение) ===== */
 .lava-container {
   position: absolute;
   bottom: 0;
@@ -603,48 +602,36 @@
   z-index: 3;
 }
 
-.lava {
-  width: 100%;
-  height: 100%;
+.lava-drop {
+  position: absolute;
+  top: 0;
+  width: 12-18%;
+  height: 0;
   background: linear-gradient(to bottom, #ff4500, #ff8800, #ffd700);
   border-radius: 50% 50% 30% 30%;
   filter: blur(6px);
-  animation: lavaFlow 3s forwards;
-  position: relative;
+  opacity: 0.8;
+  animation-fill-mode: forwards;
 }
 
-.lava::after,
-.lava::before {
-  content:"";
-  position: absolute;
-  width: 20%;
-  height: 20%;
-  background: linear-gradient(to bottom, #ff4500, #ff8800, #ffd700);
-  border-radius: 50%;
-  top: -10%;
-  left: 10%;
-  filter: blur(4px);
-  animation: drip 3s infinite;
-}
+/* Разные капли для реалистичности */
+.drop1 { left: 0; animation: lavaFlow 2.5s 0.2s linear forwards; width:14%; }
+.drop2 { left: 20%; animation: lavaFlow 2.7s 0.5s linear forwards; width:12%; }
+.drop3 { left: 40%; animation: lavaFlow 3s 0.7s linear forwards; width:16%; }
+.drop4 { left: 65%; animation: lavaFlow 2.8s 0.4s linear forwards; width:13%; }
 
-.lava::before {
-  left: 70%;
-}
-
+/* Течение лавы сверху вниз */
 @keyframes lavaFlow {
-  0% { height: 0; }
-  100% { height: 70%; } /* Дойдёт до середины видео */
-}
-
-@keyframes drip {
-  0%, 100% { transform: translateY(0); opacity:0.8; }
-  50% { transform: translateY(30px); opacity:1; }
+  0% { height: 0; transform: translateY(0) scaleX(1); }
+  40% { height: 30%; transform: translateY(10%) scaleX(1.05); }
+  70% { height: 55%; transform: translateY(25%) scaleX(0.95); }
+  100% { height: 70%; transform: translateY(40%) scaleX(1); }
 }
 
 /* ===== Надпись CADO ===== */
 .cado {
   position: absolute;
-  bottom: 5%;
+  bottom: 10%;
   left:50%;
   transform:translateX(-50%);
   font-size:3rem;
@@ -663,64 +650,8 @@
 
 @keyframes lavaText { 0% { background-position:0 0; } 100% { background-position:0 100%; } }
 
-  .lava-container {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 0;
-  z-index: 3;
-  overflow: visible;
-}
-
-.lava-drop {
-  position: absolute;
-  top: 0;
-  width: 15%;
-  height: 20px;
-  background: linear-gradient(to bottom, #ff4500, #ff8800, #ffd700);
-  border-radius: 50%;
-  filter: blur(4px);
-  opacity: 0;
-}
-
-/* Анимация капли */
-@keyframes dropFlow {
-  0% { transform: translateY(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { transform: translateY(120px); opacity: 1; }
-  100% { opacity: 0; }
-}
-
-.drop1 { left: 0; animation: dropFlow 2s ease-in forwards; animation-delay: 0s; }
-.drop2 { left: 25%; animation: dropFlow 2.2s ease-in forwards; animation-delay: 0.2s; }
-.drop3 { left: 50%; animation: dropFlow 2.5s ease-in forwards; animation-delay: 0.4s; }
-
-/* Надпись CADO */
-.cado {
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 3rem;
-  font-weight: bold;
-  color: transparent;
-  background: linear-gradient(to bottom,#ff0000,#ff8800,#ffd700,#ff0000);
-  background-size:100% 200%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  opacity:0;
-  z-index:5;
-  transition: opacity 0.5s ease;
-}
-
-.cado.show { opacity:1; animation: lavaText 1.5s forwards; }
-
-@keyframes lavaText { 0% { background-position:0 0; } 100% { background-position:0 100%; } }
-
 .hidden { display:none; }
-  
+
 </style>
   
 </head>
