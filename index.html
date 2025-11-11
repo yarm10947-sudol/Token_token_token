@@ -1164,22 +1164,22 @@ function launchSequence() {
 
   // начальные позиции
   rocket.style.bottom = '5%';
-  cat.style.left = '0%';   // кот у левого края
-  dog.style.right = '0%';  // собака у правого края
+  cat.style.transform = 'translateX(0)';   // кот у края слева
+  dog.style.transform = 'translateX(0)';   // собака у края справа
   cado.style.opacity = 0;
   cado.classList.add('hidden');
 
-  // плавный CSS переход
-  cat.style.transition = 'left 2.5s ease-in-out';
-  dog.style.transition = 'right 2.5s ease-in-out';
+  // плавность движения
+  cat.style.transition = 'transform 2.5s ease-in-out';
+  dog.style.transition = 'transform 2.5s ease-in-out';
   rocket.style.transition = 'bottom 5s ease-out';
   cado.style.transition = 'opacity 1s ease';
 
   // взлёт ракеты и сближение животных
   setTimeout(() => {
     rocket.style.bottom = '120%';
-    cat.style.left = 'calc(50% - 60px)';   // кот идёт к центру
-    dog.style.right = 'calc(50% - 60px)';  // собака идёт к центру
+    cat.style.transform = 'translateX(80px)';   // кот идёт к центру
+    dog.style.transform = 'translateX(-80px)';  // собака идёт к центру
   }, 100);
 
   // появление CADO
@@ -1190,8 +1190,8 @@ function launchSequence() {
 
   // возвращение на края
   setTimeout(() => {
-    cat.style.left = '0%';   // кот возвращается к левому краю
-    dog.style.right = '0%';  // собака возвращается к правому краю
+    cat.style.transform = 'translateX(0)';     // кот возвращается к левому краю
+    dog.style.transform = 'translateX(0)';     // собака возвращается к правому краю
     cado.style.opacity = 0;
   }, 5500);
 
