@@ -560,11 +560,11 @@
 @keyframes flame { 0% { height:45px; opacity:0.7; } 100% { height:60px; opacity:1; } }
 #animals { position: absolute; bottom: 15%; width: 100%; height: 150px; z-index: 4; }
 .animal { position: absolute; bottom: 0; width: 120px; transition: transform 2.5s ease-in-out; }
-.cat { left: 0%; }
-.dog { right: 0%; }
+.cat { left: 0; transition: transform 2.5s ease-in-out;}
+.dog { right: 0; transition: transform 2.5s ease-in-out;}
 .cado { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); font-size: 2.5rem; font-weight: bold; color: cyan; text-shadow: 0 0 10px white, 0 0 20px cyan; opacity: 0; z-index: 5; transition: opacity 1s ease; }
 .hidden { display: none; }
-  
+
 </style>
   
 </head>
@@ -1162,43 +1162,38 @@ function launchSequence() {
   const dog = document.querySelector('.dog');
   const cado = document.querySelector('.cado');
 
-  // начальные позиции
+  // начальные позиции у краёв
   rocket.style.bottom = '5%';
-  cat.style.transform = 'translateX(0)';   // кот у края слева
-  dog.style.transform = 'translateX(50)';   // собака у края справа
+  cat.style.transform = 'translateX(0)';   // кот слева у края
+  dog.style.transform = 'translateX(0)';   // собака справа у края
   cado.style.opacity = 0;
   cado.classList.add('hidden');
 
-  // плавность движения
-  cat.style.transition = 'transform 2.5s ease-in-out';
-  dog.style.transition = 'transform 2.5s ease-in-out';
-  rocket.style.transition = 'bottom 5s ease-out';
-  cado.style.transition = 'opacity 1s ease';
-
-  // взлёт ракеты и сближение животных
+  // взлёт ракеты и движение животных к центру
   setTimeout(() => {
     rocket.style.bottom = '120%';
     cat.style.transform = 'translateX(80px)';   // кот идёт к центру
     dog.style.transform = 'translateX(-80px)';  // собака идёт к центру
   }, 100);
 
-  // появление CADO
+  // появление надписи CADO
   setTimeout(() => {
     cado.classList.remove('hidden');
     cado.style.opacity = 1;
   }, 3000);
 
-  // возвращение на края
+  // возвращение животных к краям и скрытие CADO
   setTimeout(() => {
-    cat.style.transform = 'translateX(0)';     // кот возвращается к левому краю
-    dog.style.transform = 'translateX(0)';     // собака возвращается к правому краю
+    cat.style.transform = 'translateX(0)';    // кот возвращается к левому краю
+    dog.style.transform = 'translateX(0)';    // собака возвращается к правому краю
     cado.style.opacity = 0;
   }, 5500);
 
-  // повторяем цикл
+  // повтор анимации
   setTimeout(launchSequence, 8000);
 }
 
+// старт анимации после загрузки страницы
 window.addEventListener('load', launchSequence);
   </script>
 </body>
