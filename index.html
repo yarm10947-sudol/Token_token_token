@@ -579,8 +579,48 @@
 .animal { position: absolute; bottom: 0; width: 120px; transition: transform 2.5s ease-in-out; }
 .cat { right: 100%; transition: transform 2.5s ease-in-out; }
 .dog { left: 100%; transition: transform 2.5s ease-in-out; }
-.cado { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); font-size: 2.5rem; font-weight: bold; color: cyan; text-shadow: 0 0 10px white, 0 0 20px cyan; opacity: 0; z-index: 5; transition: opacity 1s ease; }
+
+/* 🌋 Эффект лавы на надпись CADO */
+.cado {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  font-weight: bold;
+  color: transparent;
+  background: linear-gradient(
+    to bottom,
+    #ff0000,
+    #ff8800,
+    #ffd700,
+    #ff0000
+  );
+  background-size: 100% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  z-index: 5;
+  transition: opacity 0.5s ease;
+}
+
+.cado.show {
+  opacity: 1;
+  animation: lavaText 1.5s forwards;
+}
+
+@keyframes lavaText {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
 .hidden { display: none; }
+  
+
 
 </style>
   
