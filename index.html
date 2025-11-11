@@ -792,22 +792,14 @@
     <img src="a8a8adb7-1fcd-4584-be0a-566a0f681b67.jpeg" alt="Dog" class="animal dog">
   </div>
 
-  <!-- Лава -->
   <div class="lava-container">
-    <div class="lava"></div>
+    <div class="lava-drop drop1"></div>
+    <div class="lava-drop drop2"></div>
+    <div class="lava-drop drop3"></div>
+    <div class="lava-drop drop4"></div>
   </div>
 
-  <!-- Надпись CADO -->
   <div class="cado hidden">CADO</div>
-    <!-- Лава и капли -->
-<div class="lava-container">
-  <div class="lava-drop drop1"></div>
-  <div class="lava-drop drop2"></div>
-  <div class="lava-drop drop3"></div>
-</div>
-
-<!-- Надпись CADO -->
-<div class="cado hidden">CADO</div>
   </section>
   
   
@@ -1332,91 +1324,52 @@ function launchSequence() {
   const rocket = document.querySelector('.rocket');
   const cat = document.querySelector('.cat');
   const dog = document.querySelector('.dog');
-  const lava = document.querySelector('.lava');
   const cado = document.querySelector('.cado');
+  const lavaDrops = document.querySelectorAll('.lava-drop');
 
-  // начальные позиции
+  // Reset positions
   rocket.style.bottom = '5%';
   cat.style.transform = 'translateX(0)';
   dog.style.transform = 'translateX(-100%)';
-  lava.style.height = '0';
-  cado.classList.add('hidden');
   cado.classList.remove('show');
+  cado.classList.add('hidden');
 
-  // взлёт ракеты и движение животных
+  lavaDrops.forEach(drop => {
+    drop.style.height = '0';
+    drop.style.transform = 'translateY(0)';
+  });
+
+  // Rocket & animals move
   setTimeout(() => {
     rocket.style.bottom = '120%';
     cat.style.transform = 'translateX(45vw)';
     dog.style.transform = 'translateX(-60vw)';
   }, 100);
 
-  // Лава течёт вниз
+  // Lava flows
   setTimeout(() => {
-    lava.style.animation = 'lavaFlow 3s forwards';
-  }, 1000);
+    lavaDrops.forEach(drop => {
+      drop.style.animationPlayState = 'running';
+    });
+  }, 500);
 
-  // Появление надписи CADO из лавы
+  // Show CADO after lava flows
   setTimeout(() => {
     cado.classList.remove('hidden');
     cado.classList.add('show');
-  }, 3500);
+  }, 2200);
 
-  // Возврат животных и скрытие надписи
+  // Reset
   setTimeout(() => {
     cat.style.transform = 'translateX(0)';
     dog.style.transform = 'translateX(0)';
     cado.classList.remove('show');
     cado.classList.add('hidden');
-    lava.style.height = '0';
-    lava.style.animation = '';
-  }, 7000);
-
-  setTimeout(launchSequence, 8000);
-}
-
-window.addEventListener('load', launchSequence);
-    function launchSequence() {
-  const rocket = document.querySelector('.rocket');
-  const cat = document.querySelector('.cat');
-  const dog = document.querySelector('.dog');
-  const cado = document.querySelector('.cado');
-  const drops = document.querySelectorAll('.lava-drop');
-
-  // начальные позиции
-  rocket.style.bottom = '5%';
-  cat.style.transform = 'translateX(0)';
-  dog.style.transform = 'translateX(-100%)';
-  drops.forEach(drop => { drop.style.opacity = 0; });
-
-  cado.classList.add('hidden');
-  cado.classList.remove('show');
-
-  // взлёт ракеты и движение животных
-  setTimeout(() => {
-    rocket.style.bottom = '120%';
-    cat.style.transform = 'translateX(45vw)';
-    dog.style.transform = 'translateX(-60vw)';
-  }, 100);
-
-  // Лава течёт вниз
-  setTimeout(() => {
-    drops.forEach(drop => drop.style.opacity = 1);
-  }, 1000);
-
-  // Появление надписи после "капель"
-  setTimeout(() => {
-    cado.classList.remove('hidden');
-    cado.classList.add('show');
-  }, 3000);
-
-  // Возврат в исходное состояние
-  setTimeout(() => {
-    cat.style.transform = 'translateX(0)';
-    dog.style.transform = 'translateX(0)';
-    cado.classList.remove('show');
-    cado.classList.add('hidden');
-    drops.forEach(drop => drop.style.opacity = 0);
-  }, 6000);
+    lavaDrops.forEach(drop => {
+      drop.style.height = '0';
+      drop.style.transform = 'translateY(0)';
+    });
+  }, 5500);
 
   setTimeout(launchSequence, 8000);
 }
