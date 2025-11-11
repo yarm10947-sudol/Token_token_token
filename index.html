@@ -605,7 +605,7 @@
 .lava-drop {
   position: absolute;
   top: 0;
-  width: 12-18%;
+  width: 12%;
   height: 0;
   background: linear-gradient(to bottom, #ff4500, #ff8800, #ffd700);
   border-radius: 50% 50% 30% 30%;
@@ -620,12 +620,12 @@
 .drop3 { left: 40%; animation: lavaFlow 3s 0.7s linear forwards; width:16%; }
 .drop4 { left: 65%; animation: lavaFlow 2.8s 0.4s linear forwards; width:13%; }
 
-/* Течение лавы сверху вниз */
+/* Течение лавы сверху вниз с реалистичными каплями */
 @keyframes lavaFlow {
-  0% { height: 0; transform: translateY(0) scaleX(1); }
-  40% { height: 30%; transform: translateY(10%) scaleX(1.05); }
-  70% { height: 55%; transform: translateY(25%) scaleX(0.95); }
-  100% { height: 70%; transform: translateY(40%) scaleX(1); }
+  0% { height: 0; transform: translateY(-10%) scaleX(1); }
+  30% { height: 20%; transform: translateY(5%) scaleX(1.05); }
+  60% { height: 50%; transform: translateY(20%) scaleX(0.95); }
+  100% { height: 70%; transform: translateY(35%) scaleX(1); }
 }
 
 /* ===== Надпись CADO ===== */
@@ -651,7 +651,6 @@
 @keyframes lavaText { 0% { background-position:0 0; } 100% { background-position:0 100%; } }
 
 .hidden { display:none; }
-
 </style>
   
 </head>
