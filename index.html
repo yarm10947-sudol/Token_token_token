@@ -662,6 +662,60 @@
   100% { background-position: 0 100%; }
 }
 
+
+  /* поток лавы из видео */
+.lava {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%; /* ширина лавы */
+  height: 0;
+  background: linear-gradient(to top, #ff4500, #ff8800, #ffd700);
+  border-radius: 30% 30% 0 0;
+  filter: blur(8px);
+  opacity: 0.8;
+  z-index: 3;
+}
+
+/* анимация течения лавы */
+@keyframes lavaFlow {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 70%; /* дойдёт до середины видео */
+  }
+}
+
+/* эффект появления надписи через лаву */
+.cado {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  font-weight: bold;
+  color: transparent;
+  background: linear-gradient(to bottom, #ff0000, #ff8800, #ffd700, #ff0000);
+  background-size: 100% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  z-index: 5;
+  transition: opacity 0.5s ease;
+}
+
+.cado.show {
+  opacity: 1;
+  animation: lavaText 1.5s forwards;
+}
+
+@keyframes lavaText {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
 .hidden { display: none; }
 </style>
   
@@ -1291,6 +1345,33 @@
     cado.classList.remove('show');    // выключаем эффект лавы
     cado.classList.add('hidden');     // скрываем надпись
   }, 5500);
+
+
+
+
+     const lava = document.querySelector('.lava');
+const cado = document.querySelector('.cado');
+
+function launchSequence() {
+  // начинаем с пустой лавы и скрытой надписи
+  lava.style.height = '0';
+  lava.style.opacity = '0.8';
+  cado.classList.remove('show');
+
+  // поток лавы
+  setTimeout(() => {
+    lava.style.animation = 'lavaFlow 3s forwards';
+  }, 500); // начинается через 0.5сек
+
+  // появление надписи из лавы
+  setTimeout(() => {
+    cado.classList.add('show');
+  }, 3000); // после 3 сек лавы
+}
+
+window.addEventListener('load', launchSequence);
+
+     
 
   // повтор анимации
   setTimeout(launchSequence, 8000);
