@@ -499,7 +499,71 @@
 
 
   
-
+/* Launch 2026 animation */
+#launch-2026 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+#launch-2026 .stars, #launch-2026 .falling-stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+}
+#launch-2026 .stars {
+  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  opacity: 0.7;
+}
+#launch-2026 .falling-stars {
+  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  animation: fallingStars 6s linear infinite;
+  opacity: 0.5;
+}
+@keyframes fallingStars {
+  from { background-position: 0 0; }
+  to { background-position: 0 1000px; }
+}
+.launch-title {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  text-shadow: 0 0 15px white, 0 0 30px cyan;
+  z-index: 5;
+  text-align: center;
+}
+.center-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0,255,255,0.5);
+  z-index: 2;
+  animation: pulseVideo 4s infinite alternate;
+}
+@keyframes pulseVideo {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+}
+.rocket { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); z-index: 3; width: 100px; transition: bottom 5s ease-out; }
+.rocket img { width: 100%; height: auto; }
+.flame { position: absolute; bottom:-25px; left:50%; transform:translateX(-50%); width:20px; height:60px; background: radial-gradient(ellipse at center, orange 0%, yellow 50%, transparent 80%); filter: blur(4px); opacity:0.8; animation: flame 0.3s infinite alternate; }
+@keyframes flame { 0% { height:45px; opacity:0.7; } 100% { height:60px; opacity:1; } }
+#animals { position: absolute; bottom: 15%; width: 100%; height: 150px; z-index: 4; }
+.animal { position: absolute; bottom: 0; width: 120px; transition: transform 2.5s ease-in-out; }
+.cat { left: 0%; }
+.dog { right: 0%; }
+.cado { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); font-size: 2.5rem; font-weight: bold; color: cyan; text-shadow: 0 0 10px white, 0 0 20px cyan; opacity: 0; z-index: 5; transition: opacity 1s ease; }
+.hidden { display: none; }
   
 </style>
   
@@ -553,7 +617,28 @@
 
 
   
-  
+  <section id="launch-2026">
+  <div class="stars"></div>
+  <div class="falling-stars"></div>
+
+  <h1 class="launch-title">Launching<br>in 2026</h1>
+
+  <video class="center-video" autoplay muted loop>
+    <source src="InShot_20251109_161136016.mp4" type="video/mp4">
+  </video>
+
+  <div class="rocket">
+    <img src="7172284.png" alt="Rocket Launch">
+    <div class="flame"></div>
+  </div>
+
+  <div id="animals">
+    <img src="40b1e017-cd54-4f7b-8f20-5faaf22c659b.jpeg" alt="Cat" class="animal cat">
+    <img src="a8a8adb7-1fcd-4584-be0a-566a0f681b67.jpeg" alt="Dog" class="animal dog">
+  </div>
+
+  <div class="cado hidden">CADO</div>
+  </section>
 
   
 
@@ -1068,6 +1153,41 @@
 
   
 </script>
+  <script>
+function launchSequence() {
+  const rocket = document.querySelector('.rocket');
+  const cat = document.querySelector('.cat');
+  const dog = document.querySelector('.dog');
+  const cado = document.querySelector('.cado');
+
+  rocket.style.bottom = '5%';
+  cat.style.transform = 'translateX(0)';
+  dog.style.transform = 'translateX(0)';
+  cado.style.opacity = 0;
+  cado.classList.add('hidden');
+
+  setTimeout(() => {
+    rocket.style.bottom = '120%';
+    cat.style.transform = 'translateX(80px)';
+    dog.style.transform = 'translateX(-80px)';
+  }, 100);
+
+  setTimeout(() => {
+    cado.classList.remove('hidden');
+    cado.style.opacity = 1;
+  }, 3000);
+
+  setTimeout(() => {
+    cat.style.transform = 'translateX(0px)';
+    dog.style.transform = 'translateX(0px)';
+    cado.style.opacity = 0;
+  }, 5500);
+
+  setTimeout(launchSequence, 8000);
+}
+
+window.addEventListener('load', launchSequence);
+  </script>
 
 </body>
 </html>
