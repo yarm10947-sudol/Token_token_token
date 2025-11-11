@@ -1221,33 +1221,36 @@ function launchSequence() {
 
   // начальные позиции у краёв
   rocket.style.bottom = '5%';
-  cat.style.transform = 'translateX(0)';          // кот слева у края
-  dog.style.transform = 'translateX(-100%)';      // собака справа у края
+  cat.style.transform = 'translateX(0)';       // кот слева у края
+  dog.style.transform = 'translateX(-100%)';   // собака справа у края
   cado.style.opacity = 0;
   cado.classList.add('hidden');
+  cado.classList.remove('show');               // убрать эффект лавы
 
   // взлёт ракеты и движение животных к центру
   setTimeout(() => {
     rocket.style.bottom = '120%';
-    cat.style.transform = 'translateX(45vw)';      // кот идёт к центру
-    dog.style.transform = 'translateX(-60vw)';     // собака идёт к центру
+    cat.style.transform = 'translateX(45vw)';    // кот идёт к центру
+    dog.style.transform = 'translateX(-60vw)';   // собака идёт к центру
   }, 100);
 
-  // появление надписи CADO
+  // появление надписи CADO с эффектом лавы
   setTimeout(() => {
     cado.classList.remove('hidden');
-    cado.style.opacity = 1;
+    cado.classList.add('show');                  // включаем эффект лавы
   }, 3000);
 
   // возвращение животных к краям и скрытие CADO
   setTimeout(() => {
-    cat.style.transform = 'translateX(0)';         // кот возвращается к левому краю
-    dog.style.transform = 'translateX(0)';     // собака возвращается к правому краю
-    cado.style.opacity = 0;
+    cat.style.transform = 'translateX(0)';
+    dog.style.transform = 'translateX(0)';
+    cado.classList.remove('show');               // выключаем эффект лавы
+    cado.classList.add('hidden');
   }, 5500);
 
   setTimeout(launchSequence, 8000);
 }
+
 window.addEventListener('load', launchSequence);
   </script>
 </body>
