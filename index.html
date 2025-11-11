@@ -1153,6 +1153,8 @@
 
   
 </script>
+  
+
   <script>
 function launchSequence() {
   const rocket = document.querySelector('.rocket');
@@ -1160,26 +1162,30 @@ function launchSequence() {
   const dog = document.querySelector('.dog');
   const cado = document.querySelector('.cado');
 
+  // начальные позиции
   rocket.style.bottom = '5%';
-  cat.style.transform = 'translateX(0)';
-  dog.style.transform = 'translateX(0)';
+  cat.style.left = '0%';   // кот у края слева
+  dog.style.right = '0%';  // собака у края справа
   cado.style.opacity = 0;
   cado.classList.add('hidden');
 
+  // взлёт и сближение
   setTimeout(() => {
     rocket.style.bottom = '120%';
-    cat.style.transform = 'translateX(80px)';
-    dog.style.transform = 'translateX(-80px)';
+    cat.style.left = '20%';   // кот идёт к центру
+    dog.style.right = '20%';  // собака идёт к центру
   }, 100);
 
+  // появление CADO
   setTimeout(() => {
     cado.classList.remove('hidden');
     cado.style.opacity = 1;
   }, 3000);
 
+  // возвращение на края
   setTimeout(() => {
-    cat.style.transform = 'translateX(0px)';
-    dog.style.transform = 'translateX(0px)';
+    cat.style.left = '0%';    // кот возвращается к краю
+    dog.style.right = '0%';   // собака возвращается к краю
     cado.style.opacity = 0;
   }, 5500);
 
@@ -1188,6 +1194,5 @@ function launchSequence() {
 
 window.addEventListener('load', launchSequence);
   </script>
-
 </body>
 </html>
