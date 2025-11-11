@@ -505,7 +505,9 @@
   height: 100vh;
   overflow: hidden;
 }
-#launch-2026 .stars, #launch-2026 .falling-stars {
+
+#launch-2026 .stars,
+#launch-2026 .falling-stars {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -513,19 +515,23 @@
   top: 0;
   left: 0;
 }
+
 #launch-2026 .stars {
   background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
   opacity: 0.7;
 }
+
 #launch-2026 .falling-stars {
   background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
   animation: fallingStars 6s linear infinite;
   opacity: 0.5;
 }
+
 @keyframes fallingStars {
   from { background-position: 0 0; }
   to { background-position: 0 1000px; }
 }
+
 .launch-title {
   position: absolute;
   top: 5%;
@@ -571,12 +577,54 @@
   }
 }
 
-.rocket { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); z-index: 3; width: 100px; transition: bottom 5s ease-out; }
-.rocket img { width: 100%; height: auto; }
-.flame { position: absolute; bottom:-25px; left:50%; transform:translateX(-50%); width:20px; height:60px; background: radial-gradient(ellipse at center, orange 0%, yellow 50%, transparent 80%); filter: blur(4px); opacity:0.8; animation: flame 0.3s infinite alternate; }
-@keyframes flame { 0% { height:45px; opacity:0.7; } 100% { height:60px; opacity:1; } }
-#animals { position: absolute; bottom: 15%; width: 100%; height: 150px; z-index: 4; }
-.animal { position: absolute; bottom: 0; width: 120px; transition: transform 2.5s ease-in-out; }
+.rocket {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 100px;
+  transition: bottom 5s ease-out;
+}
+
+.rocket img {
+  width: 100%;
+  height: auto;
+}
+
+.flame {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 60px;
+  background: radial-gradient(ellipse at center, orange 0%, yellow 50%, transparent 80%);
+  filter: blur(4px);
+  opacity: 0.8;
+  animation: flame 0.3s infinite alternate;
+}
+
+@keyframes flame {
+  0% { height: 45px; opacity: 0.7; }
+  100% { height: 60px; opacity: 1; }
+}
+
+#animals {
+  position: absolute;
+  bottom: 15%;
+  width: 100%;
+  height: 150px;
+  z-index: 4;
+}
+
+.animal {
+  position: absolute;
+  bottom: 0;
+  width: 120px;
+  transition: transform 2.5s ease-in-out;
+}
+
 .cat { right: 100%; transition: transform 2.5s ease-in-out; }
 .dog { left: 100%; transition: transform 2.5s ease-in-out; }
 
@@ -610,18 +658,11 @@
 }
 
 @keyframes lavaText {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 0 100%;
-  }
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
 }
 
 .hidden { display: none; }
-  
-
-
 </style>
   
 </head>
