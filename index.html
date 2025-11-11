@@ -498,8 +498,7 @@
 
 
 
-  
-/* Launch 2026 animation */
+  /* Launch 2026 animation */
 #launch-2026 {
   position: relative;
   width: 100%;
@@ -537,6 +536,8 @@
   z-index: 5;
   text-align: center;
 }
+
+/* 🔥 Красно-золотое свечение вокруг видео */
 .center-video {
   position: absolute;
   top: 50%;
@@ -546,14 +547,30 @@
   height: 180px;
   object-fit: cover;
   border-radius: 20px;
-  box-shadow: 0 0 25px rgba(255,0,0,0.7);
+  box-shadow: 
+    0 0 25px rgba(255, 0, 0, 0.7),
+    0 0 50px rgba(255, 215, 0, 0.6);
   z-index: 2;
   animation: pulseVideo 4s infinite alternate;
 }
+
 @keyframes pulseVideo {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+    box-shadow: 
+      0 0 20px rgba(255, 0, 0, 0.7),
+      0 0 40px rgba(255, 215, 0, 0.4);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+    box-shadow: 
+      0 0 35px rgba(255, 0, 0, 1),
+      0 0 70px rgba(255, 215, 0, 0.9);
+  }
 }
+
 .rocket { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); z-index: 3; width: 100px; transition: bottom 5s ease-out; }
 .rocket img { width: 100%; height: auto; }
 .flame { position: absolute; bottom:-25px; left:50%; transform:translateX(-50%); width:20px; height:60px; background: radial-gradient(ellipse at center, orange 0%, yellow 50%, transparent 80%); filter: blur(4px); opacity:0.8; animation: flame 0.3s infinite alternate; }
@@ -561,7 +578,7 @@
 #animals { position: absolute; bottom: 15%; width: 100%; height: 150px; z-index: 4; }
 .animal { position: absolute; bottom: 0; width: 120px; transition: transform 2.5s ease-in-out; }
 .cat { right: 100%; transition: transform 2.5s ease-in-out; }
-.dog { left: 100%;  transition: transform 2.5s ease-in-out; }
+.dog { left: 100%; transition: transform 2.5s ease-in-out; }
 .cado { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); font-size: 2.5rem; font-weight: bold; color: cyan; text-shadow: 0 0 10px white, 0 0 20px cyan; opacity: 0; z-index: 5; transition: opacity 1s ease; }
 .hidden { display: none; }
 
