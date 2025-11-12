@@ -497,7 +497,8 @@
   
 
 
-  #launch-2026 {
+  /* Основной блок */
+#launch-2026 {
   position: relative;
   width: 100%;
   height: 100vh;
@@ -514,106 +515,107 @@
   left: 0;
   pointer-events: none;
 }
+
 .stars {
   background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
   opacity: 0.7;
 }
+
 .falling-stars {
   background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
-  opacity: 0.5;
   animation: fallingStars 6s linear infinite;
+  opacity: 0.5;
 }
-@keyframes fallingStars { 0%{background-position:0 0;} 100%{background-position:0 1000px;} }
+
+@keyframes fallingStars {
+  from { background-position: 0 0; }
+  to { background-position: 0 1000px; }
+}
 
 /* Видео */
 .center-video {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 320px;
-  height: 180px;
-  border-radius: 20px;
-  object-fit: cover;
-  z-index: 2;
-  box-shadow: 0 0 25px rgba(255,0,0,0.7),0 0 50px rgba(255,215,0,0.6);
-  animation: pulseVideo 4s infinite alternate;
-}
-@keyframes pulseVideo {0%{transform:translate(-50%,-50%) scale(1);}100%{transform:translate(-50%,-50%) scale(1.05);}}
-
-/* Лава из видео вниз */
-.lava-stream {
-  position: absolute;
-  top: 60%; /* снизу видео */
+  top: 5%;
   left: 50%;
   transform: translateX(-50%);
-  width: 12px;
-  height: 0;
-  background: linear-gradient(to bottom,#fff2a0,#ffb347,#ff6600,#cc2200);
-  border-radius: 6px;
-  box-shadow: 0 0 20px rgba(255,120,0,0.9),0 0 40px rgba(255,60,0,0.6);
+  width: 50%;
+  max-width: 400px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(255,0,0,0.7), 0 0 50px rgba(255,215,0,0.6);
+  z-index: 2;
+  object-fit: cover;
+}
+
+/* Животные */
+#animals {
+  position: absolute;
+  top: calc(5% + 180px + 10px); /* под видео */
+  width: 100%;
+  height: 150px;
   z-index: 3;
-  animation: lavaDown 35s linear forwards;
+}
+
+.animal {
+  position: absolute;
+  bottom: 0;
+  width: 120px;
+  transition: transform 5s ease-in-out;
+}
+
+.cat { left: -130px; }
+.dog { right: -130px; }
+
+/* Лава */
+.lava-stream {
+  position: absolute;
+  top: calc(5% + 180px); /* снизу видео */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 0;
+  background: linear-gradient(to bottom, #fff2a0, #ffb347, #ff6600, #cc2200);
+  border-radius: 6px;
+  box-shadow: 0 0 20px rgba(255,120,0,0.9), 0 0 40px rgba(255,60,0,0.6);
+  z-index: 4;
+  animation: lavaDown 40s linear forwards;
 }
 
 /* Течение лавы вниз */
 @keyframes lavaDown {
-  0% { height:0; }
-  20% { height:150px; }
-  40% { height:300px; }
-  60% { height:450px; }
-  80% { height:550px; }
-  100% { height:600px; }
+  0% { height: 0; }
+  100% { height: 200px; } /* подбираем под высоту надписи */
 }
-
-/* Животные */
-#animals { position: absolute; bottom: 20%; width:100%; height:150px; z-index:4; }
-.animal { position:absolute; bottom:0; width:120px; transition: transform 3s ease-in-out; }
-.cat { left:-20%; }
-.dog { right:-20%; }
 
 /* Надпись CADO */
 .cado {
   position: absolute;
-  bottom:10%;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:3rem;
-  font-weight:bold;
-  color: transparent;
-  background: linear-gradient(to bottom,#ff4500,#ff8800,#ffd700);
-  background-clip: text;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  font-weight: bold;
+  color: #aaa; /* стекло видное */
+  background: linear-gradient(to top, transparent 0%, #ff6600 50%, #ff2200 100%);
   -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0.2;
+  z-index: 5;
+  transition: all 2s ease-in-out;
+}
+
+/* Дым после лавы */
+.lava-smoke {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(200,200,200,0.7), transparent);
+  filter: blur(12px);
   opacity: 0;
-  z-index:5;
-}
-
-/* Появление лавы в надписи */
-.cado.fill { animation: fillText 10s forwards; }
-@keyframes fillText {
-  0% { opacity:0; background-position:0 0; filter: blur(4px);}
-  50% { opacity:1; background-position:0 50%; filter: blur(2px);}
-  100% { opacity:1; background-position:0 100%; filter: blur(0);}
-}
-
-/* Остывание и дым */
-.cado.cool { color:#b0e0e6; filter: blur(1px); }
-.smoke {
-  position:absolute;
-  bottom:12%;
-  left:50%;
-  transform:translateX(-50%);
-  width:200px;
-  height:50px;
-  background: radial-gradient(ellipse at center, rgba(200,200,200,0.5), transparent);
-  opacity:0;
-  z-index:6;
-  animation: smokeRise 10s ease-out forwards;
-}
-@keyframes smokeRise {
-  0% { opacity:0; transform:translateX(-50%) translateY(0); }
-  50% { opacity:0.5; }
-  100% { opacity:1; transform:translateX(-50%) translateY(-50px);}
+  z-index: 4;
 }
 </style>
   
@@ -667,17 +669,14 @@
 
 
 <section id="launch-2026">
+  <!-- Звёзды -->
   <div class="stars"></div>
   <div class="falling-stars"></div>
 
-  <h1 class="launch-title">Launching<br>in 2026</h1>
-
+  <!-- Видео -->
   <video class="center-video" autoplay muted loop>
     <source src="InShot_20251109_161136016.mp4" type="video/mp4">
   </video>
-
-  <!-- Лава тонкой струёй -->
-  <div class="lava-stream"></div>
 
   <!-- Животные -->
   <div id="animals">
@@ -685,15 +684,15 @@
     <img src="a8a8adb7-1fcd-4584-be0a-566a0f681b67.jpeg" alt="Dog" class="animal dog">
   </div>
 
-  <!-- Надпись CADO -->
+  <!-- Лава -->
+  <div class="lava-stream"></div>
+
+  <!-- Надпись -->
   <div class="cado">CADO</div>
 
   <!-- Дым -->
-  <div class="smoke"></div>
+  <div class="lava-smoke"></div>
 </section>
-
-<script src="launch.js"></script>
-  
   
 
   
@@ -1215,30 +1214,40 @@
     window.addEventListener('load', () => {
   const cat = document.querySelector('.cat');
   const dog = document.querySelector('.dog');
+  const lava = document.querySelector('.lava-stream');
   const cado = document.querySelector('.cado');
-  const smoke = document.querySelector('.smoke');
+  const smoke = document.querySelector('.lava-smoke');
 
-  // Животные двигаются туда-сюда бесконечно
-  function moveAnimals() {
-    cat.style.transform = 'translateX(80vw)';
-    dog.style.transform = 'translateX(-80vw)';
+  // Анимация животных
+  function animalMove() {
+    cat.style.transform = 'translateX(60vw)';
+    dog.style.transform = 'translateX(-60vw)';
+
     setTimeout(() => {
       cat.style.transform = 'translateX(0)';
       dog.style.transform = 'translateX(0)';
-    }, 3000);
-    setTimeout(moveAnimals, 6000);
+    }, 5000);
   }
-  moveAnimals();
 
-  // Запуск анимации CADO из лавы
-  setTimeout(() => {
-    cado.classList.add('fill');
-    // После заполнения лавой остывает и появляется дым
+  setInterval(animalMove, 6000);
+  animalMove();
+
+  // Анимация наполнения надписи
+  lava.addEventListener('animationend', () => {
+    // Лава достигла надписи
+    cado.style.opacity = '1';
+    cado.style.color = '#ff6600';
+    
+    // Симуляция остывания и дыма
     setTimeout(() => {
-      cado.classList.add('cool');
-      smoke.style.opacity = 1;
-    }, 12000); // после 12 секунд
-  }, 5000); // через 5 секунд после загрузки
+      cado.style.color = '#b0f0f0'; // Adamant цвет
+      smoke.style.opacity = '0.8';
+    }, 2000);
+
+    setTimeout(() => {
+      smoke.style.opacity = '0';
+    }, 10000);
+  });
 });
   </script>
 </body>
