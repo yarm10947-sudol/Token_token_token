@@ -592,78 +592,63 @@
 .animal { position:absolute; bottom:0; width:120px; transition: transform 2.5s ease-in-out; }
 .cat { right:100%; } .dog { left:100%; }
 
-/* ---- realistic lava (drops falling down) ---- */
-
-/* позиционируем контейнер прямо под видео.
-   Если у тебя видео 320px высотой и центрированно, top: calc(50% + 100px) ставит начало под видео.
-   Подстрой при необходимости (увеличь/уменьши 100px). */
+/* ======== Реалистичное течение лавы ======== */
 .lava-container {
   position: absolute;
   left: 50%;
-  top: calc(50% + 100px); /* <- если видео другая высота, подкорректируй */
+  top: calc(50% + 100px); /* под видео */
   transform: translateX(-50%);
-  width: 360px;            /* ширина потока; подстрой под видео */
-  height: 260px;           /* область, по которой течёт лава */
+  width: 380px;      /* ширина потока */
+  height: 320px;     /* высота */
+  overflow: hidden;
+  z-index: 3;
   pointer-events: none;
-  z-index: 3;              /* под надписью (надпись z-index:5) */
-  overflow: visible;
 }
 
-/* базовый вид капли (плавленый металл) */
-.lava-drop {
+/* Основной поток */
+.lava-flow {
   position: absolute;
-  top: -40px;              /* старт чуть выше контейнера, чтобы капля "падала" вниз */
-  height: 28px;
-  border-radius: 50%;
-  background: linear-gradient(180deg, #ffb150 0%, #ff6a00 45%, #ff2a00 100%);
-  filter: blur(4px) saturate(1.2);
-  box-shadow: 0 6px 18px rgba(255,80,0,0.35), inset 0 -8px 18px rgba(255,220,120,0.18);
-  transform-origin: center top;
-  opacity: 0;
-  animation-fill-mode: forwards;
-  will-change: transform, top, opacity;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 300%;
+  background: linear-gradient(
+    to bottom,
+    #ffcf66 0%,
+    #ff7b00 25%,
+    #ff4500 50%,
+    #ff2200 75%,
+    #d10000 100%
+  );
+  background-size: 100% 200%;
+  filter: blur(6px) brightness(1.2);
+  animation: lavaMove 6s linear infinite, lavaWave 2.8s ease-in-out infinite;
+  opacity: 0.95;
+  mix-blend-mode: screen;
+  border-radius: 50% 50% 0 0;
 }
 
-/* расположение, ширина и задержки для реалистичности */
-.drop1 { left: 4%;  width: 12%; animation: dropFall 2.8s 0.0s cubic-bezier(.2,.9,.2,1) forwards; }
-.drop2 { left: 22%; width: 16%; animation: dropFall 3.1s 0.25s cubic-bezier(.2,.9,.2,1) forwards; }
-.drop3 { left: 45%; width: 14%; animation: dropFall 2.9s 0.45s cubic-bezier(.2,.9,.2,1) forwards; }
-.drop4 { left: 70%; width: 11%; animation: dropFall 3.3s 0.6s cubic-bezier(.2,.9,.2,1) forwards; }
+/* Эффект "струящегося" движения */
+@keyframes lavaMove {
+  from { transform: translateY(-30%); }
+  to   { transform: translateY(10%); }
+}
 
-/* ключевая анимация: капля падает, растягивается/сплющивается, растекается и исчезает */
-@keyframes dropFall {
-  0% {
-    top: -40px;
-    transform: scaleX(1) scaleY(1);
-    opacity: 0;
-    box-shadow: 0 6px 18px rgba(255,80,0,0.25);
+/* Волновое колебание для живого эффекта */
+@keyframes lavaWave {
+  0%, 100% {
+    clip-path: polygon(
+      0% 10%, 10% 12%, 20% 15%, 30% 12%, 40% 14%,
+      50% 12%, 60% 14%, 70% 12%, 80% 15%, 90% 13%, 100% 10%,
+      100% 100%, 0% 100%
+    );
   }
-  10% {
-    opacity: 1;
-  }
-  45% {
-    top: 40%;
-    transform: scaleX(0.95) scaleY(1.15); /* струя удлиняется */
-    box-shadow: 0 14px 30px rgba(255,70,0,0.35);
-  }
-  70% {
-    top: 70%;
-    transform: scaleX(1.1) scaleY(0.9); /* начинает растекаться в ширину */
-    height: 36px;
-  }
-  90% {
-    top: 88%;
-    transform: scaleX(1.6) scaleY(0.6); /* широкая тонкая лужа */
-    height: 10px;
-    opacity: 0.9;
-    box-shadow: 0 30px 40px rgba(255,50,0,0.25);
-  }
-  100% {
-    top: 100%;
-    transform: scaleX(1.8) scaleY(0.45);
-    height: 6px;
-    opacity: 0;
-    box-shadow: 0 40px 60px rgba(255,30,0,0.12);
+  50% {
+    clip-path: polygon(
+      0% 8%, 10% 10%, 20% 12%, 30% 9%, 40% 11%,
+      50% 9%, 60% 11%, 70% 9%, 80% 12%, 90% 10%, 100% 8%,
+      100% 100%, 0% 100%
+    );
   }
 }
 
@@ -751,10 +736,7 @@
 
   <!-- Контейнер лавы -->
   <div class="lava-container">
-    <div class="lava-drop drop1"></div>
-    <div class="lava-drop drop2"></div>
-    <div class="lava-drop drop3"></div>
-    <div class="lava-drop drop4"></div>
+    <div class="lava-flow"></div>
   </div>
 
   <!-- Надпись CADO -->
