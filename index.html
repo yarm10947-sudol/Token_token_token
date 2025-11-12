@@ -592,74 +592,100 @@
 .animal { position:absolute; bottom:0; width:120px; transition: transform 2.5s ease-in-out; }
 .cat { right:100%; } .dog { left:100%; }
 
-/* ===== Лава (реалистичное течение) ===== */
+/* ---- realistic lava (drops falling down) ---- */
+
+/* позиционируем контейнер прямо под видео.
+   Если у тебя видео 320px высотой и центрированно, top: calc(50% + 100px) ставит начало под видео.
+   Подстрой при необходимости (увеличь/уменьши 100px). */
 .lava-container {
   position: absolute;
-  top: 15%; /* начинается сверху экрана, чтобы было видно течение вниз */
   left: 50%;
+  top: calc(50% + 100px); /* <- если видео другая высота, подкорректируй */
   transform: translateX(-50%);
-  width: 60%;
-  height: 70%;
-  z-index: 3;
+  width: 360px;            /* ширина потока; подстрой под видео */
+  height: 260px;           /* область, по которой течёт лава */
+  pointer-events: none;
+  z-index: 3;              /* под надписью (надпись z-index:5) */
   overflow: visible;
 }
 
+/* базовый вид капли (плавленый металл) */
 .lava-drop {
   position: absolute;
-  top: 0;
-  background: linear-gradient(to bottom, #ff4500, #ff8800, #ffd700);
-  border-radius: 50% 50% 30% 30%;
-  filter: blur(6px);
-  opacity: 0.85;
-  animation: lavaFlow 3s linear infinite;
+  top: -40px;              /* старт чуть выше контейнера, чтобы капля "падала" вниз */
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffb150 0%, #ff6a00 45%, #ff2a00 100%);
+  filter: blur(4px) saturate(1.2);
+  box-shadow: 0 6px 18px rgba(255,80,0,0.35), inset 0 -8px 18px rgba(255,220,120,0.18);
+  transform-origin: center top;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  will-change: transform, top, opacity;
 }
 
-/* Разные размеры и задержки для реалистичности */
-.drop1 { left: 5%; width: 10%; height: 10%; animation-delay: 0s; }
-.drop2 { left: 25%; width: 12%; height: 12%; animation-delay: 0.5s; }
-.drop3 { left: 50%; width: 9%; height: 9%; animation-delay: 1s; }
-.drop4 { left: 70%; width: 11%; height: 11%; animation-delay: 1.5s; }
+/* расположение, ширина и задержки для реалистичности */
+.drop1 { left: 4%;  width: 12%; animation: dropFall 2.8s 0.0s cubic-bezier(.2,.9,.2,1) forwards; }
+.drop2 { left: 22%; width: 16%; animation: dropFall 3.1s 0.25s cubic-bezier(.2,.9,.2,1) forwards; }
+.drop3 { left: 45%; width: 14%; animation: dropFall 2.9s 0.45s cubic-bezier(.2,.9,.2,1) forwards; }
+.drop4 { left: 70%; width: 11%; animation: dropFall 3.3s 0.6s cubic-bezier(.2,.9,.2,1) forwards; }
 
-@keyframes lavaFlow {
+/* ключевая анимация: капля падает, растягивается/сплющивается, растекается и исчезает */
+@keyframes dropFall {
   0% {
-    transform: translateY(0) scaleX(1);
-    opacity: 0.9;
+    top: -40px;
+    transform: scaleX(1) scaleY(1);
+    opacity: 0;
+    box-shadow: 0 6px 18px rgba(255,80,0,0.25);
   }
-  40% {
-    transform: translateY(50vh) scaleX(1.05);
-    opacity: 0.8;
+  10% {
+    opacity: 1;
+  }
+  45% {
+    top: 40%;
+    transform: scaleX(0.95) scaleY(1.15); /* струя удлиняется */
+    box-shadow: 0 14px 30px rgba(255,70,0,0.35);
   }
   70% {
-    transform: translateY(70vh) scaleX(0.95);
-    opacity: 0.6;
+    top: 70%;
+    transform: scaleX(1.1) scaleY(0.9); /* начинает растекаться в ширину */
+    height: 36px;
+  }
+  90% {
+    top: 88%;
+    transform: scaleX(1.6) scaleY(0.6); /* широкая тонкая лужа */
+    height: 10px;
+    opacity: 0.9;
+    box-shadow: 0 30px 40px rgba(255,50,0,0.25);
   }
   100% {
-    transform: translateY(100vh) scaleX(1);
+    top: 100%;
+    transform: scaleX(1.8) scaleY(0.45);
+    height: 6px;
     opacity: 0;
+    box-shadow: 0 40px 60px rgba(255,30,0,0.12);
   }
 }
 
-/* Надпись CADO */
+/* плавная "подсветка" на текст CADO при появлении */
 .cado {
   position: absolute;
-  bottom: 5%;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:3rem;
-  font-weight:bold;
-  color:transparent;
-  background: linear-gradient(to bottom,#ff0000,#ff8800,#ffd700,#ff0000);
-  background-size:100% 200%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  opacity:0;
-  z-index:5;
-  transition: opacity 0.5s ease;
+  bottom: 5%;               /* оставляем как у тебя */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  font-weight: bold;
+  color: transparent;
+  background: linear-gradient(to bottom, #ff0000, #ff8800, #ffd700, #ff0000);
+  background-clip: text;
+  -webkit-background-clip: text;
+  opacity: 0;
+  z-index: 5;
+  transition: opacity .5s ease;
 }
+.cado.show { opacity: 1; animation: lavaText 1.2s forwards; }
+@keyframes lavaText { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
 
-.cado.show { opacity:1; animation: lavaText 1.5s forwards; }
-
-@keyframes lavaText { 0% { background-position:0 0; } 100% { background-position:0 100%; } }
 
 .hidden { display:none; }
 </style>
@@ -1270,41 +1296,50 @@ function launchSequence() {
   const cat = document.querySelector('.cat');
   const dog = document.querySelector('.dog');
   const cado = document.querySelector('.cado');
-  const lavaDrops = document.querySelectorAll('.lava-drop');
+  const drops = document.querySelectorAll('.lava-drop');
 
-  // начальные позиции у краёв
+  // сброс
   rocket.style.bottom = '5%';
   cat.style.transform = 'translateX(0)';
   dog.style.transform = 'translateX(0)';
   cado.classList.remove('show');
   cado.classList.add('hidden');
 
-  lavaDrops.forEach(drop => {
-    drop.style.height = '0';
-    drop.style.opacity = '0';
+  drops.forEach(d => {
+    d.style.animation = 'none';
+    // force reflow to restart animation
+    void d.offsetWidth;
   });
 
-  // взлёт ракеты и движение животных к центру
+  // старт движения животных
   setTimeout(() => {
     rocket.style.bottom = '120%';
     cat.style.transform = 'translateX(45vw)';
     dog.style.transform = 'translateX(-60vw)';
   }, 100);
 
-  // течение лавы и появление CADO
+  // запуск капаний (каждая drop имеет анимацию с задержкой в CSS)
   setTimeout(() => {
-    lavaDrops.forEach(drop => drop.style.animationPlayState = 'running');
+    drops.forEach(d => {
+      // re-assign animation to restart (duration + delay preserved by CSS)
+      d.style.animation = ''; // let CSS animation run (we cleared it earlier)
+    });
+  }, 600);
+
+  // показать текст после первых падений (подбери тайминги по ощущению)
+  setTimeout(() => {
     cado.classList.remove('hidden');
     cado.classList.add('show');
-  }, 2000);
+  }, 2600);
 
-  // возвращение животных к краям
+  // сброс и повтор
   setTimeout(() => {
     cat.style.transform = 'translateX(0)';
     dog.style.transform = 'translateX(0)';
-  }, 5500);
+    cado.classList.remove('show');
+    cado.classList.add('hidden');
+  }, 5600);
 
-  // повтор
   setTimeout(launchSequence, 8000);
 }
 
