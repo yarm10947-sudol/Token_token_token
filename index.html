@@ -497,7 +497,7 @@
   
 
 
-/* Основной блок */
+/* ===== Основной блок ===== */
 #launch-2026 {
   position: relative;
   width: 100%;
@@ -505,6 +505,7 @@
   overflow: hidden;
 }
 
+/* ===== Звёзды ===== */
 #launch-2026 .stars,
 #launch-2026 .falling-stars {
   position: absolute;
@@ -531,18 +532,7 @@
   to { background-position: 0 1000px; }
 }
 
-.launch-title {
-  position: absolute;
-  top: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  text-shadow: 0 0 15px white, 0 0 30px cyan;
-  z-index: 5;
-  text-align: center;
-}
-
-/* Видео и свечение */
+/* ===== Видео и свечение ===== */
 .center-video {
   position: absolute;
   top: 50%;
@@ -562,7 +552,7 @@
   100% { transform: translate(-50%, -50%) scale(1.1); opacity:1; }
 }
 
-/* Ракета */
+/* ===== Ракета ===== */
 .rocket {
   position: absolute;
   bottom: 5%;
@@ -573,6 +563,7 @@
   transition: bottom 5s ease-out;
 }
 .rocket img { width: 100%; }
+
 .flame {
   position: absolute;
   bottom:-25px;
@@ -587,146 +578,78 @@
 }
 @keyframes flame { 0% { height:45px; } 100% { height:60px; } }
 
-/* Животные */
+/* ===== Животные ===== */
 #animals { position: absolute; bottom: 15%; width:100%; height:150px; z-index:4; }
 .animal { position:absolute; bottom:0; width:120px; transition: transform 2.5s ease-in-out; }
 .cat { right:100%; } .dog { left:100%; }
 
-/* ======== Реалистичное течение лавы ======== */
+/* ===== Контейнер лавы ===== */
 .lava-container {
   position: absolute;
+  top: 50%;
   left: 50%;
-  top: calc(50% + 100px); /* под видео */
   transform: translateX(-50%);
-  width: 380px;      /* ширина потока */
-  height: 320px;     /* высота */
-  overflow: hidden;
-  z-index: 3;
+  width: 20px;   /* исходная толщина, потом расширяется */
+  height: 300px;
+  z-index: 4;
   pointer-events: none;
 }
 
-/* Основной поток */
+/* ===== Потоки лавы ===== */
 .lava-flow {
   position: absolute;
-  top: -100%;
-  left: 0;
-  width: 100%;
-  height: 300%;
-  background: linear-gradient(
-    to bottom,
-    #ffcf66 0%,
-    #ff7b00 25%,
-    #ff4500 50%,
-    #ff2200 75%,
-    #d10000 100%
-  );
-  background-size: 100% 200%;
-  filter: blur(6px) brightness(1.2);
-  animation: lavaMove 6s linear infinite, lavaWave 2.8s ease-in-out infinite;
-  opacity: 0.95;
-  mix-blend-mode: screen;
-  border-radius: 50% 50% 0 0;
+  bottom: 0;
+  width: 6px;
+  height: 0;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #fff2a0, #ffb347, #ff6600, #cc2200);
+  box-shadow: 0 0 15px rgba(255,140,0,0.9), 0 0 25px rgba(255,60,0,0.6);
+  animation: flowDown 6s ease-in-out forwards, glowPulse 2.5s infinite alternate, waveMotion 3s ease-in-out infinite;
 }
 
-/* Эффект "струящегося" движения */
-@keyframes lavaMove {
-  from { transform: translateY(-30%); }
-  to   { transform: translateY(10%); }
+/* Разветвление */
+.lava1 { left: 0%; transform-origin: bottom; }
+.lava2 { left: -10%; width: 4px; animation-delay: 0.2s; transform-origin: bottom; }
+.lava3 { left: 10%; width: 5px; animation-delay: 0.4s; transform-origin: bottom; }
+
+/* ===== Анимация потока ===== */
+@keyframes flowDown {
+  0%   { height: 0; opacity: 0.6; transform: scaleX(1); }
+  40%  { height: 60%; opacity: 1; transform: scaleX(1.2); }
+  70%  { height: 80%; opacity: 1; transform: scaleX(0.9); }
+  100% { height: 0; opacity: 0; transform: scaleX(1); }
 }
 
-/* Волновое колебание для живого эффекта */
-@keyframes lavaWave {
-  0%, 100% {
-    clip-path: polygon(
-      0% 10%, 10% 12%, 20% 15%, 30% 12%, 40% 14%,
-      50% 12%, 60% 14%, 70% 12%, 80% 15%, 90% 13%, 100% 10%,
-      100% 100%, 0% 100%
-    );
-  }
-  50% {
-    clip-path: polygon(
-      0% 8%, 10% 10%, 20% 12%, 30% 9%, 40% 11%,
-      50% 9%, 60% 11%, 70% 9%, 80% 12%, 90% 10%, 100% 8%,
-      100% 100%, 0% 100%
-    );
-  }
+/* ===== Пульсация ===== */
+@keyframes glowPulse {
+  0%,100% { filter: brightness(1) blur(1px); }
+  50%      { filter: brightness(1.6) blur(2px); }
 }
 
-/* плавная "подсветка" на текст CADO при появлении */
-.cado {
+/* ===== Волновое движение ===== */
+@keyframes waveMotion {
+  0%,100% { transform: rotate(0deg); }
+  25%     { transform: rotate(1deg); }
+  50%     { transform: rotate(-1deg); }
+  75%     { transform: rotate(1deg); }
+}
+
+/* ===== Надпись CADO ===== */
+.lava-burn-text {
   position: absolute;
-  bottom: 5%;               /* оставляем как у тебя */
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   font-size: 3rem;
   font-weight: bold;
-  color: transparent;
-  background: linear-gradient(to bottom, #ff0000, #ff8800, #ffd700, #ff0000);
-  background-clip: text;
-  -webkit-background-clip: text;
-  opacity: 0;
-  z-index: 5;
-  transition: opacity .5s ease;
-}
-.cado.show { opacity: 1; animation: lavaText 1.2s forwards; }
-@keyframes lavaText { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
-
-
-.hidden { display:none; }
-  /* Тонкая струя расплавленного металла */
-.lava-stream {
-  position: absolute;
-  top: 50%;            /* начало из центра видео */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 10px;          /* толщина струи */
-  height: 0;
-  background: linear-gradient(to bottom, #fff2a0, #ffb347, #ff6600, #cc2200);
-  border-radius: 6px;
-  box-shadow:
-    0 0 20px rgba(255,120,0,0.9),
-    0 0 40px rgba(255,60,0,0.6);
-  z-index: 4;
-  animation:
-    lavaFlowDown 3s ease-in-out forwards,
-    lavaGlow 2.5s infinite alternate,
-    lavaWave 3s ease-in-out infinite;
-}
-
-@keyframes lavaFlowDown {
-  0%   { height: 0; opacity: 0.8; }
-  60%  { height: 65%; opacity: 1; }
-  100% { height: 0; opacity: 0; }
-}
-
-@keyframes lavaGlow {
-  0%   { filter: brightness(1) blur(1px); }
-  100% { filter: brightness(1.6) blur(2px); }
-}
-
-@keyframes lavaWave {
-  0%,100% { transform: translateX(-50%) rotate(0.4deg); }
-  50%     { transform: translateX(-50%) rotate(-0.4deg); }
-}
-
-/* Эффект выжигания надписи CADO */
-.lava-burn-text {
-  position: absolute;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 120px;
-  font-weight: 900;
   font-family: 'Orbitron', sans-serif;
   color: transparent;
   background: linear-gradient(to bottom, #ffeb8a, #ff7b00, #550000);
   -webkit-background-clip: text;
   background-clip: text;
-  text-shadow:
-    0 0 40px rgba(255,140,0,0.9),
-    0 0 80px rgba(255,60,0,0.8),
-    0 0 100px rgba(255,40,0,0.7);
+  text-shadow: 0 0 40px rgba(255,140,0,0.9), 0 0 80px rgba(255,60,0,0.8);
   opacity: 0;
+  z-index: 5;
   animation: burnText 3s ease-out 2s forwards, flicker 2s infinite alternate;
 }
 
@@ -801,9 +724,15 @@
     <source src="InShot_20251109_161136016.mp4" type="video/mp4">
   </video>
 
-  <div class="lava-stream"></div>
-<div class="lava-burn-text">CADO</div>
-  
+  <!-- Контейнер лавы -->
+  <div class="lava-container">
+    <div class="lava-flow lava1"></div>
+    <div class="lava-flow lava2"></div>
+    <div class="lava-flow lava3"></div>
+  </div>
+
+  <!-- Надпись CADO -->
+  <div class="lava-burn-text">CADO</div>
 
   <!-- Ракета -->
   <div class="rocket">
@@ -1336,56 +1265,46 @@
   
 
   <script>
-function launchSequence() {
+    function launchSequence() {
   const rocket = document.querySelector('.rocket');
   const cat = document.querySelector('.cat');
   const dog = document.querySelector('.dog');
-  const cado = document.querySelector('.cado');
-  const drops = document.querySelectorAll('.lava-drop');
+  const lavaStreams = document.querySelectorAll('.lava-flow');
+  const cado = document.querySelector('.lava-burn-text');
 
   // сброс
   rocket.style.bottom = '5%';
   cat.style.transform = 'translateX(0)';
   dog.style.transform = 'translateX(0)';
-  cado.classList.remove('show');
-  cado.classList.add('hidden');
+  lavaStreams.forEach(l => { l.style.height = '0'; l.style.animation = 'none'; });
+  cado.style.opacity = 0;
 
-  drops.forEach(d => {
-    d.style.animation = 'none';
-    // force reflow to restart animation
-    void d.offsetWidth;
-  });
-
-  // старт движения животных
+  // движение ракеты и животных
   setTimeout(() => {
     rocket.style.bottom = '120%';
     cat.style.transform = 'translateX(45vw)';
     dog.style.transform = 'translateX(-60vw)';
   }, 100);
 
-  // запуск капаний (каждая drop имеет анимацию с задержкой в CSS)
+  // запуск лавы
   setTimeout(() => {
-    drops.forEach(d => {
-      // re-assign animation to restart (duration + delay preserved by CSS)
-      d.style.animation = ''; // let CSS animation run (we cleared it earlier)
+    lavaStreams.forEach(l => {
+      l.style.animation = 'flowDown 6s ease-in-out forwards, glowPulse 2.5s infinite alternate, waveMotion 3s ease-in-out infinite';
     });
-  }, 600);
+  }, 500);
 
-  // показать текст после первых падений (подбери тайминги по ощущению)
-  setTimeout(() => {
-    cado.classList.remove('hidden');
-    cado.classList.add('show');
-  }, 2600);
+  // показать надпись CADO
+  setTimeout(() => { cado.style.opacity = 1; }, 2600);
 
   // сброс и повтор
   setTimeout(() => {
     cat.style.transform = 'translateX(0)';
     dog.style.transform = 'translateX(0)';
-    cado.classList.remove('show');
-    cado.classList.add('hidden');
-  }, 5600);
+    lavaStreams.forEach(l => { l.style.height = '0'; l.style.animation = 'none'; });
+    cado.style.opacity = 0;
+  }, 8000);
 
-  setTimeout(launchSequence, 8000);
+  setTimeout(launchSequence, 8500);
 }
 
 window.addEventListener('load', launchSequence);
