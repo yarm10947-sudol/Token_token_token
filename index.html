@@ -511,13 +511,14 @@ body {
 }
 
 .center-video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;  /* видео полностью видно, не обрезается */
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1.2); /* scale = «отдаление» */
+  width: auto;          /* авто, чтобы сохранить пропорции */
+  height: 100%;         /* чтобы по высоте занимало весь блок */
+  min-width: 100%;      /* чтобы по ширине перекрывало блок */
+  transform: translate(-50%, -50%) scale(1.1); /* немного «отдаляем» */
+  object-fit: cover;    /* блок полностью перекрыт */
   filter: brightness(0.95);
   z-index: 1;
 }
