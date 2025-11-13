@@ -497,140 +497,97 @@
   
 
 
-/* Основной блок */
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+}
+
 #launch-2026 {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: black;
-}
-
-/* Звезды */
-#launch-2026 .stars {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0; left: 0;
-  background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
-  opacity: 0.7;
-}
-
-#launch-2026 .falling-stars {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0; left: 0;
-  background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
-  animation: fallingStars 6s linear infinite;
-  opacity: 0.5;
-}
-
-@keyframes fallingStars {
-  from { background-position: 0 0; }
-  to { background-position: 0 1000px; }
 }
 
 /* Видео */
 .center-video {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 320px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 0 25px rgba(255,0,0,0.7), 0 0 50px rgba(255,215,0,0.6);
-  z-index: 2;
-}
-
-/* Животные */
-#animals {
-  position: absolute;
-  bottom: 15%;
   width: 100%;
-  height: 150px;
-  z-index: 4;
-}
-.animal {
+  height: 100%;
+  object-fit: cover;
   position: absolute;
-  bottom: 0;
-  width: 120px;
-  transition: transform 2.5s ease-in-out;
+  top: 0;
+  left: 0;
 }
-.cat { left: -15%; }
-.dog { right: -15%; }
 
-/* Лава */
-.lava-container {
+/* 🔥 Огненная надпись CADO */
+.cado-fire {
   position: absolute;
-  width: 10px;
-  height: 100px;
-  bottom: 50%;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
-  overflow: visible;
+  font-size: 120px;
+  font-weight: 900;
+  font-family: Arial, sans-serif;
+  letter-spacing: 6px;
+  color: #ff3b00;
+
+  text-shadow:
+    0 0 20px #ff3000,
+    0 0 40px #ff6600,
+    0 0 70px #ff9d00,
+    0 0 120px #ffb300;
+
+  animation: firePulse 3s infinite alternate;
   z-index: 3;
 }
 
-.lava-flow {
+@keyframes firePulse {
+  0% { text-shadow: 0 0 20px #ff2b00, 0 0 40px #ff7600; }
+  100% { text-shadow: 0 0 40px #ff5500, 0 0 90px #ffaa00; }
+}
+
+/* 🐱🐶 Животные */
+#animals {
   position: absolute;
-  bottom: 0;
   width: 100%;
-  height: 0;
-  background: linear-gradient(to bottom, #ffcf66, #ff7b00, #ff4500);
-  border-radius: 10px;
-  filter: blur(6px) brightness(1.2);
-  animation: lavaFlowDown 15s linear forwards;
+  bottom: 18%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 3;
 }
 
-/* Лава течет вниз */
-@keyframes lavaFlowDown {
-  0%   { height: 0; opacity: 0.8; }
-  80%  { height: 100px; opacity: 1; }
-  100% { height: 100px; opacity: 1; }
+.animal {
+  width: 200px;
+  transition: transform 6s ease-in-out;
 }
 
-/* Надпись CADO */
-.cado {
+/* 🔥 Лавовые шарики (капли) */
+#lava-drops {
   position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 3rem;
-  font-weight: bold;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  background: linear-gradient(to bottom, #a3c1d1, #7ea7b9);
-  text-shadow: 0 0 8px rgba(255,255,255,0.5);
-  z-index: 5;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
 }
 
-/* Эффект заполнения лавой */
-.cado.lava-fill {
-  background: linear-gradient(to bottom, #ffcf66, #ff7b00, #ff4500);
-  animation: fillText 15s linear forwards;
+.lava-drop {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffec99 0%, #ff6600 60%, #b30000 100%);
+  box-shadow: 0 0 10px #ff4500, 0 0 20px #ff2200;
+  opacity: 0.9;
+  animation: fall linear;
 }
 
-@keyframes fillText {
-  0% { background-position: 0 0; opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 1; background-position: 0 100%; }
+@keyframes fall {
+  from { transform: translateY(-20px); }
+  to   { transform: translateY(120vh); }
 }
-
-/* Остывание */
-.cado.cool-down {
-  background: linear-gradient(to bottom, #a3c1d1, #7ea7b9);
-  filter: blur(1px);
-  animation: fadeSmoke 5s forwards;
-}
-
-@keyframes fadeSmoke {
-  0% { opacity: 1; text-shadow: 0 0 20px rgba(255,120,0,0.7); }
-  100% { opacity: 1; text-shadow: 0 0 10px rgba(0,0,0,0.3); }
-}
-  
 </style>
   
 </head>
@@ -683,28 +640,23 @@
 
 
 <section id="launch-2026">
-  <div class="stars"></div>
-  <div class="falling-stars"></div>
-
-  <h1 class="launch-title">Launching<br>in 2026</h1>
 
   <video class="center-video" autoplay muted loop>
     <source src="InShot_20251109_161136016.mp4" type="video/mp4">
   </video>
 
-  <!-- Лава, которая течет вниз -->
-  <div class="lava-container">
-    <div class="lava-flow"></div>
-  </div>
-
-  <!-- Надпись под животными -->
-  <div class="cado">CADO</div>
+  <!-- Падающие лавовые шарики -->
+  <div id="lava-drops"></div>
 
   <!-- Животные -->
   <div id="animals">
-    <img src="40b1e017-cd54-4f7b-8f20-5faaf22c659b.jpeg" alt="Cat" class="animal cat">
-    <img src="a8a8adb7-1fcd-4584-be0a-566a0f681b67.jpeg" alt="Dog" class="animal dog">
+    <img src="40b1e017-cd54-4f7b-8f20-5faaf22c659b.jpeg" class="animal cat">
+    <img src="a8a8adb7-1fcd-4584-be0a-566a0f681b67.jpeg" class="animal dog">
   </div>
+
+  <!-- Лавовая надпись -->
+  <h1 class="cado-fire">CADO</h1>
+
 </section>
   
 
@@ -1222,48 +1174,48 @@
   
 
   <script>
-    window.addEventListener('load', () => {
-  const lava = document.querySelector('.lava-flow');
-  const cado = document.querySelector('.cado');
+    // Движение животных
+function moveAnimals() {
   const cat = document.querySelector('.cat');
   const dog = document.querySelector('.dog');
 
-  function animateSequence() {
-    // Животные к центру и обратно
-    cat.style.transform = 'translateX(45vw)';
-    dog.style.transform = 'translateX(-45vw)';
+  // Идут почти к центру (оставляя пустое место для CADO)
+  cat.style.transform = 'translateX(40vw)';
+  dog.style.transform = 'translateX(-40vw)';
 
-    setTimeout(() => {
-      cat.style.transform = 'translateX(0)';
-      dog.style.transform = 'translateX(0)';
-    }, 5000); // 5 секунд туда и обратно
+  // Возвращаются назад
+  setTimeout(() => {
+    cat.style.transform = 'translateX(0)';
+    dog.style.transform = 'translateX(0)';
+  }, 6000);
 
-    // Лава наполняет надпись
-    cado.classList.remove('cool-down');
-    cado.classList.add('lava-fill');
+  setTimeout(moveAnimals, 12000);
+}
+moveAnimals();
 
-    // После заполнения - остывание
-    setTimeout(() => {
-      cado.classList.remove('lava-fill');
-      cado.classList.add('cool-down');
-    }, 15000); // 15 секунд на заполнение
 
-    // Сброс для следующего цикла
-    setTimeout(() => {
-      lava.style.height = '0';
-      cado.classList.remove('cool-down');
-      // Перезапуск анимации лавы
-      lava.style.animation = 'none';
-      void lava.offsetWidth; // force reflow
-      lava.style.animation = 'lavaFlowDown 15s linear forwards';
-    }, 22000);
+// Создание лавовых шариков
+function createLavaDrops() {
+  const container = document.getElementById('lava-drops');
 
-    // Перезапуск цикла
-    setTimeout(animateSequence, 23000);
+  for (let i = 0; i < 12; i++) {
+    const drop = document.createElement('div');
+    drop.classList.add('lava-drop');
+
+    drop.style.left = Math.random() * 100 + 'vw';
+    drop.style.animationDuration = (3 + Math.random() * 3) + 's';
+    drop.style.animationDelay = Math.random() * 2 + 's';
+
+    container.appendChild(drop);
+
+    // удаляем после падения
+    setTimeout(() => drop.remove(), 6000);
   }
 
-  animateSequence();
-});
+  setTimeout(createLavaDrops, 1000);
+}
+
+createLavaDrops();
   </script>
 </body>
 </html>
