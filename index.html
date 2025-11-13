@@ -510,14 +510,14 @@ body {
   overflow: hidden;
 }
 
-/* Видео — на весь экран, но ОТДАЛЕНО на 15% */
 .center-video {
-  width: 115%;      /* увеличили */
-  height: 115%;     /* увеличили */
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;  /* видео полностью видно, не обрезается */
   position: absolute;
-  top: -7%;
-  left: -7%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2); /* scale = «отдаление» */
   filter: brightness(0.95);
   z-index: 1;
 }
