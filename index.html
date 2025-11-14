@@ -514,11 +514,10 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: auto;          /* авто, чтобы сохранить пропорции */
-  height: 100%;         /* чтобы по высоте занимало весь блок */
-  min-width: 100%;      /* чтобы по ширине перекрывало блок */
-  transform: translate(-50%, -50%) scale(0.40); /* немного «отдаляем» */
-  object-fit: cover;    /* блок полностью перекрыт */
+  width: 100%;           /* ширина блока */
+  height: 100%;          /* высота блока */
+  object-fit: contain;    /* всё видео помещается, без обрезки */
+  transform: translate(-50%, -50%) scale(1.0); /* масштабируем при желании */
   filter: brightness(0.95);
   z-index: 1;
 }
