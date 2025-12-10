@@ -554,36 +554,39 @@ body {
 
 
   
-  /* Блок */
-.marquee {
+  .marquee {
   width: 100%;
-  height: 160px; /* высота блока — регулируй */
   overflow: hidden;
-  border-radius: 20px; /* скругление блока */
-  border: 2px solid #ffffff20; /* лёгкая рамка */
-  background: #0f0f0f; /* фон блока */
   padding: 10px 0;
-  box-sizing: border-box;
+  border-radius: 20px;
+  background: #0f0f0f;
+  border: 2px solid #ffffff20;
 }
 
-/* Лента */
+/* Трек — ДВИГАЕТ всю ленту */
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
+/* Внутренний блок с картинками */
 .marquee-content {
   display: flex;
   gap: 20px;
-  animation: scroll 12s linear infinite; /* скорость — уменьши число чтобы сделать быстрее */
 }
 
-/* Картинки */
+/* Картинки — квадратные */
 .marquee-content img {
-  width: 120px;      /* КВАДРАТ */
-  height: 120px;     /* КВАДРАТ */
-  object-fit: cover; /* чтобы центр красиво обрезался */
-  border-radius: 12px; /* если нужно круглые — поставь 50% */
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
   flex-shrink: 0;
 }
 
-/* Анимация */
-@keyframes scroll {
+/* Анимация на половину длины — ВАЖНО */
+@keyframes marquee {
   0% {
     transform: translateX(0);
   }
@@ -645,24 +648,23 @@ body {
   
 
   <div class="marquee">
-  <div class="marquee-content">
-    <!-- Твои картинки -->
-    <img src="5c168065-e403-41fb-a22d-5963c590f598.png" />
-    <img src="7234e760-fc1c-42f0-9090-ea01506b780d.png" />
-    <img src="Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png" />
-    <img src="Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png" />
-    <img src="Whisk_75f1ff4d1144293b0604453f419dfe58eg.png" />
-    <img src="Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png" />
-    <img src="Whisk_a47b408310a8695a1d74ac1f7853771ceg.png" />
-    <img src="Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png" />
-    <img src="Whisk_c65c75a91538ef696df405442d136e06eg.png" />
-    <img src="Whisk_e7442ecf21459b6b618445bc29822e57eg.png" />
-    <img src="Whisk_f495ee622efd09abf2e40ae9872cad76eg.png" />
-    <img src="f4e54cb9-aea2-4e79-9066-5067825879c0.png" />
-    <img src="d643c5a4-12d9-467d-8f86-9170945ae70c.png" />
-    <img src="Whisk_f249f16e46546fe9a814b05c566d7954eg.png" />
-
-    
+  <div class="track">
+    <div class="marquee-content">
+      <img src="5c168065-e403-41fb-a22d-5963c590f598.png" />
+      <img src="7234e760-fc1c-42f0-9090-ea01506b780d.png" />
+      <img src="Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png" />
+      <img src="Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png" />
+      <img src="Whisk_75f1ff4d1144293b0604453f419dfe58eg.png" />
+      <img src="Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png" />
+      <img src="Whisk_a47b408310a8695a1d74ac1f7853771ceg.png" />
+      <img src="Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png" />
+      <img src="Whisk_c65c75a91538ef696df405442d136e06eg.png" />
+      <img src="Whisk_e7442ecf21459b6b618445bc29822e57eg.png" />
+      <img src="Whisk_f495ee622efd09abf2e40ae9872cad76eg.png" />
+      <img src="f4e54cb9-aea2-4e79-9066-5067825879c0.png" />
+      <img src="d643c5a4-12d9-467d-8f86-9170945ae70c.png" />
+      <img src="Whisk_f249f16e46546fe9a814b05c566d7954eg.png" />
+    </div>
   </div>
   </div>
 
