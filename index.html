@@ -553,47 +553,39 @@ body {
 
 
 
-  
   .marquee {
   width: 100%;
   overflow: hidden;
+  background: black;
+  height: 150px;  /* подгони под размер картинок */
+  border-radius: 12px;
   padding: 10px 0;
-  border-radius: 20px;
-  background: #0f0f0f;
-  border: 2px solid #ffffff20;
 }
 
-/* Трек — ДВИГАЕТ всю ленту */
-.track {
-  display: flex;
-  width: max-content;
-  animation: marquee 20s linear infinite;
-}
-
-/* Внутренний блок с картинками */
 .marquee-content {
   display: flex;
-  gap: 20px;
+  gap: 20px;  /* расстояние между картинками */
+  width: max-content; /* растягиваем под все картинки */
+  animation: scroll 40s linear infinite; /* скорость можно менять */
 }
 
-/* Картинки — квадратные */
 .marquee-content img {
-  width: 120px;
+  width: 120px;  /* квадрат */
   height: 120px;
   object-fit: cover;
   border-radius: 12px;
   flex-shrink: 0;
 }
 
-/* Анимация на половину длины — ВАЖНО */
-@keyframes marquee {
+@keyframes scroll {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-50%); /* смещаем ровно на первую половину */
   }
 }
+  
 </style>
   
 </head>
@@ -648,23 +640,38 @@ body {
   
 
   <div class="marquee">
-  <div class="track">
-    <div class="marquee-content">
-      <img src="5c168065-e403-41fb-a22d-5963c590f598.png" />
-      <img src="7234e760-fc1c-42f0-9090-ea01506b780d.png" />
-      <img src="Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png" />
-      <img src="Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png" />
-      <img src="Whisk_75f1ff4d1144293b0604453f419dfe58eg.png" />
-      <img src="Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png" />
-      <img src="Whisk_a47b408310a8695a1d74ac1f7853771ceg.png" />
-      <img src="Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png" />
-      <img src="Whisk_c65c75a91538ef696df405442d136e06eg.png" />
-      <img src="Whisk_e7442ecf21459b6b618445bc29822e57eg.png" />
-      <img src="Whisk_f495ee622efd09abf2e40ae9872cad76eg.png" />
-      <img src="f4e54cb9-aea2-4e79-9066-5067825879c0.png" />
-      <img src="d643c5a4-12d9-467d-8f86-9170945ae70c.png" />
-      <img src="Whisk_f249f16e46546fe9a814b05c566d7954eg.png" />
-    </div>
+  <div class="marquee-content">
+    <!-- Оригинальные 14 картинок -->
+    <img src="5c168065-e403-41fb-a22d-5963c590f598.png" />
+    <img src="7234e760-fc1c-42f0-9090-ea01506b780d.png" />
+    <img src="Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png" />
+    <img src="Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png" />
+    <img src="Whisk_75f1ff4d1144293b0604453f419dfe58eg.png" />
+    <img src="Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png" />
+    <img src="Whisk_a47b408310a8695a1d74ac1f7853771ceg.png" />
+    <img src="Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png" />
+    <img src="Whisk_c65c75a91538ef696df405442d136e06eg.png" />
+    <img src="Whisk_e7442ecf21459b6b618445bc29822e57eg.png" />
+    <img src="Whisk_f495ee622efd09abf2e40ae9872cad76eg.png" />
+    <img src="f4e54cb9-aea2-4e79-9066-5067825879c0.png" />
+    <img src="d643c5a4-12d9-467d-8f86-9170945ae70c.png" />
+    <img src="Whisk_f249f16e46546fe9a814b05c566d7954eg.png" />
+
+    <!-- Дубликат для бесконечной прокрутки -->
+    <img src="5c168065-e403-41fb-a22d-5963c590f598.png" />
+    <img src="7234e760-fc1c-42f0-9090-ea01506b780d.png" />
+    <img src="Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png" />
+    <img src="Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png" />
+    <img src="Whisk_75f1ff4d1144293b0604453f419dfe58eg.png" />
+    <img src="Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png" />
+    <img src="Whisk_a47b408310a8695a1d74ac1f7853771ceg.png" />
+    <img src="Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png" />
+    <img src="Whisk_c65c75a91538ef696df405442d136e06eg.png" />
+    <img src="Whisk_e7442ecf21459b6b618445bc29822e57eg.png" />
+    <img src="Whisk_f495ee622efd09abf2e40ae9872cad76eg.png" />
+    <img src="f4e54cb9-aea2-4e79-9066-5067825879c0.png" />
+    <img src="d643c5a4-12d9-467d-8f86-9170945ae70c.png" />
+    <img src="Whisk_f249f16e46546fe9a814b05c566d7954eg.png" />
   </div>
   </div>
 
