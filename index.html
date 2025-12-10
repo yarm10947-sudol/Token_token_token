@@ -549,7 +549,36 @@ body {
   from { transform: translateY(-30px); }
   to   { transform: translateY(120vh); }
 }
+
+
+
+
   
+  .marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 20px;
+  animation: scroll 25s linear infinite;
+}
+
+.marquee-content img {
+  height: 130px; /* меняй под себя */
+  flex-shrink: 0;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 </style>
   
 </head>
@@ -603,6 +632,41 @@ body {
 
   
 
+  <div class="marquee">
+  <div class="marquee-content">
+    <!-- Твои картинки -->
+    <img src="img1.jpg" />
+    <img src="img2.jpg" />
+    <img src="img3.jpg" />
+    <img src="img4.jpg" />
+    <img src="img5.jpg" />
+    <img src="img6.jpg" />
+    <img src="img7.jpg" />
+    <img src="img8.jpg" />
+    <img src="img9.jpg" />
+    <img src="img10.jpg" />
+    <img src="img7.jpg" />
+    <img src="img8.jpg" />
+    <img src="img9.jpg" />
+    <img src="img10.jpg" />
+
+    <!-- Дубликат для бесконечного эффекта -->
+    <img src="img1.jpg" />
+    <img src="img2.jpg" />
+    <img src="img3.jpg" />
+    <img src="img4.jpg" />
+    <img src="img5.jpg" />
+    <img src="img6.jpg" />
+    <img src="img7.jpg" />
+    <img src="img8.jpg" />
+    <img src="img9.jpg" />
+    <img src="img10.jpg" />
+    <img src="img7.jpg" />
+    <img src="img8.jpg" />
+    <img src="img9.jpg" />
+    <img src="img10.jpg" />
+  </div>
+  </div>
 
 <section id="lava-video-block">
 
