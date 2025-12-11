@@ -687,73 +687,113 @@ body {
 
 
 
-  <div style="max-width: 100%; overflow: hidden;">
-  <svg viewBox="0 0 1000 300" width="100%" height="auto">
-    <defs>
-      <!-- Маски для букв -->
-      <mask id="maskC">
-        <text x="50" y="200" font-size="150" font-weight="bold" fill="white">C</text>
-      </mask>
-      <mask id="maskA">
-        <text x="200" y="200" font-size="150" font-weight="bold" fill="white">A</text>
-      </mask>
-      <mask id="maskD">
-        <text x="350" y="200" font-size="150" font-weight="bold" fill="white">D</text>
-      </mask>
-      <mask id="maskO">
-        <text x="500" y="200" font-size="150" font-weight="bold" fill="white">O</text>
-      </mask>
-    </defs>
-
-    <!-- Белые буквы -->
-    <text x="50" y="200" font-size="350" font-weight="bold" fill="white">C</text>
-    <text x="200" y="200" font-size="350" font-weight="bold" fill="white">A</text>
-    <text x="350" y="200" font-size="350" font-weight="bold" fill="white">D</text>
-    <text x="500" y="200" font-size="350" font-weight="bold" fill="white">O</text>
-
-    <!-- Бегущие строки с маской -->
-    <g mask="url(#maskC)">
-      <text x="0" y="180" font-size="30" fill="black" class="scroll">
-        CADO больше чем мем коин, CADO больше чем мем коин, CADO больше чем мем коин...
-      </text>
-    </g>
-
-    <g mask="url(#maskA)">
-      <text x="200" y="180" font-size="30" fill="black" class="scroll">
-        CADO это то, что ты ищешь, CADO это то, что ты ищешь, CADO это то, что ты ищешь...
-      </text>
-    </g>
-
-    <g mask="url(#maskD)">
-      <text x="350" y="180" font-size="30" fill="black" class="scroll">
-        Текст внутри буквы D, замените на свой текст, Текст внутри буквы D...
-      </text>
-    </g>
-
-    <g mask="url(#maskO)">
-      <text x="500" y="180" font-size="30" fill="black" class="scroll">
-        Текст внутри буквы O, замените на свой текст, Текст внутри буквы O...
-      </text>
-    </g>
-
+  
     <style>
-      /* Анимация бегущей строки */
-      .scroll {
-        animation: scroll-text 15s linear infinite;
-      }
+  .logo-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  svg {
+    width: 90vw;
+    max-width: 900px;
+  }
 
-      @keyframes scroll-text {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-100%); }
-      }
+  text {
+    fill: black;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 
-      /* Адаптивные буквы */
-      text {
-        font-size: calc(10px + 8vw);
-      }
-    </style>
-  </svg>
-  </div>
+  .letter-path {
+    fill: none;
+    stroke: white;
+    stroke-width: 18;
+  }
+
+  /* Анимация движения текста */
+  .moving > textPath {
+    animation: move 12s linear infinite;
+  }
+
+  @keyframes move {
+    from { startOffset: 0%; }
+    to   { startOffset: 100%; }
+  }
+</style>
+
+<div class="logo-wrap">
+<svg viewBox="0 0 1200 300">
+
+  <!-- LETTER C -->
+  <path id="Cpath"
+    d="M250 150
+       m -100 0
+       a 100 100 0 1 1 0 0.1"
+    class="letter-path"
+  />
+
+  <g class="moving">
+    <text>
+      <textPath href="#Cpath" startOffset="0%">
+        CADO — больше чем мем коин • CADO — будущее • CADO — инновация •
+      </textPath>
+    </text>
+  </g>
+
+  <!-- LETTER A -->
+  <path id="Apath"
+    d="M450 250 L520 50 L590 250 Z M475 180 H565"
+    class="letter-path"
+  />
+
+  <g class="moving">
+    <text>
+      <textPath href="#Apath" startOffset="0%">
+        CADO — это то, что ты ищешь • CADO — новый уровень • Будущее здесь •
+      </textPath>
+    </text>
+  </g>
+
+  <!-- LETTER D -->
+  <path id="Dpath"
+    d="M700 50 V250
+       H760
+       a 100 100 0 1 0 0 -200
+       H700 Z"
+    class="letter-path"
+  />
+
+  <g class="moving">
+    <text>
+      <textPath href="#Dpath" startOffset="0%">
+        Сила CADO • Новая эра крипто • Прорывные технологии •
+      </textPath>
+    </text>
+  </g>
+
+  <!-- LETTER O -->
+  <path id="Opath"
+    d="M950 150
+       m -100 0
+       a 100 100 0 1 1 200 0
+       a 100 100 0 1 1 -200 0"
+    class="letter-path"
+  />
+
+  <g class="moving">
+    <text>
+      <textPath href="#Opath" startOffset="0%">
+        Присоединяйся к движению CADO • Крипто меняется • Время действовать •
+      </textPath>
+    </text>
+  </g>
+
+</svg>
+</div>
+      
   
 
 <section class="tokenomics" aria-labelledby="tokenomics-title" id="tokenomicsSection">
