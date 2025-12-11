@@ -1224,5 +1224,50 @@ function createLavaDrops() {
 
 createLavaDrops();
   </script>
+  <svg width="1000" height="300" viewBox="0 0 1000 300">
+  <defs>
+    <!-- Кривые для букв -->
+    <path id="curveC" d="M50,200 C50,50 150,50 150,200" />
+    <path id="curveA" d="M200,200 L250,50 L300,200 Z" />
+    <path id="curveD" d="M350,200 L350,50 C400,50 450,100 350,200 Z" />
+    <path id="curveO" d="M500,150 C500,50 600,50 600,150 C600,250 500,250 500,150 Z" />
+  </defs>
+
+  <!-- Буква C -->
+  <text font-size="150" font-weight="bold" fill="none" stroke="black" stroke-width="3">C</text>
+  <text font-size="20" fill="red">
+    <textPath href="#curveC" startOffset="0%">
+      <!-- Текст для буквы C -->
+      Это бегущая лента внутри C, замените на свой текст...
+    </textPath>
+  </text>
+
+  <!-- Буква A -->
+  <text font-size="150" font-weight="bold" fill="none" stroke="black" stroke-width="3" x="200" y="200">A</text>
+  <text font-size="20" fill="blue">
+    <textPath href="#curveA" startOffset="0%">
+      <!-- Текст для буквы A -->
+      Это бегущая лента внутри A, замените на свой текст...
+    </textPath>
+  </text>
+
+  <!-- Буква D -->
+  <text font-size="150" font-weight="bold" fill="none" stroke="black" stroke-width="3" x="350" y="200">D</text>
+  <text font-size="20" fill="green">
+    <textPath href="#curveD" startOffset="0%">
+      <!-- Текст для буквы D -->
+      Это бегущая лента внутри D, замените на свой текст...
+    </textPath>
+  </text>
+
+  <!-- Буква O -->
+  <text font-size="150" font-weight="bold" fill="none" stroke="black" stroke-width="3" x="500" y="200">O</text>
+  <text font-size="20" fill="orange">
+    <textPath href="#curveO" startOffset="0%">
+      <!-- Текст для буквы O -->
+      Это бегущая лента внутри O, замените на свой текст...
+    </textPath>
+  </text>
+  </svg>
 </body>
 </html>
