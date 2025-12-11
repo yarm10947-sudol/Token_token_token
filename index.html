@@ -589,34 +589,47 @@ body {
 
 
 
-
-  .cado-container {
+.cado-container {
   position: relative;
-  width: 90vw;
+  width: 100%;
   max-width: 1100px;
-  margin: auto;
+  margin: 40px auto;
   height: 350px;
 }
 
-#falling-area {
+.cado-letters {
   position: absolute;
   inset: 0;
-  clip-path: url(#cado-clip);
+  font-size: 200px;
+  font-weight: 900;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  pointer-events: none;
+}
+
+#fall-area {
+  position: absolute;
+  inset: 0;
+  clip-path: url(#clip-cado);
   overflow: hidden;
 }
 
-.fall {
+.falling {
   position: absolute;
   width: 25px;
   height: 25px;
   object-fit: contain;
-  animation: fall linear forwards;
+  animation: fall 4s linear forwards;
 }
 
 @keyframes fall {
-  0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+  0% { transform: translateY(-40px) rotate(0deg); opacity: 1; }
   100% { transform: translateY(380px) rotate(360deg); opacity: 1; }
 }
+  
 </style>
   
 </head>
@@ -719,21 +732,28 @@ body {
 
 
   <div class="cado-container">
-  <svg viewBox="0 0 1400 400" class="cado-mask">
+  <svg class="clip-svg" width="0" height="0">
     <defs>
-      <clipPath id="cado-clip" clipPathUnits="objectBoundingBox">
-        <path d="M0.1,0.5 
-                 a0.2,0.2 0 1,1 0.0001,0
-                 M0.35,0.8 L0.45,0.2 L0.55,0.8 Z
-                 M0.65,0.2 L0.65,0.8 
-                 a0.15,0.15 0 1,0 0,-0.6 Z
-                 M0.9,0.5 
-                 a0.2,0.2 0 1,1 0.0001,0" />
+      <clipPath id="clip-cado" clipPathUnits="objectBoundingBox">
+        <path d="
+        M0.05,0.50
+        a0.20,0.20 0 1,1 0.0001,0
+
+        M0.32,0.80 L0.40,0.20 L0.48,0.80 Z
+
+        M0.60,0.20 L0.60,0.80 
+        a0.15,0.15 0 1,0 0,-0.60 Z
+
+        M0.85,0.50
+        a0.20,0.20 0 1,1 0.0001,0
+        " />
       </clipPath>
     </defs>
   </svg>
 
-  <div id="falling-area"></div>
+  <div class="cado-letters">C A D O</div>
+
+  <div id="fall-area"></div>
   </div>
     
       
@@ -1276,8 +1296,9 @@ function createLavaDrops() {
 createLavaDrops();
   </script>
   
-<script>
-const images = [
+
+  <script>
+const pics = [
   "5c168065-e403-41fb-a22d-5963c590f598.png",
   "7234e760-fc1c-42f0-9090-ea01506b780d.png",
   "Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png",
@@ -1294,23 +1315,21 @@ const images = [
   "Whisk_f249f16e46546fe9a814b05c566d7954eg.png"
 ];
 
-function dropImage() {
-  const area = document.getElementById("falling-area");
+function drop() {
+  const area = document.getElementById("fall-area");
   const img = document.createElement("img");
-
-  img.src = images[Math.floor(Math.random() * images.length)];
-  img.classList.add("fall");
-
-  img.style.left = Math.random() * 95 + "%";
-  img.style.animationDuration = (2 + Math.random() * 3) + "s";
+  
+  img.src = pics[Math.floor(Math.random() * pics.length)];
+  img.classList.add("falling");
+  img.style.left = Math.random() * 100 + "%";
+  img.style.animationDuration = (3 + Math.random() * 2) + "s";
 
   area.appendChild(img);
 
-  setTimeout(() => img.remove(), 4000);
+  setTimeout(() => img.remove(), 5000);
 }
 
-setInterval(dropImage, 180);
-</script>
-
+setInterval(drop, 180);
+  </script>
 </body>
 </html>
