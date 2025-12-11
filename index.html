@@ -1224,6 +1224,8 @@ function createLavaDrops() {
 
 createLavaDrops();
   </script>
+  
+
   <svg width="1000" height="300" viewBox="0 0 1000 300">
   <defs>
     <!-- Кривые для букв -->
@@ -1233,41 +1235,48 @@ createLavaDrops();
     <path id="curveO" d="M500,150 C500,50 600,50 600,150 C600,250 500,250 500,150 Z" />
   </defs>
 
-  <!-- Буква C -->
-  <text font-size="150" font-weight="bold" fill="none" stroke="black" stroke-width="3">C</text>
-  <text font-size="20" fill="red">
+  <!-- Буквы CADO -->
+  <text font-size="150" font-weight="bold" fill="white" stroke="black" stroke-width="0">C</text>
+  <text font-size="150" font-weight="bold" fill="white" stroke="black" stroke-width="0" x="200" y="200">A</text>
+  <text font-size="150" font-weight="bold" fill="white" stroke="black" stroke-width="0" x="350" y="200">D</text>
+  <text font-size="150" font-weight="bold" fill="white" stroke="black" stroke-width="0" x="500" y="200">O</text>
+
+  <!-- Бегущие строки внутри букв -->
+  <text font-size="20" fill="black">
     <textPath href="#curveC" startOffset="0%">
-      <!-- Текст для буквы C -->
-      Это бегущая лента внутри C, замените на свой текст...
+      CADO больше чем мем коин, CADO больше чем мем коин...
     </textPath>
   </text>
 
-  <!-- Буква A -->
-  <text font-size="150" font-weight="bold" fill="none" stroke="black" stroke-width="3" x="200" y="200">A</text>
-  <text font-size="20" fill="blue">
+  <text font-size="20" fill="black">
     <textPath href="#curveA" startOffset="0%">
-      <!-- Текст для буквы A -->
-      Это бегущая лента внутри A, замените на свой текст...
+      CADO это то, что ты ищешь, CADO это то, что ты ищешь...
     </textPath>
   </text>
 
-  <!-- Буква D -->
-  <text font-size="150" font-weight="bold" fill="none" stroke="black" stroke-width="3" x="350" y="200">D</text>
-  <text font-size="20" fill="green">
+  <text font-size="20" fill="black">
     <textPath href="#curveD" startOffset="0%">
-      <!-- Текст для буквы D -->
-      Это бегущая лента внутри D, замените на свой текст...
+      Текст внутри буквы D, замените на свой текст...
     </textPath>
   </text>
 
-  <!-- Буква O -->
-  <text font-size="150" font-weight="bold" fill="none" stroke="black" stroke-width="3" x="500" y="200">O</text>
-  <text font-size="20" fill="orange">
+  <text font-size="20" fill="black">
     <textPath href="#curveO" startOffset="0%">
-      <!-- Текст для буквы O -->
-      Это бегущая лента внутри O, замените на свой текст...
+      Текст внутри буквы O, замените на свой текст...
     </textPath>
   </text>
+
+  <style>
+    /* Анимация бегущей строки */
+    textPath {
+      animation: scroll-text 15s linear infinite;
+    }
+
+    @keyframes scroll-text {
+      0% { startOffset: 0%; }
+      100% { startOffset: 100%; }
+    }
+  </style>
   </svg>
 </body>
 </html>
