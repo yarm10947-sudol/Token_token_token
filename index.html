@@ -1228,53 +1228,61 @@ createLavaDrops();
 
   <svg width="1000" height="300" viewBox="0 0 1000 300">
   <defs>
-    <!-- Кривые для букв -->
-    <path id="curveC" d="M50,200 C50,50 150,50 150,200" />
-    <path id="curveA" d="M200,200 L250,50 L300,200 Z" />
-    <path id="curveD" d="M350,200 L350,50 C400,50 450,100 350,200 Z" />
-    <path id="curveO" d="M500,150 C500,50 600,50 600,150 C600,250 500,250 500,150 Z" />
+    <!-- Маски для букв -->
+    <mask id="maskC">
+      <text x="50" y="200" font-size="150" font-weight="bold" fill="white">C</text>
+    </mask>
+    <mask id="maskA">
+      <text x="200" y="200" font-size="150" font-weight="bold" fill="white">A</text>
+    </mask>
+    <mask id="maskD">
+      <text x="350" y="200" font-size="150" font-weight="bold" fill="white">D</text>
+    </mask>
+    <mask id="maskO">
+      <text x="500" y="200" font-size="150" font-weight="bold" fill="white">O</text>
+    </mask>
   </defs>
 
-  <!-- Буквы CADO -->
-  <text font-size="150" font-weight="bold" fill="white" stroke="black" stroke-width="0">C</text>
-  <text font-size="150" font-weight="bold" fill="white" stroke="black" stroke-width="0" x="200" y="200">A</text>
-  <text font-size="150" font-weight="bold" fill="white" stroke="black" stroke-width="0" x="350" y="200">D</text>
-  <text font-size="150" font-weight="bold" fill="white" stroke="black" stroke-width="0" x="500" y="200">O</text>
+  <!-- Белые буквы -->
+  <text x="50" y="200" font-size="150" font-weight="bold" fill="white">C</text>
+  <text x="200" y="200" font-size="150" font-weight="bold" fill="white">A</text>
+  <text x="350" y="200" font-size="150" font-weight="bold" fill="white">D</text>
+  <text x="500" y="200" font-size="150" font-weight="bold" fill="white">O</text>
 
-  <!-- Бегущие строки внутри букв -->
-  <text font-size="20" fill="black">
-    <textPath href="#curveC" startOffset="0%">
-      CADO больше чем мем коин, CADO больше чем мем коин...
-    </textPath>
-  </text>
+  <!-- Бегущие строки с маской -->
+  <g mask="url(#maskC)">
+    <text x="0" y="180" font-size="30" fill="black">
+      CADO больше чем мем коин CADO больше чем мем коин CADO...
+    </text>
+  </g>
 
-  <text font-size="20" fill="black">
-    <textPath href="#curveA" startOffset="0%">
+  <g mask="url(#maskA)">
+    <text x="200" y="180" font-size="30" fill="black">
       CADO это то, что ты ищешь, CADO это то, что ты ищешь...
-    </textPath>
-  </text>
+    </text>
+  </g>
 
-  <text font-size="20" fill="black">
-    <textPath href="#curveD" startOffset="0%">
+  <g mask="url(#maskD)">
+    <text x="350" y="180" font-size="30" fill="black">
       Текст внутри буквы D, замените на свой текст...
-    </textPath>
-  </text>
+    </text>
+  </g>
 
-  <text font-size="20" fill="black">
-    <textPath href="#curveO" startOffset="0%">
+  <g mask="url(#maskO)">
+    <text x="500" y="180" font-size="30" fill="black">
       Текст внутри буквы O, замените на свой текст...
-    </textPath>
-  </text>
+    </text>
+  </g>
 
   <style>
     /* Анимация бегущей строки */
-    textPath {
-      animation: scroll-text 15s linear infinite;
+    g text {
+      animation: scroll 10s linear infinite;
     }
 
-    @keyframes scroll-text {
-      0% { startOffset: 0%; }
-      100% { startOffset: 100%; }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
     }
   </style>
   </svg>
