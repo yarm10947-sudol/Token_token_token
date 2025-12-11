@@ -585,7 +585,38 @@ body {
     transform: translateX(-50%); /* смещаем ровно на первую половину */
   }
 }
-  
+
+
+
+
+
+  .cado-container {
+  position: relative;
+  width: 90vw;
+  max-width: 1100px;
+  margin: auto;
+  height: 350px;
+}
+
+#falling-area {
+  position: absolute;
+  inset: 0;
+  clip-path: url(#cado-clip);
+  overflow: hidden;
+}
+
+.fall {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(380px) rotate(360deg); opacity: 1; }
+}
 </style>
   
 </head>
@@ -687,7 +718,23 @@ body {
 
 
 
-  
+  <div class="cado-container">
+  <svg viewBox="0 0 1400 400" class="cado-mask">
+    <defs>
+      <clipPath id="cado-clip" clipPathUnits="objectBoundingBox">
+        <path d="M0.1,0.5 
+                 a0.2,0.2 0 1,1 0.0001,0
+                 M0.35,0.8 L0.45,0.2 L0.55,0.8 Z
+                 M0.65,0.2 L0.65,0.8 
+                 a0.15,0.15 0 1,0 0,-0.6 Z
+                 M0.9,0.5 
+                 a0.2,0.2 0 1,1 0.0001,0" />
+      </clipPath>
+    </defs>
+  </svg>
+
+  <div id="falling-area"></div>
+  </div>
     
       
   
@@ -1229,7 +1276,41 @@ function createLavaDrops() {
 createLavaDrops();
   </script>
   
+<script>
+const images = [
+  "5c168065-e403-41fb-a22d-5963c590f598.png",
+  "7234e760-fc1c-42f0-9090-ea01506b780d.png",
+  "Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png",
+  "Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png",
+  "Whisk_75f1ff4d1144293b0604453f419dfe58eg.png",
+  "Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png",
+  "Whisk_a47b408310a8695a1d74ac1f7853771ceg.png",
+  "Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png",
+  "Whisk_c65c75a91538ef696df405442d136e06eg.png",
+  "Whisk_e7442ecf21459b6b618445bc29822e57eg.png",
+  "Whisk_f495ee622efd09abf2e40ae9872cad76eg.png",
+  "f4e54cb9-aea2-4e79-9066-5067825879c0.png",
+  "d643c5a4-12d9-467d-8f86-9170945ae70c.png",
+  "Whisk_f249f16e46546fe9a814b05c566d7954eg.png"
+];
 
+function dropImage() {
+  const area = document.getElementById("falling-area");
+  const img = document.createElement("img");
+
+  img.src = images[Math.floor(Math.random() * images.length)];
+  img.classList.add("fall");
+
+  img.style.left = Math.random() * 95 + "%";
+  img.style.animationDuration = (2 + Math.random() * 3) + "s";
+
+  area.appendChild(img);
+
+  setTimeout(() => img.remove(), 4000);
+}
+
+setInterval(dropImage, 180);
+</script>
 
 </body>
 </html>
