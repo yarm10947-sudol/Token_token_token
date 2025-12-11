@@ -685,7 +685,75 @@ body {
 
 </section>
 
-  
+
+
+  <div style="max-width: 100%; overflow: hidden;">
+  <svg viewBox="0 0 1000 300" width="100%" height="auto">
+    <defs>
+      <!-- Маски для букв -->
+      <mask id="maskC">
+        <text x="50" y="200" font-size="150" font-weight="bold" fill="white">C</text>
+      </mask>
+      <mask id="maskA">
+        <text x="200" y="200" font-size="150" font-weight="bold" fill="white">A</text>
+      </mask>
+      <mask id="maskD">
+        <text x="350" y="200" font-size="150" font-weight="bold" fill="white">D</text>
+      </mask>
+      <mask id="maskO">
+        <text x="500" y="200" font-size="150" font-weight="bold" fill="white">O</text>
+      </mask>
+    </defs>
+
+    <!-- Белые буквы -->
+    <text x="50" y="200" font-size="150" font-weight="bold" fill="white">C</text>
+    <text x="200" y="200" font-size="150" font-weight="bold" fill="white">A</text>
+    <text x="350" y="200" font-size="150" font-weight="bold" fill="white">D</text>
+    <text x="500" y="200" font-size="150" font-weight="bold" fill="white">O</text>
+
+    <!-- Бегущие строки с маской -->
+    <g mask="url(#maskC)">
+      <text x="0" y="180" font-size="30" fill="black" class="scroll">
+        CADO больше чем мем коин, CADO больше чем мем коин, CADO больше чем мем коин...
+      </text>
+    </g>
+
+    <g mask="url(#maskA)">
+      <text x="200" y="180" font-size="30" fill="black" class="scroll">
+        CADO это то, что ты ищешь, CADO это то, что ты ищешь, CADO это то, что ты ищешь...
+      </text>
+    </g>
+
+    <g mask="url(#maskD)">
+      <text x="350" y="180" font-size="30" fill="black" class="scroll">
+        Текст внутри буквы D, замените на свой текст, Текст внутри буквы D...
+      </text>
+    </g>
+
+    <g mask="url(#maskO)">
+      <text x="500" y="180" font-size="30" fill="black" class="scroll">
+        Текст внутри буквы O, замените на свой текст, Текст внутри буквы O...
+      </text>
+    </g>
+
+    <style>
+      /* Анимация бегущей строки */
+      .scroll {
+        animation: scroll-text 15s linear infinite;
+      }
+
+      @keyframes scroll-text {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+      }
+
+      /* Адаптивные буквы */
+      text {
+        font-size: calc(10px + 8vw);
+      }
+    </style>
+  </svg>
+  </div>
   
 
 <section class="tokenomics" aria-labelledby="tokenomics-title" id="tokenomicsSection">
@@ -1226,65 +1294,6 @@ createLavaDrops();
   </script>
   
 
-  <svg width="1000" height="300" viewBox="0 0 1000 300">
-  <defs>
-    <!-- Маски для букв -->
-    <mask id="maskC">
-      <text x="50" y="200" font-size="150" font-weight="bold" fill="white">C</text>
-    </mask>
-    <mask id="maskA">
-      <text x="200" y="200" font-size="150" font-weight="bold" fill="white">A</text>
-    </mask>
-    <mask id="maskD">
-      <text x="350" y="200" font-size="150" font-weight="bold" fill="white">D</text>
-    </mask>
-    <mask id="maskO">
-      <text x="500" y="200" font-size="150" font-weight="bold" fill="white">O</text>
-    </mask>
-  </defs>
 
-  <!-- Белые буквы -->
-  <text x="50" y="200" font-size="150" font-weight="bold" fill="white">C</text>
-  <text x="200" y="200" font-size="150" font-weight="bold" fill="white">A</text>
-  <text x="350" y="200" font-size="150" font-weight="bold" fill="white">D</text>
-  <text x="500" y="200" font-size="150" font-weight="bold" fill="white">O</text>
-
-  <!-- Бегущие строки с маской -->
-  <g mask="url(#maskC)">
-    <text x="0" y="180" font-size="30" fill="black">
-      CADO больше чем мем коин CADO больше чем мем коин CADO...
-    </text>
-  </g>
-
-  <g mask="url(#maskA)">
-    <text x="200" y="180" font-size="30" fill="black">
-      CADO это то, что ты ищешь, CADO это то, что ты ищешь...
-    </text>
-  </g>
-
-  <g mask="url(#maskD)">
-    <text x="350" y="180" font-size="30" fill="black">
-      Текст внутри буквы D, замените на свой текст...
-    </text>
-  </g>
-
-  <g mask="url(#maskO)">
-    <text x="500" y="180" font-size="30" fill="black">
-      Текст внутри буквы O, замените на свой текст...
-    </text>
-  </g>
-
-  <style>
-    /* Анимация бегущей строки */
-    g text {
-      animation: scroll 10s linear infinite;
-    }
-
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-  </style>
-  </svg>
 </body>
 </html>
