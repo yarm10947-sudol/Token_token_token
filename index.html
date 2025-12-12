@@ -594,15 +594,15 @@ body {
  #cado-wrapper {
   position: relative;
   width: 100%;
-  max-width: 800px;
-  height: 300px;
+  max-width: 700px;   /* адаптивно */
+  height: 30vw;       /* высота = 30% ширины экрана */
+  max-height: 250px;  /* ограничение, чтобы не было слишком большим */
   margin: 20px auto;
 }
 
 #cado-svg {
   width: 100%;
   height: 100%;
-  display: block;
 }
 
 #cado-fill {
@@ -613,16 +613,16 @@ body {
   pointer-events: none;
 }
 
-/* Слои */
+/* СЛОИ */
 .cado-layer {
   position: absolute;
-  bottom: 0;
   left: 0;
-  height: 25px;
   width: 100%;
+  height: 4vw;              /* адаптивная высота слоя */
+  max-height: 25px;         /* не больше 25px */
   display: flex;
-  gap: 2px;
   justify-content: center;
+  gap: 2px;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.6s ease;
@@ -634,9 +634,11 @@ body {
 }
 
 .cado-layer img {
-  width: 25px;
-  height: 25px;
-} 
+  width: 4vw;
+  height: 4vw;
+  max-width: 25px;
+  max-height: 25px;
+  }
   
 </style>
   
@@ -1297,7 +1299,9 @@ createLavaDrops();
   </script>
   
 
- <script>
+
+
+  <script>
 const images = [
   "5c168065-e403-41fb-a22d-5963c590f598.png",
   "7234e760-fc1c-42f0-9090-ea01506b780d.png",
@@ -1316,14 +1320,34 @@ const images = [
 ];
 
 const fill = document.getElementById("cado-fill");
-let layerCount = 12; // сколько слоев (можно увеличить)
 
-function createLayer(y) {
+function startCycle() {
+  fill.innerHTML = ""; // очистить старые слои
+
+  let layerTotal = 12;
+  let current = 0;
+
+  let interval = setInterval(() => {
+    createLayer(current);
+    current++;
+
+    if (current >= layerTotal) {
+      clearInterval(interval);
+
+      // запуск нового цикла
+      setTimeout(startCycle, 2000);
+    }
+  }, 250);
+}
+
+function createLayer(index) {
   const layer = document.createElement("div");
   layer.className = "cado-layer";
-  layer.style.bottom = `${y * 25}px`;
 
-  for (let i = 0; i < 20; i++) {
+  layer.style.bottom = `calc(${index} * 4vw)`;
+  layer.style.maxBottom = `${index * 25}px`;
+
+  for (let i = 0; i < 25; i++) {
     const img = document.createElement("img");
     img.src = images[Math.floor(Math.random() * images.length)];
     layer.appendChild(img);
@@ -1331,17 +1355,10 @@ function createLayer(y) {
 
   fill.appendChild(layer);
 
-  // плавное появление
   setTimeout(() => layer.classList.add("visible"), 50);
 }
 
-let current = 0;
-const interval = setInterval(() => {
-  createLayer(current);
-  current++;
-
-  if (current >= layerCount) clearInterval(interval);
-}, 300);
- </script> 
+startCycle();
+  </script>
 </body>
 </html>
