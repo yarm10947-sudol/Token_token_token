@@ -641,7 +641,10 @@ body {
   height: 28px;
   flex-shrink: 0;
 }
-
+/* Адаптивный размер букв */
+#cado-text {
+  font-size: clamp(80px, 20vw, 300px);
+}
   
 </style>
   
@@ -752,7 +755,7 @@ body {
       <clipPath id="cado-clip">
         <text id="cado-text"
           x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
-          font-size="300" font-weight="900">
+          id="cado-text" font-weight="900">
           CADO
         </text>
       </clipPath>
