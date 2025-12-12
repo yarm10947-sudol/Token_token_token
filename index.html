@@ -594,51 +594,63 @@ body {
  
   
 
-#cado-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  aspect-ratio: 3 / 1; /* гарантирует правильную форму */
-  margin: 0 auto;
-  overflow: hidden; /* важное фиксирующее правило */
-}
+  body {
+    margin: 0;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-#cado-svg {
-  width: 100%;
-  height: 100%;
-}
+  .text-mask {
+    position: relative;
+    width: 90vw;
+    max-width: 800px;
+    aspect-ratio: 4 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-#cado-fill {
-  position: absolute;
-  inset: 0;
-  clip-path: url(#cado-clip);
-  overflow: hidden;
-}
+  .text-mask svg {
+    width: 100%;
+    height: 100%;
+  }
 
-/* Слои заполнения */
-.cado-layer {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 28px;
-  display: flex;
-  justify-content: center;
-  gap: 3px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.5s ease-out;
-}
+  /* Чтобы текст адаптировался по ширине и высоте экрана */
+  svg text {
+    font-family: Arial Black, sans-serif;
+    font-weight: 900;
+    fill: white;
 
-.cado-layer.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+    /* Умный адаптив */
+    font-size: min(22vw, 22vh, 140px);
+  }
 
-.cado-layer img {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-}
+  /* Падающие картинки */
+  .falling-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    mask-image: url(#text-mask);
+  }
+
+  .fall {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    animation: fallAnim linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes fallAnim {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(120%) rotate(360deg); opacity: 1; }
+  }
+
   
 </style>
   
@@ -743,20 +755,18 @@ body {
 
   
   
-<div id="cado-wrapper">
-  <svg id="cado-svg" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet">
+<div class="text-mask">
+  <!-- SVG маска текста -->
+  <svg viewBox="0 0 1000 300">
     <defs>
-      <clipPath id="cado-clip">
-        <text id="cado-text"
-          x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
-          font-size="300" font-weight="900">
-          CADO
-        </text>
-      </clipPath>
+      <mask id="text-mask">
+        <rect width="100%" height="100%" fill="black"/>
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">CADO</text>
+      </mask>
     </defs>
   </svg>
 
-  <div id="cado-fill"></div>
+  <div class="falling-container" id="fallZone"></div>
 </div>
 
   
@@ -1303,9 +1313,11 @@ createLavaDrops();
   
 
 
+
+
 <script>
-const imgs = [
-  "5c168065-e403-41fb-a22d-5963c590f598.png",
+  const images = [
+    "5c168065-e403-41fb-a22d-5963c590f598.png",
   "7234e760-fc1c-42f0-9090-ea01506b780d.png",
   "Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png",
   "Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png",
@@ -1319,43 +1331,24 @@ const imgs = [
   "f4e54cb9-aea2-4e79-9066-5067825879c0.png",
   "d643c5a4-12d9-467d-8f86-9170945ae70c.png",
   "Whisk_f249f16e46546fe9a814b05c566d7954eg.png"
-];
 
-const fill = document.getElementById("cado-fill");
+  ]; // заменишь потом
 
-function runCycle() {
-  fill.innerHTML = ""; 
-  
-  const totalLayers = 11; 
-  let index = 0;
-
-  let timer = setInterval(() => {
-    addLayer(index);
-    index++;
-
-    if (index >= totalLayers) {
-      clearInterval(timer);
-      setTimeout(runCycle, 2000);
-    }
-  }, 250);
-}
-
-function addLayer(i) {
-  const row = document.createElement("div");
-  row.className = "cado-layer";
-  row.style.bottom = `${i * 28}px`;
-
-  for (let j = 0; j < 28; j++) {
+  function spawnImage() {
+    const zone = document.getElementById("fallZone");
     const img = document.createElement("img");
-    img.src = imgs[Math.floor(Math.random() * imgs.length)];
-    row.appendChild(img);
+    img.src = images[Math.floor(Math.random() * images.length)];
+    img.className = "fall";
+
+    img.style.left = Math.random() * 90 + "%";
+    img.style.animationDuration = (3 + Math.random() * 3) + "s";
+
+    zone.appendChild(img);
+
+    setTimeout(() => img.remove(), 6000);
   }
 
-  fill.appendChild(row);
-  setTimeout(() => row.classList.add("visible"), 30);
-}
-
-runCycle();
+  setInterval(spawnImage, 300); // частота появления
 </script>
   
 </body>
