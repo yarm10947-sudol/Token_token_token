@@ -694,7 +694,97 @@ body {
 
   
   
+<div id="cado-wrapper">
+  <svg viewBox="0 0 800 300" id="cado-svg">
+    <defs>
+      <clipPath id="cado-clip">
+        <text x="50%" y="50%" text-anchor="middle" dy="40"
+              font-size="200" font-weight="900">
+          CADO
+        </text>
+      </clipPath>
+    </defs>
+  </svg>
 
+  <div id="cado-fill"></div>
+</div>
+
+<style>
+  #cado-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 300px;
+    margin: 0 auto;
+  }
+
+  #cado-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #cado-fill {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    clip-path: url(#cado-clip);
+    pointer-events: none;
+  }
+
+  #cado-fill img {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    animation: fall-to-bottom 2s ease-in forwards;
+  }
+
+  /* Анимация падения вниз */
+  @keyframes fall-to-bottom {
+    0%   { transform: translateY(-40px); opacity: 0; }
+    40%  { opacity: 1; }
+    100% { transform: translateY(240px); opacity: 1; }
+  }
+</style>
+
+<script>
+(function () {
+  /* заменишь на свои 14 картинок */
+  const images = [
+    "5c168065-e403-41fb-a22d-5963c590f598.png",
+    "7234e760-fc1c-42f0-9090-ea01506b780d.png",
+    "Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png",
+    "Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png",
+    "Whisk_75f1ff4d1144293b0604453f419dfe58eg.png",
+    "Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png",
+    "Whisk_a47b408310a8695a1d74ac1f7853771ceg.png",
+    "Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png",
+    "Whisk_c65c75a91538ef696df405442d136e06eg.png",
+    "Whisk_e7442ecf21459b6b618445bc29822e57eg.png",
+    "Whisk_f495ee622efd09abf2e40ae9872cad76eg.png",
+    "f4e54cb9-aea2-4e79-9066-5067825879c0.png",
+    "d643c5a4-12d9-467d-8f86-9170945ae70c.png",
+    "Whisk_f249f16e46546fe9a814b05c566d7954eg.png"
+  ];
+
+  const area = document.querySelector("#cado-fill");
+
+  function dropImage() {
+    const img = document.createElement("img");
+    img.src = images[Math.floor(Math.random() * images.length)];
+
+    img.style.left = Math.random() * 90 + "%";
+    img.style.top = "-40px";
+
+    area.appendChild(img);
+
+    /* остаются навсегда, создавая эффект заполнения снизу */
+  }
+
+  /* Скорость заполнения */
+  setInterval(dropImage, 120);
+})();
+</script>
 
       
   
