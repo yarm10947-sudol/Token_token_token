@@ -599,10 +599,15 @@ body {
   #cado-wrapper {
   position: relative;
   width: 100%;
-  max-width: 900px;
-  aspect-ratio: 3 / 1; /* гарантирует правильную форму */
+  max-width: 600px; /* меньше, чтобы поместилось на телефоне */
+  aspect-ratio: 2.2 / 1; /* более узкая и компактная форма */
   margin: 0 auto;
-  overflow: hidden; /* важное фиксирующее правило */
+  overflow: hidden;
+}
+
+/* Адаптивный размер текста */
+#cado-text {
+  font-size: clamp(60px, 17vw, 220px);
 }
 
 #cado-svg {
