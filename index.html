@@ -654,6 +654,63 @@ body {
     min-height: 110px;
   }
 }
+
+
+
+
+
+  .cado-mask {
+  width: 100%;
+  max-width: 100%;
+  height: clamp(160px, 30vw, 260px);
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+
+  /* ТЕКСТ-МАСКА */
+  -webkit-mask-image: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 300'>\
+    <text x='50%' y='65%' text-anchor='middle' \
+    font-size='260' font-weight='900' \
+    font-family='Arial Black, Arial'>CADO</text>\
+  </svg>");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+
+  mask-image: -webkit-mask-image;
+}
+
+.cado-fill {
+  position: absolute;
+  inset: 0;
+}
+
+/* СТРОКА КАРТИНОК */
+.cado-row {
+  position: absolute;
+  left: 0;
+  display: flex;
+  gap: 4px;
+  animation: rise 0.6s ease-out forwards;
+}
+
+.cado-row img {
+  width: 25px;
+  height: 25px;
+  object-fit: cover;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
   
 </head>
@@ -705,7 +762,10 @@ body {
 </div>
 </header>
 
-  
+
+  <div class="cado-mask">
+  <div class="cado-fill" id="cadoFill"></div>
+  </div>
 
   <div class="marquee">
   <div class="marquee-content">
@@ -1383,6 +1443,54 @@ function addLayer(i) {
 runCycle();
 </script>
 
+<script>
+const images = [
+  "5c168065-e403-41fb-a22d-5963c590f598.png",
+  "7234e760-fc1c-42f0-9090-ea01506b780d.png",
+  "Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png",
+  "Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png",
+  "Whisk_75f1ff4d1144293b0604453f419dfe58eg.png",
+  "Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png",
+  "Whisk_a47b408310a8695a1d74ac1f7853771ceg.png",
+  "Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png",
+  "Whisk_c65c75a91538ef696df405442d136e06eg.png",
+  "Whisk_e7442ecf21459b6b618445bc29822e57eg.png",
+  "Whisk_f495ee622efd09abf2e40ae9872cad76eg.png",
+  "f4e54cb9-aea2-4e79-9066-5067825879c0.png",
+  "d643c5a4-12d9-467d-8f86-9170945ae70c.png",
+  "Whisk_f249f16e46546fe9a814b05c566d7954eg.png"
+];
 
+const fill = document.getElementById("cadoFill");
+const rowHeight = 25;
+const rows = 12;
+
+function startFill() {
+  fill.innerHTML = "";
+  let i = 0;
+
+  const timer = setInterval(() => {
+    const row = document.createElement("div");
+    row.className = "cado-row";
+    row.style.bottom = `${i * rowHeight}px`;
+
+    for (let j = 0; j < 40; j++) {
+      const img = document.createElement("img");
+      img.src = images[Math.floor(Math.random() * images.length)];
+      row.appendChild(img);
+    }
+
+    fill.appendChild(row);
+    i++;
+
+    if (i >= rows) {
+      clearInterval(timer);
+      setTimeout(startFill, 2000);
+    }
+  }, 200);
+}
+
+startFill();
+</script>
 </body>
 </html>
