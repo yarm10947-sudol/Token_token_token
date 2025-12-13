@@ -1368,7 +1368,130 @@ function start() {
 start();
   </script>
 
+<div class="cado-container">
+  <svg class="cado-svg" viewBox="0 0 1000 240" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <clipPath id="cadoClip">
+        <text
+          x="50%"
+          y="65%"
+          text-anchor="middle"
+          font-size="100"
+          font-weight="900"
+          font-family="Arial Black, Arial">
+          CADO
+        </text>
+      </clipPath>
+    </defs>
+  </svg>
 
+  <div class="cado-fill" id="cadoFill"></div>
+</div>
+
+<script>
+const images = [
+  "5c168065-e403-41fb-a22d-5963c590f598.png",
+  "7234e760-fc1c-42f0-9090-ea01506b780d.png",
+  "Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png",
+  "Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png",
+  "Whisk_75f1ff4d1144293b0604453f419dfe58eg.png",
+  "Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png",
+  "Whisk_a47b408310a8695a1d74ac1f7853771ceg.png",
+  "Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png",
+  "Whisk_c65c75a91538ef696df405442d136e06eg.png",
+  "Whisk_e7442ecf21459b6b618445bc29822e57eg.png",
+  "Whisk_f495ee622efd09abf2e40ae9872cad76eg.png",
+  "f4e54cb9-aea2-4e79-9066-5067825879c0.png",
+  "d643c5a4-12d9-467d-8f86-9170945ae70c.png",
+  "Whisk_f249f16e46546fe9a814b05c566d7954eg.png"
+];
+
+const fill = document.getElementById("cadoFill");
+const rowHeight = 25;
+const maxRows = 6;
+
+function start() {
+  fill.innerHTML = "";
+  let row = 0;
+
+  const interval = setInterval(() => {
+    const div = document.createElement("div");
+    div.className = "cado-row";
+
+    for (let i = 0; i < 10; i++) {  // меньше картинок для узкой ширины
+      const img = document.createElement("img");
+      img.src = images[Math.floor(Math.random() * images.length)];
+      div.appendChild(img);
+    }
+
+    fill.appendChild(div);
+    row++;
+
+    if (row >= maxRows) {
+      clearInterval(interval);
+      setTimeout(start, 2000);
+    }
+  }, 250);
+}
+
+start();
+</script>
+
+<style>
+.cado-container {
+  width: 100px;           /* фиксированная ширина */
+  height: 110px;          /* фиксированная высота */
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.cado-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cado-fill {
+  position: absolute;
+  inset: 0;
+  clip-path: url(#cadoClip);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.cado-row {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  height: 16px;           /* уменьшил для маленькой ширины */
+  opacity: 0;
+  transform: translateY(4px);
+  animation: show 0.4s forwards;
+}
+
+.cado-row img {
+  width: 16px;            /* уменьшил для маленькой ширины */
+  height: 16px;
+}
+
+@keyframes show {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🔴 Мобильные */
+@media (max-width: 480px) {
+  .cado-container {
+    width: 100px;
+    height: 110px;
+  }
+}
+</style>
   
 </body>
 </html>
