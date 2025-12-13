@@ -591,126 +591,11 @@ body {
 
 
 
- #cado-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  height: 40vw;          /* КЛЮЧЕВОЕ */
-  max-height: 180px;    /* ограничение */
-  min-height: 120px;    /* чтобы не схлопывался */
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-/* SVG всегда занимает весь контейнер */
-#cado-svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* Адаптивный размер букв — ДЛЯ SVG */
-#cado-text {
-  font-size: clamp(48px, 26vw, 160px);
-  font-weight: 900;
-}
-
-/* Маска */
-#cado-fill {
-  position: absolute;
-  inset: 0;
-  clip-path: url(#cado-clip);
-  overflow: hidden;
-}
-
-/* Слои */
-.cado-layer {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 22px;
-  display: flex;
-  justify-content: center;
-  gap: 2px;
-  opacity: 0;
-  transform: translateY(16px);
-  transition: all 0.4s ease-out;
-}
-
-.cado-layer.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.cado-layer img {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
-
-/* Доп фикс для очень маленьких экранов */
-@media (max-width: 360px) {
-  #cado-wrapper {
-    height: 48vw;
-    min-height: 110px;
-  }
-}
+ 
 
 
 
 
-
-  .cado-mask {
-  width: 100%;
-  max-width: 100%;
-  height: clamp(160px, 30vw, 260px);
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-
-  /* ТЕКСТ-МАСКА */
-  -webkit-mask-image: url("data:image/svg+xml;utf8,\
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 300'>\
-    <text x='50%' y='65%' text-anchor='middle' \
-    font-size='260' font-weight='900' \
-    font-family='Arial Black, Arial'>CADO</text>\
-  </svg>");
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
-
-  mask-image: -webkit-mask-image;
-}
-
-.cado-fill {
-  position: absolute;
-  inset: 0;
-}
-
-/* СТРОКА КАРТИНОК */
-.cado-row {
-  position: absolute;
-  left: 0;
-  display: flex;
-  gap: 4px;
-  animation: rise 0.6s ease-out forwards;
-}
-
-.cado-row img {
-  width: 25px;
-  height: 25px;
-  object-fit: cover;
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 </style>
   
 </head>
@@ -763,9 +648,7 @@ body {
 </header>
 
 
-  <div class="cado-mask">
-  <div class="cado-fill" id="cadoFill"></div>
-  </div>
+  
 
   <div class="marquee">
   <div class="marquee-content">
@@ -1019,29 +902,7 @@ body {
   margin-top: 20px;
 }
  </style> 
-<div id="cado-wrapper">
-  <svg id="cado-svg"
-       viewBox="0 0 800 300"
-       preserveAspectRatio="xMidYMid meet">
 
-    <defs>
-      <clipPath id="cado-clip">
-        <text id="cado-text"
-          x="50%"
-          y="50%"
-          text-anchor="middle"
-          dominant-baseline="middle"
-          textLength="700"
-          lengthAdjust="spacingAndGlyphs">
-          CADO
-        </text>
-      </clipPath>
-    </defs>
-
-  </svg>
-
-  <div id="cado-fill"></div>
-</div>
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
@@ -1386,111 +1247,8 @@ createLavaDrops();
 
 
   
-<script>
-const imgs = [
-  "5c168065-e403-41fb-a22d-5963c590f598.png",
-  "7234e760-fc1c-42f0-9090-ea01506b780d.png",
-  "Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png",
-  "Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png",
-  "Whisk_75f1ff4d1144293b0604453f419dfe58eg.png",
-  "Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png",
-  "Whisk_a47b408310a8695a1d74ac1f7853771ceg.png",
-  "Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png",
-  "Whisk_c65c75a91538ef696df405442d136e06eg.png",
-  "Whisk_e7442ecf21459b6b618445bc29822e57eg.png",
-  "Whisk_f495ee622efd09abf2e40ae9872cad76eg.png",
-  "f4e54cb9-aea2-4e79-9066-5067825879c0.png",
-  "d643c5a4-12d9-467d-8f86-9170945ae70c.png",
-  "Whisk_f249f16e46546fe9a814b05c566d7954eg.png"
-];
 
-const fill = document.getElementById("cado-fill");
 
-function runCycle() {
-  fill.innerHTML = "";
-
-  const totalLayers = 14; // больше слоев для плотности
-  let index = 0;
-
-  let timer = setInterval(() => {
-    addLayer(index);
-    index++;
-
-    if (index >= totalLayers) {
-      clearInterval(timer);
-      setTimeout(runCycle, 2500);
-    }
-  }, 180);
-}
-
-function addLayer(i) {
-  const row = document.createElement("div");
-  row.className = "cado-layer";
-  row.style.bottom = `${i * 22}px`;
-
-  const count = Math.floor(fill.clientWidth / 22) + 2;
-
-  for (let j = 0; j < count; j++) {
-    const img = document.createElement("img");
-    img.src = imgs[Math.floor(Math.random() * imgs.length)];
-    row.appendChild(img);
-  }
-
-  fill.appendChild(row);
-  setTimeout(() => row.classList.add("visible"), 40);
-}
-
-runCycle();
-</script>
-
-<script>
-const images = [
-  "5c168065-e403-41fb-a22d-5963c590f598.png",
-  "7234e760-fc1c-42f0-9090-ea01506b780d.png",
-  "Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png",
-  "Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png",
-  "Whisk_75f1ff4d1144293b0604453f419dfe58eg.png",
-  "Whisk_85ff4edc5893be7b9f94062ec74e8ca6eg.png",
-  "Whisk_a47b408310a8695a1d74ac1f7853771ceg.png",
-  "Whisk_b3e1d6bbf20e91d9c7a4fba3e985e1bbeg.png",
-  "Whisk_c65c75a91538ef696df405442d136e06eg.png",
-  "Whisk_e7442ecf21459b6b618445bc29822e57eg.png",
-  "Whisk_f495ee622efd09abf2e40ae9872cad76eg.png",
-  "f4e54cb9-aea2-4e79-9066-5067825879c0.png",
-  "d643c5a4-12d9-467d-8f86-9170945ae70c.png",
-  "Whisk_f249f16e46546fe9a814b05c566d7954eg.png"
-];
-
-const fill = document.getElementById("cadoFill");
-const rowHeight = 25;
-const rows = 12;
-
-function startFill() {
-  fill.innerHTML = "";
-  let i = 0;
-
-  const timer = setInterval(() => {
-    const row = document.createElement("div");
-    row.className = "cado-row";
-    row.style.bottom = `${i * rowHeight}px`;
-
-    for (let j = 0; j < 40; j++) {
-      const img = document.createElement("img");
-      img.src = images[Math.floor(Math.random() * images.length)];
-      row.appendChild(img);
-    }
-
-    fill.appendChild(row);
-    i++;
-
-    if (i >= rows) {
-      clearInterval(timer);
-      setTimeout(startFill, 2000);
-    }
-  }, 200);
-}
-
-startFill();
-</script>
+  
 </body>
 </html>
