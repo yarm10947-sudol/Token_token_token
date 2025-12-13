@@ -591,31 +591,30 @@ body {
 
 
 
- 
-  
-
-  
-    
-  #cado-wrapper {
+ #cado-wrapper {
   position: relative;
   width: 100%;
-  max-width: 350px; /* идеально для мобильных */
-  aspect-ratio: 1.6 / 1; /* более компактный прямоугольник */
+  max-width: 420px;
+  height: 40vw;          /* КЛЮЧЕВОЕ */
+  max-height: 180px;    /* ограничение */
+  min-height: 120px;    /* чтобы не схлопывался */
   margin: 0 auto;
   overflow: hidden;
 }
 
-/* Адаптивный размер букв */
-#cado-text {
-  font-size: clamp(40px, 22vw, 160px);
-  font-weight: 900;
-}
-
+/* SVG всегда занимает весь контейнер */
 #cado-svg {
   width: 100%;
   height: 100%;
 }
 
+/* Адаптивный размер букв — ДЛЯ SVG */
+#cado-text {
+  font-size: clamp(48px, 26vw, 160px);
+  font-weight: 900;
+}
+
+/* Маска */
 #cado-fill {
   position: absolute;
   inset: 0;
@@ -623,17 +622,17 @@ body {
   overflow: hidden;
 }
 
-/* Слои заполнения — адаптивные */
+/* Слои */
 .cado-layer {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 22px;     /* уменьшили */
+  height: 22px;
   display: flex;
   justify-content: center;
   gap: 2px;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(16px);
   transition: all 0.4s ease-out;
 }
 
@@ -648,17 +647,11 @@ body {
   flex-shrink: 0;
 }
 
-/* Доп адаптивность */
-@media (max-width: 400px) {
+/* Доп фикс для очень маленьких экранов */
+@media (max-width: 360px) {
   #cado-wrapper {
-    max-width: 300px;
-  }
-  .cado-layer {
-    height: 20px;
-  }
-  .cado-layer img {
-    width: 20px;
-    height: 20px;
+    height: 48vw;
+    min-height: 110px;
   }
 }
 </style>
