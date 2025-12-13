@@ -591,15 +591,17 @@ body {
 
 
 
- 
-.cado-container {
+ .cado-container {
   width: 100%;
   max-width: 100%;
-  height: 140px;          /* 🔴 ключевое */
+  height: 30vw;          /* 🔥 ВОТ КЛЮЧ */
+  max-height: 200px;     /* ограничение для больших экранов */
+  min-height: 110px;     /* защита от слишком малого */
   margin: 0 auto;
   position: relative;
   overflow: hidden;
-}
+ }
+
 
 .cado-svg {
   position: absolute;
