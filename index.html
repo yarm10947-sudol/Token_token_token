@@ -1334,9 +1334,9 @@ const imgs = [
 const fill = document.getElementById("cado-fill");
 
 function runCycle() {
-  fill.innerHTML = ""; 
-  
-  const totalLayers = 11; 
+  fill.innerHTML = "";
+
+  const totalLayers = 14; // больше слоев для плотности
   let index = 0;
 
   let timer = setInterval(() => {
@@ -1345,28 +1345,31 @@ function runCycle() {
 
     if (index >= totalLayers) {
       clearInterval(timer);
-      setTimeout(runCycle, 2000);
+      setTimeout(runCycle, 2500);
     }
-  }, 250);
+  }, 180);
 }
 
 function addLayer(i) {
   const row = document.createElement("div");
   row.className = "cado-layer";
-  row.style.bottom = `${i * 28}px`;
+  row.style.bottom = `${i * 22}px`;
 
-  for (let j = 0; j < 28; j++) {
+  const count = Math.floor(fill.clientWidth / 22) + 2;
+
+  for (let j = 0; j < count; j++) {
     const img = document.createElement("img");
     img.src = imgs[Math.floor(Math.random() * imgs.length)];
     row.appendChild(img);
   }
 
   fill.appendChild(row);
-  setTimeout(() => row.classList.add("visible"), 30);
+  setTimeout(() => row.classList.add("visible"), 40);
 }
 
 runCycle();
 </script>
+
 
 </body>
 </html>
