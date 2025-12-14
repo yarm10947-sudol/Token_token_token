@@ -594,7 +594,7 @@ body {
 .cado-container {
   width: 100%;
   max-width: 1200px;
-  height: 220px;               /* десктоп */
+  height: 200px;        /* фикс */
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -611,41 +611,19 @@ body {
   position: absolute;
   inset: 0;
   clip-path: url(#cadoClip);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  background: repeating-linear-gradient(
+    45deg,
+    #ff0000,
+    #ff0000 6px,
+    #0000ff 6px,
+    #0000ff 12px
+  );
 }
 
-.cado-row {
-  display: flex;
-  justify-content: center;
-  gap: 2px;
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: drop 0.6s forwards;
-}
-
-.cado-row img {
-  width: 18px;
-  height: 18px;
-}
-
-@keyframes drop {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 🔴 ТЕЛЕФОН (ПОРТРЕТ) */
+/* 📱 МОБИЛА */
 @media (max-width: 600px) {
   .cado-container {
-    height: 140px;   /* ← КЛЮЧ: увеличиваем высоту */
-  }
-
-  .cado-row img {
-    width: 14px;
-    height: 14px;
+    height: 160px;
   }
 }
 
@@ -961,16 +939,16 @@ body {
   
 
 <div class="cado-container">
-  <svg class="cado-svg" viewBox="0 0 1000 240" preserveAspectRatio="xMidYMid meet">
+  <svg class="cado-svg" viewBox="0 0 1000 240">
     <defs>
-      <clipPath id="cadoClip">
+      <clipPath id="cadoClip" clipPathUnits="userSpaceOnUse">
         <text
           x="500"
-          y="170"
-          text-anchor="middle"
+          y="180"
           font-size="180"
           font-weight="900"
-          font-family="Arial Black, Arial">
+          font-family="Arial Black, Arial"
+          text-anchor="middle">
           CADO
         </text>
       </clipPath>
