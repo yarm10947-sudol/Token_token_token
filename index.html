@@ -901,7 +901,9 @@ body {
  </style> 
 
   
-<div class="cado-container">
+
+
+  <div class="cado-container">
   <svg class="cado-svg" viewBox="0 0 300 300">
     <defs>
       <clipPath id="cadoClip" clipPathUnits="userSpaceOnUse">
@@ -913,9 +915,8 @@ body {
     <rect width="300" height="300" fill="transparent"/>
   </svg>
 
-  <!-- Добавляем clip-path через CSS -->
   <div class="cado-fill"></div>
-</div>
+  </div>
 
 <style>
 .cado-container {
@@ -928,8 +929,27 @@ body {
 .cado-fill {
   position: absolute;
   inset: 0;
-  background: linear-gradient(45deg, red, blue);
-  clip-path: url(#cadoClip); /* привязка к clipPath */
+  clip-path: url(#cadoClip);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cado-row {
+  display: flex;
+  gap: 2px;
+  animation: moveDown 5s linear infinite;
+}
+
+.cado-row img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
+@keyframes moveDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 </style>
 
@@ -1279,29 +1299,28 @@ createLavaDrops();
 
 <script>
 const fill = document.querySelector(".cado-fill");
+
+// Пути к картинкам
 const images = [
   "5c168065-e403-41fb-a22d-5963c590f598.png",
   "7234e760-fc1c-42f0-9090-ea01506b780d.png",
   "Whisk_1f307ff0f5c72adbbc84424afe33f786eg.png",
   "Whisk_31088f7bc76a7d3967d415d6dc9a8a33eg.png"
 ];
-const maxRows = 6;
+
+const rowsCount = 6; // количество рядов
 
 function startCADOFill() {
-  fill.innerHTML = "";
-  for (let row = 0; row < maxRows; row++) {
+  fill.innerHTML = ""; // очистка перед заполнением
+  for (let row = 0; row < rowsCount; row++) {
     const div = document.createElement("div");
-    div.style.display = "flex";
-    div.style.justifyContent = "center";
-    div.style.gap = "5px";
+    div.className = "cado-row";
+    div.style.animationDelay = `${row * 0.5}s`; // смещение рядов
 
-    const rowCount = Math.floor(fill.clientWidth / 30);
+    const rowCount = Math.ceil(fill.clientWidth / 30) + 2; // сколько картинок в ряду
     for (let i = 0; i < rowCount; i++) {
       const img = document.createElement("img");
       img.src = images[Math.floor(Math.random() * images.length)];
-      img.style.width = "30px";
-      img.style.height = "30px";
-      img.style.objectFit = "cover";
       div.appendChild(img);
     }
 
@@ -1309,7 +1328,11 @@ function startCADOFill() {
   }
 }
 
+// Запуск
 startCADOFill();
+
+// Если окно меняется, пересоздаём ряды
+window.addEventListener("resize", startCADOFill);
 </script>
 
 </body>
