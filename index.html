@@ -594,10 +594,18 @@ body {
 .cado-container {
   width: 100%;
   max-width: 1200px;
-  height: 200px;              /* landscape / desktop */
+  height: 220px;          /* ДЕСКТОП */
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+}
+
+/* 📱 МОБИЛА — КВАДРАТ */
+@media (max-width: 600px) {
+  .cado-container {
+    width: 90px;
+    height: 90px;
+  }
 }
 
 .cado-svg {
@@ -611,20 +619,7 @@ body {
   position: absolute;
   inset: 0;
   clip-path: url(#cadoClip);
-}
-
-/* 📱 ТЕЛЕФОН — ВЕРТИКАЛЬНО */
-@media (orientation: portrait) {
-  .cado-container {
-    height: 320px;            /* ← ВОТ РЕШЕНИЕ */
-  }
-}
-
-/* 📱 ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ */
-@media (orientation: portrait) and (max-width: 400px) {
-  .cado-container {
-    height: 360px;
-  }
+  background: linear-gradient(45deg, red, blue);
 }
 
 
@@ -938,13 +933,13 @@ body {
   
 
 <div class="cado-container">
-  <svg class="cado-svg" viewBox="0 0 1000 240">
+  <svg class="cado-svg" viewBox="0 0 300 300">
     <defs>
       <clipPath id="cadoClip" clipPathUnits="userSpaceOnUse">
         <text
-          x="500"
-          y="180"
-          font-size="180"
+          x="150"
+          y="185"
+          font-size="90"
           font-weight="900"
           font-family="Arial Black, Arial"
           text-anchor="middle">
