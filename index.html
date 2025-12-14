@@ -591,26 +591,7 @@ body {
 
 
 
-.cado-container {
-  width: 90px;
-  height: 90px;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-}
 
-.cado-svg {
-  width: 100%;
-  height: 100%;
-  display: block;   /* 🔥 КРИТИЧНО */
-}
-
-.cado-fill {
-  position: absolute;
-  inset: 0;
-  clip-path: url(#cadoClip);
-  background: linear-gradient(45deg, red, blue);
-}
 
 </style>
   
@@ -920,30 +901,41 @@ body {
  </style> 
 
   
-
 <div class="cado-container">
   <svg class="cado-svg" viewBox="0 0 300 300">
     <defs>
       <clipPath id="cadoClip" clipPathUnits="userSpaceOnUse">
-        <text
-          x="150"
-          y="185"
-          font-size="90"
-          font-weight="900"
-          font-family="Arial Black, Arial"
-          text-anchor="middle">
+        <text x="150" y="185" font-size="90" font-weight="900" font-family="Arial Black, Arial" text-anchor="middle">
           CADO
         </text>
       </clipPath>
     </defs>
-
-    <!-- ВАЖНО: этот rect ФИКСИРУЕТ область -->
     <rect width="300" height="300" fill="transparent"/>
   </svg>
 
+  <!-- Добавляем clip-path через CSS -->
   <div class="cado-fill"></div>
 </div>
+
+<style>
+.cado-container {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.cado-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, red, blue);
+  clip-path: url(#cadoClip); /* привязка к clipPath */
+}
+</style>
+
+
   
+
 <footer>
   © 2025 CADO Token — All rights reserved.
 </footer>
