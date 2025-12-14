@@ -594,7 +594,7 @@ body {
 .cado-container {
   width: 100%;
   max-width: 1200px;
-  height: 200px;        /* фикс */
+  height: 200px;              /* landscape / desktop */
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -611,22 +611,21 @@ body {
   position: absolute;
   inset: 0;
   clip-path: url(#cadoClip);
-  background: repeating-linear-gradient(
-    45deg,
-    #ff0000,
-    #ff0000 6px,
-    #0000ff 6px,
-    #0000ff 12px
-  );
 }
 
-/* 📱 МОБИЛА */
-@media (max-width: 600px) {
+/* 📱 ТЕЛЕФОН — ВЕРТИКАЛЬНО */
+@media (orientation: portrait) {
   .cado-container {
-    height: 160px;
+    height: 320px;            /* ← ВОТ РЕШЕНИЕ */
   }
 }
 
+/* 📱 ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ */
+@media (orientation: portrait) and (max-width: 400px) {
+  .cado-container {
+    height: 360px;
+  }
+}
 
 
 </style>
@@ -943,7 +942,7 @@ body {
     <defs>
       <clipPath id="cadoClip" clipPathUnits="userSpaceOnUse">
         <text
-          x="100"
+          x="500"
           y="180"
           font-size="180"
           font-weight="900"
@@ -955,9 +954,8 @@ body {
     </defs>
   </svg>
 
-  <div class="cado-fill" id="cadoFill"></div>
+  <div class="cado-fill"></div>
 </div>
-  
   
 <footer>
   © 2025 CADO Token — All rights reserved.
