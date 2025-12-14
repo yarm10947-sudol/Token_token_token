@@ -592,27 +592,17 @@ body {
 
 
 .cado-container {
-  width: 100%;
-  max-width: 1200px;
-  height: 220px;          /* ДЕСКТОП */
+  width: 90px;
+  height: 90px;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
 }
 
-/* 📱 МОБИЛА — КВАДРАТ */
-@media (max-width: 600px) {
-  .cado-container {
-    width: 90px;
-    height: 90px;
-  }
-}
-
 .cado-svg {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
+  display: block;   /* 🔥 КРИТИЧНО */
 }
 
 .cado-fill {
@@ -621,7 +611,6 @@ body {
   clip-path: url(#cadoClip);
   background: linear-gradient(45deg, red, blue);
 }
-
 
 </style>
   
@@ -947,6 +936,9 @@ body {
         </text>
       </clipPath>
     </defs>
+
+    <!-- ВАЖНО: этот rect ФИКСИРУЕТ область -->
+    <rect width="300" height="300" fill="transparent"/>
   </svg>
 
   <div class="cado-fill"></div>
