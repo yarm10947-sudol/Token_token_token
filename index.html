@@ -1325,7 +1325,7 @@ function startCADOFill() {
   for (let row = 0; row < rowsCount; row++) {
     const div = document.createElement("div");
     div.className = "cado-row";
-    div.style.animationDelay = `${row * 2}s`; // смещение рядов
+    div.style.animationDelay = `${row * 0.5}s`; // смещение рядов
 
     const rowCount = Math.ceil(fill.clientWidth / 30) + 2; // сколько картинок в ряду
     for (let i = 0; i < rowCount; i++) {
